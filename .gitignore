@@ -1,0 +1,6 @@
+# Ignorar o arquivo database.php dentro da pasta project
+backend/config/database.php
+
+# Diretórios específicos (opcional)
+/project/vendor
+/project/node_modules
