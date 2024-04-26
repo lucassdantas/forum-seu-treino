@@ -1,5 +1,5 @@
 # Ignorar o arquivo database.php dentro da pasta project
-backend/config/database.php
+backend/config/env.php
 
 # Diretórios específicos (opcional)
 /project/vendor
