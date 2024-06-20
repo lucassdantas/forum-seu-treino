@@ -7,6 +7,7 @@ require_once 'controllers/PostController.php';
 require_once 'controllers/CommentController.php';
 require_once 'controllers/LikeController.php';
 require_once 'controllers/RoutineController.php';
+require_once 'controllers/AdminController.php';
 require_once 'backend/middleware.php';
 
 // Crie uma instância do middleware
@@ -31,7 +32,7 @@ switch ($route) {
         $middleware->authMiddleware();
 
         $userController = new UserController();
-        $userController->index(); // Método para listar usuários
+        $userController->index(); // Listar usuários
         break;
 
     case 'posts':
@@ -39,7 +40,7 @@ switch ($route) {
         $middleware->authMiddleware();
 
         $postController = new PostController();
-        $postController->index(); // Método para listar postagens
+        $postController->index(); // Listar postagens
         break;
 
     case 'comments':
@@ -47,7 +48,7 @@ switch ($route) {
         $middleware->authMiddleware();
 
         $commentController = new CommentController();
-        $commentController->index(); // Método para listar comentários
+        $commentController->index(); // Listar comentários
         break;
 
     case 'likes':
@@ -55,7 +56,7 @@ switch ($route) {
         $middleware->authMiddleware();
 
         $likeController = new LikeController();
-        $likeController->index(); // Método para listar curtidas
+        $likeController->index(); // Listar curtidas
         break;
 
     case 'routines':
@@ -63,7 +64,20 @@ switch ($route) {
         $middleware->authMiddleware();
 
         $routineController = new RoutineController();
-        $routineController->index(); // Método para listar rotinas
+        $routineController->index(); // Listar rotinas
+        break;
+
+    case 'admin':
+        // Aplicar middleware de autenticação
+        $middleware->authMiddleware();
+
+        // Verificar se o usuário é um administrador (supondo que haja uma função isAdmin() no seu sistema)
+        if ($authController->isAdmin()) {
+            $adminController = new AdminController();
+            $adminController->adminArea(); // Acessar área administrativa
+        } else {
+            echo 'Você não tem permissão para acessar esta página.';
+        }
         break;
 
     default:
