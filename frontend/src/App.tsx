@@ -23,13 +23,10 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <Navbar />
         <Routes>
           <Route path="/" element={<Login setAuth={setAuth} />} />
           <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
         </Routes>
-      </div>
     </Router>
   );
 };
