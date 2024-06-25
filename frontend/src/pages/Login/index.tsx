@@ -15,8 +15,8 @@ const Login = ({ setAuth }:any) => {
       const response = await axios.post('http://localhost/backend/login.php', { username, password }, { withCredentials: true });
       if (response.data.success) {
         setAuth(true);
-        console.log(response)
       } else {
+        console.log(response)
         alert('Login failed'+JSON.stringify(response));
       }
     } catch (error) {
@@ -47,7 +47,7 @@ const Login = ({ setAuth }:any) => {
                     placeholder="E-mail"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className='bg-transparent  py-2 w-full'
+                    className='bg-transparent py-2 w-full outline-none'
                   />
                 </div>
                 <div className='flex items-center gap-2 border-b-2 border-b-orange-seu-treino'>
@@ -57,7 +57,7 @@ const Login = ({ setAuth }:any) => {
                     placeholder="Senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className='bg-transparent py-2 w-full'
+                    className='bg-transparent py-2 w-full outline-none'
                   />
                 </div>
               </fieldset>
