@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Limiter } from '../../components/common/Limiter';
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdKey } from "react-icons/io";
+import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
 
 const Login = ({ setAuth }:any) => {
   const [username, setUsername] = useState('');
@@ -24,16 +25,18 @@ const Login = ({ setAuth }:any) => {
   };
 
   return (
-    <main className='bg-black text-white w-full py-4 h-screen flex items-center'>
+    <main className='bg-black text-white w-full py-4 h-screen flex items-center justify-center'>
       <Limiter>
-        <div className="flex justify-center items-center w-full gap-4">
+        <div className="flex lg:flex-row flex-col justify-center items-center w-full gap-4">
           
-          <div className="flex flex-col w-1/2 items-center ">
-            <img src={''} alt='Imagem para login'/>
+          <div className="lg:flex flex-col w-1/2 lg:relative hidden items-center ">
+            <img src={logo} alt='Imagem para login'/>
           </div>
 
-          <div className="flex flex-col w-1/2 gap-8 px-4">
-            <img src={''} alt='Logo'/>
+          <div className="flex flex-col lg:w-1/2 w-full gap-8 lg:px-4 px-8 lg:text-left text-center">
+            <div className="w-full flex lg:justify-start justify-center">
+              <img src={logo} alt='Logo' className='w-1/2'/>
+            </div>
             <p className='text-lg'>Obtenha acesso exclusivo ao Seu Treino</p>
             <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
               <fieldset className='flex flex-col gap-4 mb-8'>
