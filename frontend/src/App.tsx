@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from './components/Navbar';
+import Header from './components/Header';
 import Login from './pages/Login';
 import Feed from './pages/Feed';
 
@@ -22,12 +22,18 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-        <Routes>
-          <Route path="/" element={<Login setAuth={setAuth} />} />
-          <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
-        </Routes>
-    </Router>
+    <>
+      <Router>
+        <div>
+          {auth && <Header/>}
+          <Routes>
+            <Route path="/" element={<Login setAuth={setAuth} />} />
+            <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
+          </Routes>
+
+        </div>
+      </Router>
+    </>
   );
 };
 

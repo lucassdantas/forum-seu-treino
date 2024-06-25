@@ -29,11 +29,13 @@ const Feed = ({ setAuth }:any) => {
   };
 
   return (
-    <div>
+    <>
+    <header></header>
+    <main></main>
       <h2>Feed</h2>
       <p>Welcome to the feed!</p>
       <button onClick={handleLogout}>Logout</button>
-    </div>
+    </>
   );
 };
 
