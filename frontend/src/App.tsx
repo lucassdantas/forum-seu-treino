@@ -24,7 +24,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login setAuth={setAuth} />} />
+        <Route path="/" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth}/>} />
         <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
       </Routes>
     </Router>

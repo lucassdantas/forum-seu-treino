@@ -14,16 +14,11 @@ const Login = ({setAuth }:any) => {
 
   const handleSubmit = async (e:any) => {
     e.preventDefault();
+
     try {
       const response = await axios.post('http://localhost/backend/login.php', { username, password }, { withCredentials: true });
-      if (response.data.success) {
-        setAuth(true);
-        navigate('/feed')
-
-      } else {
-        console.log(response)
-        alert('Login failed'+JSON.stringify(response));
-      }
+      if (response.data.success) setAuth(true);
+      else                       console.log(response)
     } catch (error) {
       console.error('There was an error logging in!', error);
     }
