@@ -24,12 +24,14 @@ const Login = ({ setAuth }:any) => {
   };
 
   return (
-    <main className='bg-black text-white w-full py-4 h-screen pt-[20%]'>
+    <main className='bg-black text-white w-full py-4 h-screen flex items-center'>
       <Limiter>
         <div className="flex justify-center items-center w-full gap-4">
-          <div className="flex flex-col w-1/2 items-center">
+          
+          <div className="flex flex-col w-1/2 items-center ">
             <img src={''} alt='Imagem para login'/>
           </div>
+
           <div className="flex flex-col w-1/2 gap-8 px-4">
             <img src={''} alt='Logo'/>
             <p className='text-lg'>Obtenha acesso exclusivo ao Seu Treino</p>
