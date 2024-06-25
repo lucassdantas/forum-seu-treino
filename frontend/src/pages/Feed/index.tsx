@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import Header from '@/components/Header';
 
 const Feed = ({ setAuth }:any) => {
   useEffect(() => {
@@ -30,7 +31,7 @@ const Feed = ({ setAuth }:any) => {
 
   return (
     <>
-    <header></header>
+    <Header/>
     <main></main>
       <h2>Feed</h2>
       <p>Welcome to the feed!</p>

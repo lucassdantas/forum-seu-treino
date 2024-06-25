@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Limiter } from '../../components/common/Limiter';
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdKey } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
 
-const Login = ({ setAuth }:any) => {
+const Login = ({setAuth }:any) => {
+  const navigate = useNavigate()
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,6 +18,8 @@ const Login = ({ setAuth }:any) => {
       const response = await axios.post('http://localhost/backend/login.php', { username, password }, { withCredentials: true });
       if (response.data.success) {
         setAuth(true);
+        navigate('/feed')
+
       } else {
         console.log(response)
         alert('Login failed'+JSON.stringify(response));
@@ -63,7 +68,7 @@ const Login = ({ setAuth }:any) => {
               </fieldset>
               <button type="submit" className='bg-yellow-600 rounded-lg text-center text-black px-12 py-2 hover:bg-yellow-seu-treino transition-colors font-semibold'>Login</button>
             </form>
-              <p className='cursor-pointer text-center text-sm'>Esqueceu sua senha?</p>
+            <p className='cursor-pointer text-center text-sm'>Esqueceu sua senha?</p>
           </div>
         </div>
 

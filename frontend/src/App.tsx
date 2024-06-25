@@ -22,18 +22,12 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <Router>
-        <div>
-          {auth && <Header/>}
-          <Routes>
-            <Route path="/" element={<Login setAuth={setAuth} />} />
-            <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
-          </Routes>
-
-        </div>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login setAuth={setAuth} />} />
+        <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
+      </Routes>
+    </Router>
   );
 };
 
