@@ -40,24 +40,24 @@ const Login = ({ setAuth }:any) => {
             <p className='text-lg'>Obtenha acesso exclusivo ao Seu Treino</p>
             <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
               <fieldset className='flex flex-col gap-4 mb-8'>
-                <div>
+                <div className='flex items-center gap-2 border-b-2 border-b-orange-seu-treino'>
                   <MdOutlineEmail />
                   <input
                     type="email"
                     placeholder="E-mail"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className='bg-transparent border-b-2 border-b-orange-seu-treino py-2 w-full'
+                    className='bg-transparent  py-2 w-full'
                   />
                 </div>
-                <div>
+                <div className='flex items-center gap-2 border-b-2 border-b-orange-seu-treino'>
                   <IoMdKey />
                   <input
                     type="password"
                     placeholder="Senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className='bg-transparent border-b-2 border-b-orange-seu-treino py-2 w-full'
+                    className='bg-transparent py-2 w-full'
                   />
                 </div>
               </fieldset>
