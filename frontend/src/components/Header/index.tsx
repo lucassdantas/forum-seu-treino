@@ -4,6 +4,11 @@ import { Limiter } from '@/components/common/Limiter';
 import { Button } from '@/components/common/Button';
 import { FaAngleDown } from "react-icons/fa";
 import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
+import { FaSearch } from "react-icons/fa";
+import { PiUserPlus } from "react-icons/pi";
+import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
+
+
 import tempImgBrenoSilva from '@/assets/personal-trainer-breno-silva-1.jpg';
 
 const Header = () => {
@@ -27,11 +32,11 @@ const Header = () => {
             <Button>Visualizar rotina</Button>
           </div>
           <div className='w-4/12'>
-            <ul className='flex gap-4 w-full justify-center'>
-              <li>Pesuisar</li>
-              <li>Pesuisar</li>
-              <li>Pesuisar</li>
-              <li>Pesuisar</li>
+            <ul className='flex gap-8 w-full justify-center'>
+              <li><FaSearch  className='text-yellow-seu-treino text-xl cursor-pointer'/></li>
+              <li><PiUserPlus className='text-yellow-seu-treino text-xl cursor-pointer'/></li>
+              <li><FaRegEnvelope  className='text-yellow-seu-treino text-xl cursor-pointer'/></li>
+              <li><FaRegBell  className='text-yellow-seu-treino text-xl cursor-pointer'/></li>
             </ul>
           </div>
           <div className='w-2/12'>
