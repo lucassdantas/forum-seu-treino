@@ -18,9 +18,9 @@ try {
     $pdo = new PDO($dsn, $db_user, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT * FROM users WHERE username = :username AND password = :password';
+    $sql = 'SELECT * FROM forum_user WHERE login = :login AND password = :password';
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['username' => $username, 'password' => $password]);
+    $stmt->execute(['login' => $username, 'password' => $password]);
 
     $response = array('success' => false);
 
