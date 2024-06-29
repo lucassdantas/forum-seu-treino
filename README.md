@@ -14,12 +14,12 @@ php -S localhost:80
 
 ```
 ## Database
-there's also a database in mysql that need to be created.
+there's also a database in mysql that need to be created (you can use xampp or wathever works).
 Informations for dev database:
 
 ```bash
-create a database with "root" and "" access
-create a table with "login" and "password" columns 
+create a database named forum_seutreino with and "root" and "" access
+create a table called "forum_user" with "login" and "password" columns 
 fill them with values that you want for login and password  
 the database should be runnin on port 3306 and in mysql 
 ``` 
