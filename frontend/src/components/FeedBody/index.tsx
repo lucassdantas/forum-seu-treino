@@ -77,9 +77,11 @@ const MiddleColumn = () => {
                 <span>{post.dateOfCreation}</span>
               </div>
             </div>
+
             <div className='my-4'>
               <p>{post.postContent}</p>
             </div>
+
             <div className='flex border-t border-t-white py-2 gap-4'>
               <div className='flex items-center gap-2'>
                 <CiHeart className=''/> <span>Curtidas {post.likesQuantity}</span>
@@ -87,6 +89,10 @@ const MiddleColumn = () => {
               <div className='flex items-center gap-2'>
                 <TfiComment className=''/> <span>Comentários {post.commentsQuantity}</span>
               </div>
+            </div>
+
+            <div className='border-t'>
+              
             </div>
           </GrayCard>
         ))

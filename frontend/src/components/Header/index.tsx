@@ -22,11 +22,10 @@ const Header = () => {
           </div>
           <div className='w-4/12'>
             <ul className='flex gap-4 items-center justify-center w-full'>
-              <li><Link to="/">Login</Link></li>
-              <li><Link to="/feed">Feed</Link></li>
-              <li><Link to="/feed">Feed</Link></li>
-              <li><Link to="/feed">Feed</Link></li>
-              <li><Link to="/feed">Feed</Link></li>
+              <li><Link to="/">Feed</Link></li>
+              <li><Link to="/perfil">Meu perfil</Link></li>
+              <li><Link to="/seguidores">Seguidores</Link></li>
+              <li><Link to="/feed">Configurações</Link></li>
             </ul>
           </div>
           <div className='w-2/12'>
@@ -51,7 +50,7 @@ const Header = () => {
                     onMouseLeave={() => setIsMenuOpen(false)}
                   >
                       <nav className='flex flex-col py-4'>
-                        <Link to='amigos' className='hover:bg-neutral-700  px-4 py-2'>Amigos</Link>
+                        <Link to='seguidores' className='hover:bg-neutral-700  px-4 py-2'>Seguidores</Link>
                         <Link to='configuracoes' className='hover:bg-neutral-700  px-4 py-2'>Configurações da conta</Link>
                       </nav>
                   </div>
