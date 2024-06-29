@@ -5,7 +5,7 @@ type CardProps = {
 }
 export const GrayCard = ({children}:CardProps) => {
   return (
-    <div className='bg-gray-700 text-white p-2'>
+    <div className='bg-gray-700 text-white p-4'>
         {children}
     </div>
   )
