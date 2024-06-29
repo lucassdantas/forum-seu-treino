@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Limiter } from '@/components/common/Limiter';
 import { Button } from '@/components/common/Button';
@@ -12,6 +12,7 @@ import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
 import tempImgBrenoSilva from '@/assets/personal-trainer-breno-silva-1.jpg';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   return (
     <header className='bg-black text-white flex justify-center'>
       <Limiter>
@@ -43,8 +44,29 @@ const Header = () => {
             <div className="flex justify-center items-center gap-4">
               <img src={tempImgBrenoSilva} alt='Foto' className='rounded-full w-[50px]'/>
               <div className="flex">
-                <span> Olá, nome</span>
-                <FaAngleDown className='text-yellow-seu-treino cursor-pointer '/>
+                {
+                  isMenuOpen &&
+                  <div className='absolute mt-4 bg-black rounded-md' 
+                    onMouseEnter={() => setIsMenuOpen(true)}
+                    onMouseLeave={() => setIsMenuOpen(false)}
+                  >
+                      <nav className='flex flex-col py-4'>
+                        <Link to='amigos' className='hover:bg-neutral-700  px-4 py-2'>Amigos</Link>
+                        <Link to='configuracoes' className='hover:bg-neutral-700  px-4 py-2'>Configurações da conta</Link>
+                      </nav>
+                  </div>
+                }
+
+                <div className="flex items-center">
+                  <span> Olá, nome</span>
+                  <FaAngleDown 
+                    className='text-yellow-seu-treino cursor-pointer'
+                    onClick={() => setIsMenuOpen(!isMenuOpen)} 
+                    onMouseEnter={() => setIsMenuOpen(true)}
+                    onMouseLeave={() => setIsMenuOpen(false)}
+                  />
+                </div>
+
               </div>
             </div>
           </div>
