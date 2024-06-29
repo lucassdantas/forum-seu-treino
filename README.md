@@ -9,9 +9,9 @@ npm run dev
 ```
 ## Server side
 To run the server in php, run the following command at the root directory: 
-```
-php -S localhost:80
 
+```bash
+php -S localhost:80
 ```
 ## Database
 there's also a database in mysql that need to be created (you can use xampp or wathever works).
