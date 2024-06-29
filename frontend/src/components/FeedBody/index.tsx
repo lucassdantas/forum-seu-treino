@@ -7,6 +7,7 @@ import { posts } from '@/api/posts'
 import { postsWithAuthorsInfo } from '@/api/postsWithAuthorsInfo'
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
+import { advertising } from '@/api/advertising'
 
 export const FeedBody = () => {
 
@@ -97,8 +98,15 @@ const MiddleColumn = () => {
 
 const RightColumn = () => {
   return (
-    <div className='text-white flex flex-col w-1/3'>
+    <div className='text-white flex flex-col w-1/3 gap-4'>
+      {
+        advertising.map((ads, i) => (
+          <div key={i} className=''>
+            <img src={ads.img} alt='Propaganda'/>
 
+          </div>
+        ))
+      }
     </div>
   )
 }
