@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors:{
-        "orange-seu-treino":"#FFB900",
-        "yellow-seu-treino":"#F1FC00",
+        "orange-seu-treino":"#FFB901",
+        "yellow-seu-treino":"#F3D880",
         "red-seu-treino":"#FC0000",
       }
     },

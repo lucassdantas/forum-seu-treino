@@ -61,7 +61,7 @@ const Login = ({setAuth }:any) => {
                   />
                 </div>
               </fieldset>
-              <button type="submit" className='bg-yellow-600 rounded-lg text-center text-black px-12 py-2 hover:bg-yellow-seu-treino transition-colors font-semibold'>Login</button>
+              <button type="submit" className='bg-orange-seu-treino rounded-lg text-center text-black px-12 py-2 hover:bg-yellow-seu-treino transition-colors font-semibold'>Login</button>
             </form>
             <p className='cursor-pointer text-center text-sm'>Esqueceu sua senha?</p>
           </div>

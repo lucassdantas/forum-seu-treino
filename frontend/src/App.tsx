@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
-import Header from './components/Header';
-import Login from './pages/Login';
-import Feed from './pages/Feed';
+import Login from '@/pages/Login';
+import Feed from '@/pages/Feed';
+import { MainComponent } from '@/components/MainComponent';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -24,8 +24,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth}/>} />
-        <Route path="/feed" element={auth ? <Feed setAuth={setAuth} /> : <Login setAuth={setAuth} />} />
+        <Route path="/" element={auth ? <MainComponent setAuth={setAuth} Component={Feed} /> : <Login setAuth={setAuth}/>} />
+        <Route path="/feed" element={auth ? <MainComponent setAuth={setAuth} Component={Feed} /> : <Login setAuth={setAuth} />} />
       </Routes>
     </Router>
   );

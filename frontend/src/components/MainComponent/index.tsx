@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import Header from '@/components/Header';
-import { Banner } from '@/components/common/Banner';
-import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
-import profilePhoto from '@/assets/profile/profilePhoto.png'
+import axios from 'axios';
+import { Footer } from '@/components/Footer';
 
-const Feed = ({ setAuth }:any) => {
+type MainComponentProps = {
+  setAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  Component: React.ElementType;
+}
+
+export const MainComponent = ({ setAuth, Component }: MainComponentProps) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -34,11 +37,11 @@ const Feed = ({ setAuth }:any) => {
 
   return (
     <>
-      <Banner/>
-      <PhotoFollowerAndSubjects followers='67' subjects='40' profilePhoto={profilePhoto} profileName='Arthur Nunes'/>
-      <button onClick={handleLogout}>Logout</button>
+      <Header />
+      <main>
+        <Component />
+      </main>
+      <Footer />
     </>
   );
 };
-
-export default Feed;
