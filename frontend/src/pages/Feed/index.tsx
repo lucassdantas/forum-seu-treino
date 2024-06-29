@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
-import Header from '@/components/Header';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import profilePhoto from '@/assets/profile/profilePhoto.png'
+import { FeedBody } from '@/components/FeedBody';
 
 const Feed = ({ setAuth }:any) => {
   useEffect(() => {
@@ -36,6 +36,7 @@ const Feed = ({ setAuth }:any) => {
     <>
       <Banner/>
       <PhotoFollowerAndSubjects followers='67' subjects='40' profilePhoto={profilePhoto} profileName='Arthur Nunes'/>
+      <FeedBody/>
       <button onClick={handleLogout}>Logout</button>
     </>
   );
