@@ -37,7 +37,6 @@ const Feed = ({ setAuth }:any) => {
       <Banner/>
       <PhotoFollowerAndSubjects followers='67' subjects='40' profilePhoto={profilePhoto} profileName='Arthur Nunes'/>
       <FeedBody/>
-      <button onClick={handleLogout}>Logout</button>
     </>
   );
 };

@@ -24,16 +24,7 @@ export const MainComponent = ({ setAuth, Component }: MainComponentProps) => {
     checkSession();
   }, [setAuth]);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post('http://localhost/backend/logout.php', {}, { withCredentials: true });
-      if (response.data.success) {
-        setAuth(false);
-      }
-    } catch (error) {
-      console.error('There was an error logging out!', error);
-    }
-  };
+
 
   return (
     <>
