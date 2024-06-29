@@ -56,7 +56,7 @@ const LeftColumn = () => {
 
 const MiddleColumn = () => {
   return(
-    <div className='text-white flex flex-col w-1/3'>
+    <div className='text-white flex flex-col w-1/3 gap-4'>
       <GrayCard>
         <div className='flex gap-4'>
             <img src='#' alt='Foto do usuário'/> <input placeholder={'No que você está pensando, ' + 'Arthur?'}/>
@@ -66,6 +66,7 @@ const MiddleColumn = () => {
       {
         postsWithAuthorsInfo.map((post, i) => (
           <GrayCard>
+
             <div className="flex">
               <div className="flex flex-col">
                   <img src={post.authorImage} alt='Foto do autor do post'/>
@@ -75,9 +76,16 @@ const MiddleColumn = () => {
                 <span>{post.dateOfCreation}</span>
               </div>
             </div>
-            <div className='flex border-t-2 border-t-white py-2'>
-              <span><CiHeart/> Curtidas {post.likesQuantity}</span>
-              <span><TfiComment /> Comentários {post.commentsQuantity}</span>
+            <div className='my-4'>
+              <p>{post.postContent}</p>
+            </div>
+            <div className='flex border-t border-t-white py-2 gap-4'>
+              <div className='flex items-center gap-2'>
+                <CiHeart className=''/> <span>Curtidas {post.likesQuantity}</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <TfiComment className=''/> <span>Comentários {post.commentsQuantity}</span>
+              </div>
             </div>
           </GrayCard>
         ))
