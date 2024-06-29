@@ -57,7 +57,7 @@ const Header = () => {
                 }
 
                 <div className="flex items-center">
-                  <span> Olá, nomee</span>
+                  <span> Olá, nome</span>
                   <FaAngleDown 
                     className='text-yellow-seu-treino cursor-pointer'
                     onClick={() => setIsMenuOpen(!isMenuOpen)} 
