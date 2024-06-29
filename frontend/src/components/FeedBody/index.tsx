@@ -8,6 +8,7 @@ import { postsWithAuthorsInfo } from '@/api/postsWithAuthorsInfo'
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import { advertising } from '@/api/advertising'
+import tempProfileImage from '@/assets/profile/profilePhoto.png'
 
 export const FeedBody = () => {
 
@@ -59,8 +60,9 @@ const MiddleColumn = () => {
   return(
     <div className='text-white flex flex-col w-1/3 gap-4'>
       <GrayCard>
-        <div className='flex gap-4'>
-            <img src='#' alt='Foto do usuário'/> <input placeholder={'No que você está pensando, ' + 'Arthur?'}/>
+        <div className='flex gap-4 mb-4'>
+            <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]'/> 
+            <input placeholder={'No que você está pensando, ' + 'Arthur?'}/>
         </div>
         <Button>Publicar</Button>
       </GrayCard>
@@ -92,7 +94,7 @@ const MiddleColumn = () => {
             </div>
 
             <div className='border-t'>
-              
+
             </div>
           </GrayCard>
         ))
