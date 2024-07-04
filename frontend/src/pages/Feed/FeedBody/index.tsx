@@ -11,6 +11,7 @@ import tempProfileImage from '@/assets/profile/profilePhoto.png'
 import { IoPersonAddOutline } from "react-icons/io5";
 import { friendsSuggestion } from '@/api/friendsSuggestion'
 import { topics } from '@/api/topics'
+import { formatTimeAgo } from '@/utils/formatTimeAgo'
 
 export const FeedBody = () => {
 
@@ -32,7 +33,7 @@ export const FeedBody = () => {
 
 const LeftColumn = () => {
   return(
-    <div className='text-white flex flex-col w-1/3 gap-4'>
+    <div className='text-white flex flex-col w-1/4 gap-4'>
       <GrayCard>
         <ul className='mb-2 divide-y'>
           {topics.map((topic, i) => (
@@ -69,7 +70,7 @@ const LeftColumn = () => {
 
 const MiddleColumn = () => {
   return(
-    <div className='text-white flex flex-col w-1/3 gap-4'>
+    <div className='text-white flex flex-col w-2/4 gap-4'>
       <GrayCard>
         <div className='flex gap-4 mb-4'>
             <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]'/> 
@@ -83,27 +84,29 @@ const MiddleColumn = () => {
         postsWithAuthorsInfo.map((post, i) => (
           <GrayCard>
 
-            <div className="flex">
-              <div className="flex flex-col">
-                  <img src={post.authorImage} alt='Foto do autor do post'/>
+            <div className="flex gap-4">
+
+              <div className="flex flex-col ">
+                  <img src={post.authorImage} alt='Foto do autor do post' className='w-[50px]'/>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-1">
                 <span>{post.author}</span>
-                <span>{post.dateOfCreation}</span>
+                <span className='text-sm opacity-85'>{formatTimeAgo(post.dateOfCreation)}</span>
               </div>
+
             </div>
 
             <div className='my-4'>
               <p>{post.postContent}</p>
             </div>
 
-            <div className='flex border-t border-t-white py-2 gap-4'>
+            <div className='flex border-t border-t-neutral-700 py-4 gap-4'>
               <div className='flex items-center gap-2'>
-                <CiHeart className=''/> <span>Curtidas {post.likesQuantity}</span>
+                <CiHeart className='text-xl cursor-pointer'/> <span>Curtidas {post.likesQuantity}</span>
               </div>
               <div className='flex items-center gap-2'>
-                <TfiComment className=''/> <span>Comentários {post.commentsQuantity}</span>
+                <TfiComment className='cursor-pointer'/> <span>Comentários {post.commentsQuantity}</span>
               </div>
             </div>
 
@@ -120,7 +123,7 @@ const MiddleColumn = () => {
 
 const RightColumn = () => {
   return (
-    <div className='text-white flex flex-col w-1/3 gap-4'>
+    <div className='text-white flex flex-col w-1/4 gap-4'>
       {
         advertising.map((ads, i) => (
           <div key={i} className=''>
