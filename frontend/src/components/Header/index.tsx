@@ -10,9 +10,11 @@ import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
 
 
 import tempImgBrenoSilva from '@/assets/personal-trainer-breno-silva-1.jpg';
+import { handleLogout } from '@/utils/handleLogout';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const firstName = 'Lucas'
   return (
     <header className='bg-black text-white flex justify-center'>
       <Limiter>
@@ -52,12 +54,13 @@ const Header = () => {
                       <nav className='flex flex-col py-4'>
                         <Link to='seguidores' className='hover:bg-neutral-700  px-4 py-2'>Seguidores</Link>
                         <Link to='configuracoes' className='hover:bg-neutral-700  px-4 py-2'>Configurações da conta</Link>
+                        <span onClick={() => handleLogout()} className='hover:bg-neutral-700  px-4 py-2 cursor-pointer'>Sair</span>
                       </nav>
                   </div>
                 }
 
-                <div className="flex items-center">
-                  <span> Olá, nome</span>
+                <div className="flex items-center gap-1">
+                  <span> Olá, {firstName} </span>
                   <FaAngleDown 
                     className='text-yellow-seu-treino cursor-pointer'
                     onClick={() => setIsMenuOpen(!isMenuOpen)} 
