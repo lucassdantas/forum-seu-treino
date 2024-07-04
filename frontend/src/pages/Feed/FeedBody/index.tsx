@@ -54,8 +54,8 @@ const LeftColumn = () => {
                   <span>{friend.friendName}</span>
                 </div>
 
-                <div className='cursor-pointer'>
-                  <IoPersonAddOutline/>
+                <div className='cursor-pointer '>
+                  <IoPersonAddOutline className=''/>
                 </div>
               </div>
             ))
@@ -73,9 +73,11 @@ const MiddleColumn = () => {
       <GrayCard>
         <div className='flex gap-4 mb-4'>
             <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]'/> 
-            <input placeholder={'No que você está pensando, ' + 'Arthur?'}/>
+            <input placeholder={'No que você está pensando, ' + 'Arthur?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 '/>
         </div>
-        <Button>Publicar</Button>
+        <div className='flex justify-end'>
+          <Button className='w-full'>Publicar</Button>
+        </div>
       </GrayCard>
       {
         postsWithAuthorsInfo.map((post, i) => (
@@ -85,6 +87,7 @@ const MiddleColumn = () => {
               <div className="flex flex-col">
                   <img src={post.authorImage} alt='Foto do autor do post'/>
               </div>
+
               <div className="flex flex-col">
                 <span>{post.author}</span>
                 <span>{post.dateOfCreation}</span>

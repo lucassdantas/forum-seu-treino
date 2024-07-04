@@ -46,6 +46,7 @@ const Header = () => {
               <img src={tempImgBrenoSilva} alt='Foto' className='rounded-full w-[50px]'/>
               <div className="flex">
                 {
+                  //floating menu (not chat gpt comment haha)
                   isMenuOpen &&
                   <div className='absolute mt-4 bg-black rounded-md' 
                     onMouseEnter={() => setIsMenuOpen(true)}
