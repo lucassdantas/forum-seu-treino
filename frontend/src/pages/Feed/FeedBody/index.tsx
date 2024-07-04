@@ -34,9 +34,9 @@ const LeftColumn = () => {
   return(
     <div className='text-white flex flex-col w-1/3 gap-4'>
       <GrayCard>
-        <ul className='mb-2'>
+        <ul className='mb-2 divide-y'>
           {topics.map((topic, i) => (
-            <li className={`py-4 ${i > 0? 'border-t':''}`} key={i}>{topic.name}</li>
+            <li className={`py-4 `} key={i}>{topic.name}</li>
           ))}
         </ul>
         <OutlineButton>+ Adicionar tópico</OutlineButton>
@@ -44,20 +44,24 @@ const LeftColumn = () => {
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>
-        {
-          friendsSuggestion.map((friend, i) => (
-            <div className='flex gap-4 items-center justify-between mb-4' key={i}>
-              <div className='flex items-center gap-4'>
-                <img src={friend.friendImage} alt='Foto do usuário' className='w-[40px]'/>
-                <span>{friend.friendName}</span>
-              </div>
+        <div className='divide-y divide-neutral-700'>
+          {
+            friendsSuggestion.map((friend, i) => (
+              <div className={`flex gap-4 items-center justify-between  py-4`} key={i}>
 
-              <div className='cursor-pointer'>
-                <IoPersonAddOutline/>
+                <div className='flex items-center gap-4'>
+                  <img src={friend.friendImage} alt='Foto do usuário' className='w-[40px]'/>
+                  <span>{friend.friendName}</span>
+                </div>
+
+                <div className='cursor-pointer'>
+                  <IoPersonAddOutline/>
+                </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
+        
       </GrayCard>
     </div>
   )

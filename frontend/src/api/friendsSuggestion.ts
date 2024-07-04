@@ -10,4 +10,8 @@ export const friendsSuggestion = [
         friendImage:tempImage,
         friendName: 'Deutrano',
     },
+    {
+        friendImage:tempImage,
+        friendName: 'Ciclano',
+    },
 ] 
