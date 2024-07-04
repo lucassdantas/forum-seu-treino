@@ -2,13 +2,15 @@ import React from 'react'
 import { Button, OutlineButton } from '@/components/common/Button'
 import { Limiter }  from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
-import { friends }  from '@/api/friends'
 import { posts } from '@/api/posts'
 import { postsWithAuthorsInfo } from '@/api/postsWithAuthorsInfo'
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import { advertising } from '@/api/advertising'
 import tempProfileImage from '@/assets/profile/profilePhoto.png'
+import { IoPersonAddOutline } from "react-icons/io5";
+import { friendsSuggestion } from '@/api/friendsSuggestion'
+import { topics } from '@/api/topics'
 
 export const FeedBody = () => {
 
@@ -33,21 +35,26 @@ const LeftColumn = () => {
     <div className='text-white flex flex-col w-1/3 gap-4'>
       <GrayCard>
         <ul className='mb-2'>
-          <li>Tópico 1</li>
-          <li>Tópico 2</li>
-          <li>Tópico 3</li>
-          <li>Tópico 4</li>
+          {topics.map((topic, i) => (
+            <li className={`py-4 ${i > 0? 'border-t':''}`} key={i}>{topic.name}</li>
+          ))}
         </ul>
         <OutlineButton>+ Adicionar tópico</OutlineButton>
       </GrayCard>
 
       <GrayCard>
-        <h4>Sugestões de amizade</h4>
+        <h4 className='mb-4'>Sugestões de amizade</h4>
         {
-          friends.map((friend, i) => (
-            <div className='flex gap-4' key={i}>
-              <img src={friend.friendImage} alt='Foto do usuário'/>
-              <span>{friend.friendName}</span>
+          friendsSuggestion.map((friend, i) => (
+            <div className='flex gap-4 items-center justify-between mb-4' key={i}>
+              <div className='flex items-center gap-4'>
+                <img src={friend.friendImage} alt='Foto do usuário' className='w-[40px]'/>
+                <span>{friend.friendName}</span>
+              </div>
+
+              <div className='cursor-pointer'>
+                <IoPersonAddOutline/>
+              </div>
             </div>
           ))
         }
