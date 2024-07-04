@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import profilePhoto from '@/assets/profile/profilePhoto.png'
-import { FeedBody } from '@/components/FeedBody';
+import { FeedBody } from '@/pages/Feed/FeedBody';
 
 const Feed = ({ setAuth }:any) => {
   useEffect(() => {
