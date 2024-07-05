@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, OutlineButton } from '@/components/common/Button'
 import { Limiter }  from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
 import { posts } from '@/api/posts'
-import { postsWithAuthorsInfo } from '@/api/postsWithAuthorsInfo'
+import { postsWithAuthorsInfo as externalPosts, PostWithAuthors } from '@/api/postsWithAuthorsInfo'
 import { CiHeart } from "react-icons/ci";
 import { TfiComment } from "react-icons/tfi";
 import { advertising } from '@/api/advertising'
@@ -12,10 +12,9 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import { friendsSuggestion } from '@/api/friendsSuggestion'
 import { topics } from '@/api/topics'
 import { formatTimeAgo } from '@/utils/formatTimeAgo'
+import { PostCard } from '@/pages/Feed/components/PostCard'
 
 export const FeedBody = () => {
-
-
   return (
     <div className='bg-black w-full flex justify-center'>
       <Limiter>
@@ -69,52 +68,37 @@ const LeftColumn = () => {
 }
 
 const MiddleColumn = () => {
+  const [postsWithAuthorsInfo, setPosts] = useState<PostWithAuthors[]>(externalPosts)
+  const [currentPostContent, setCurrentPostContent] = useState<string>('')
+
+  const handleNewPost = (postContent:string) => {
+    setCurrentPostContent('')
+
+    const newPost:PostWithAuthors = {
+      author:'Arthur Nunes',
+      authorImage:tempProfileImage,
+      postContent: postContent,
+      dateOfCreation:new Date().toISOString(),
+      likesQuantity:0,
+      commentsQuantity:0,
+    }
+    setPosts([newPost, ...postsWithAuthorsInfo])
+  }
+
   return(
     <div className='text-white flex flex-col w-2/4 gap-4'>
       <GrayCard>
         <div className='flex gap-4 mb-4'>
             <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]'/> 
-            <input placeholder={'No que você está pensando, ' + 'Arthur?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 '/>
+            <input placeholder={'No que você está pensando, ' + 'Arthur?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2 ' value={currentPostContent} onChange={(e) => setCurrentPostContent(e.target.value) }/>
         </div>
         <div className='flex justify-end'>
-          <Button className='w-full'>Publicar</Button>
+          <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
         </div>
       </GrayCard>
+
       {
-        postsWithAuthorsInfo.map((post, i) => (
-          <GrayCard>
-
-            <div className="flex gap-4">
-
-              <div className="flex flex-col ">
-                  <img src={post.authorImage} alt='Foto do autor do post' className='w-[50px]'/>
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <span>{post.author}</span>
-                <span className='text-sm opacity-85'>{formatTimeAgo(post.dateOfCreation)}</span>
-              </div>
-
-            </div>
-
-            <div className='my-4'>
-              <p>{post.postContent}</p>
-            </div>
-
-            <div className='flex border-t border-t-neutral-700 py-4 gap-4'>
-              <div className='flex items-center gap-2'>
-                <CiHeart className='text-xl cursor-pointer'/> <span>Curtidas {post.likesQuantity}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <TfiComment className='cursor-pointer'/> <span>Comentários {post.commentsQuantity}</span>
-              </div>
-            </div>
-
-            <div className='border-t'>
-
-            </div>
-          </GrayCard>
-        ))
+        postsWithAuthorsInfo.map((post, i) => <PostCard key={i} post={post}/>)
       }
     </div>
   )
