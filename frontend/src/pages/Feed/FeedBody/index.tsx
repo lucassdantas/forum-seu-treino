@@ -2,17 +2,14 @@ import React, { useState } from 'react'
 import { Button, OutlineButton } from '@/components/common/Button'
 import { Limiter }  from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
-import { posts } from '@/api/posts'
-import { postsWithAuthorsInfo as externalPosts, PostWithAuthors } from '@/api/postsWithAuthorsInfo'
-import { CiHeart } from "react-icons/ci";
-import { TfiComment } from "react-icons/tfi";
+import { postsWithAuthorsInfo as externalPosts, PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
 import { advertising } from '@/api/advertising'
 import tempProfileImage from '@/assets/profile/profilePhoto.png'
 import { IoPersonAddOutline } from "react-icons/io5";
-import { friendsSuggestion } from '@/api/friendsSuggestion'
+import { friendsSuggestion } from '@/api/users/friendsSuggestion'
 import { topics } from '@/api/topics'
-import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { PostCard } from '@/pages/Feed/components/PostCard'
+import { currentUser } from '@/api/users/currentUser'
 
 export const FeedBody = () => {
   return (
@@ -75,9 +72,10 @@ const MiddleColumn = () => {
     setCurrentPostContent('')
 
     const newPost:PostWithAuthors = {
-      id:0,
-      author:'Arthur Nunes',
-      authorImage:tempProfileImage,
+      postId:0,
+      authorId:currentUser.userId,
+      authorName:currentUser.name,
+      authorImage:currentUser.image,
       postContent: postContent,
       dateOfCreation:new Date().toISOString(),
       likesQuantity:0,
@@ -91,7 +89,7 @@ const MiddleColumn = () => {
       <GrayCard>
         <div className='flex gap-4 mb-4'>
             <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]'/> 
-            <input placeholder={'No que você está pensando, ' + 'Arthur?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2 ' value={currentPostContent} onChange={(e) => setCurrentPostContent(e.target.value) }/>
+            <input placeholder={'No que você está pensando, ' + currentUser.name +'?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2 ' value={currentPostContent} onChange={(e) => setCurrentPostContent(e.target.value) }/>
         </div>
         <div className='flex justify-end'>
           <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>

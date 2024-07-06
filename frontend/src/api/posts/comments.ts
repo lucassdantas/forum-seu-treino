@@ -1,4 +1,4 @@
-import { PostWithAuthors } from "@/api/postsWithAuthorsInfo"
+import { PostWithAuthors } from "@/api/posts/postsWithAuthorsInfo"
 import tempImage from '@/assets/profile/profilePhoto.png'
 
 export interface Comment extends Omit<PostWithAuthors, 'commentsQuantity'>  {

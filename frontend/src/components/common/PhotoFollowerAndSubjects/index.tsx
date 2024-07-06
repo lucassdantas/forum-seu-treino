@@ -4,8 +4,8 @@ import { Limiter } from '@/components/common/Limiter';
 type PhotoFollowerAndSubjectsProps = {
   profilePhoto:string;
   profileName:string;
-  followers:string;
-  subjects:string;
+  followers:number;
+  subjects:number;
 }
 export const PhotoFollowerAndSubjects = ({profilePhoto, profileName,  followers, subjects}:PhotoFollowerAndSubjectsProps) => {
   return (
