@@ -4,6 +4,7 @@ import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import profilePhoto from '@/assets/profile/profilePhoto.png'
 import { FeedBody } from '@/pages/Feed/FeedBody';
+import { currentUser } from '@/api/users/currentUser';
 
 const Feed = ({ setAuth }:any) => {
   useEffect(() => {
@@ -21,21 +22,11 @@ const Feed = ({ setAuth }:any) => {
     checkSession();
   }, [setAuth]);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post('http://localhost/backend/logout.php', {}, { withCredentials: true });
-      if (response.data.success) {
-        setAuth(false);
-      }
-    } catch (error) {
-      console.error('There was an error logging out!', error);
-    }
-  };
 
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects followers='67' subjects='40' profilePhoto={profilePhoto} profileName='Arthur Nunes'/>
+      <PhotoFollowerAndSubjects followers={currentUser.followers} subjects={currentUser.subjects} profilePhoto={currentUser.image} profileName={currentUser.name}/>
       <FeedBody/>
     </>
   );

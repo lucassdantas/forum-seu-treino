@@ -36,7 +36,9 @@ export const PostCard = ({post}:PostCardProps) => {
         <TfiComment className='cursor-pointer'/> <span>Comentários {post.commentsQuantity}</span>
       </div>
     </div>
-
+    {
+      post.commentsQuantity
+    }
     <div className='border-t'>
 
     </div>

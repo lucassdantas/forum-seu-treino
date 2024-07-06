@@ -1,3 +1,13 @@
+
+export interface PostType{
+  postId:number;
+  authorId:number;
+  postContent:string;
+  dateOfCreation:string;
+  likesQuantity:number;
+  commentsQuantity:number;
+}
+
 export const posts = [
     {
       author:'Arthur Nunes',
