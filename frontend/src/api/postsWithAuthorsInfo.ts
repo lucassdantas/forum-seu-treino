@@ -1,6 +1,7 @@
 import tempImage from '@/assets/profile/profilePhoto.png'
 
 export interface PostWithAuthors {
+  id:number;
   author:string;
   authorImage:string;
   postContent:string;
@@ -11,6 +12,7 @@ export interface PostWithAuthors {
 }
 export const postsWithAuthorsInfo:PostWithAuthors[] = [
     {
+      id:1,
       author:'Arthur Nunes',
       authorImage:tempImage,
       postContent:'Conteúdo do post',
@@ -20,7 +22,8 @@ export const postsWithAuthorsInfo:PostWithAuthors[] = [
       
     },
     {
-      author:'Arthur Nunes',
+      id:2,
+      author:'Lucas Dantas',
       authorImage:tempImage,
       postContent:'Conteúdo do post lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ' ,
       dateOfCreation:'2024-07-04T20:42:05',

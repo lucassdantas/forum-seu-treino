@@ -75,6 +75,7 @@ const MiddleColumn = () => {
     setCurrentPostContent('')
 
     const newPost:PostWithAuthors = {
+      id:0,
       author:'Arthur Nunes',
       authorImage:tempProfileImage,
       postContent: postContent,
@@ -112,7 +113,6 @@ const RightColumn = () => {
         advertising.map((ads, i) => (
           <div key={i} className=''>
             <img src={ads.img} alt='Propaganda'/>
-
           </div>
         ))
       }
