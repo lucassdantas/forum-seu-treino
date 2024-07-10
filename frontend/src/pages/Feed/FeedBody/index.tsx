@@ -10,6 +10,7 @@ import { friendsSuggestion } from '@/api/users/friendsSuggestion'
 import { topics } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
 import { currentUser } from '@/api/users/currentUser'
+import { TopicsList } from '@/pages/Feed/components/TopicsList'
 
 export const FeedBody = () => {
   return (
@@ -31,12 +32,7 @@ const LeftColumn = () => {
   return(
     <div className='text-white flex flex-col w-1/4 gap-4'>
       <GrayCard>
-        <ul className='mb-2 divide-y'>
-          {topics.map((topic, i) => (
-            <li className={`py-4 `} key={i}>{topic.name}</li>
-          ))}
-        </ul>
-        <OutlineButton>+ Adicionar tópico</OutlineButton>
+        <TopicsList topics={topics}/>
       </GrayCard>
 
       <GrayCard>
