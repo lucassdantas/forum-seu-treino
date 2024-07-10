@@ -12,13 +12,14 @@ export const TopicsList = ({topics}:TopicsListProps) => {
     const [isAddingNewTopic, setIsAddingNewTopic] = useState(false)
     
     const filterSpaceAndSpecialChars = (value:string, setFunction:any = null) => {
-        const removeSpecialCharacters = (str: string) => str.replace(/[^a-zA-Z0-9\s]/g, '');
+        const removeSpecialCharactersExceptAccents = (str: string) => str.replace(/[^a-zA-Z0-9\s\u00C0-\u00FF]/g, '');
         const removeDoubleSpaces = (str: string) => str.replace(/\s{2,}/g, ' ');
-        const filtredValue = removeDoubleSpaces(removeSpecialCharacters(value))
+        const filtredValue = removeDoubleSpaces(removeSpecialCharactersExceptAccents(value))
 
         if(setFunction) return setFunction(filtredValue)
         else            return filtredValue
     }
+
     const handleNewTopic = (topicName: string) => {
         const removeAccents = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         const formatTopicUrl = (str: string) => str.toLowerCase().replace(/\s+/g, '-');
