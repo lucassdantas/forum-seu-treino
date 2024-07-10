@@ -3,6 +3,7 @@ import { OutlineButton } from '@/components/common/Button'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { Popup } from '@/components/common/PopUp';
 type TopicsListProps = {
     topics:TopicType[]
 }
@@ -14,11 +15,12 @@ interface AddNewTopicProps{
 export const TopicsList = ({topics}:TopicsListProps) => {
     const [topicsList, setTopicsList] = useState<TopicType[]>(topics)
     const [isAddingNewTopic, setIsAddingNewTopic] = useState(false)
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
     const firstTopics = topicsList.slice(0, 6);
     
     return (
-    <>
-        <ul className='mb-2 divide-y'>
+    <div className='flex flex-col gap-2'>
+        <ul className='divide-y'>
             {firstTopics.map((singleTopic:TopicType, i:number) => (
                 <li className={`py-4 `} key={i}>
                     <Link to={singleTopic.url}>{singleTopic.name}</Link>
@@ -27,7 +29,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
         </ul>
 
         {topicsList.length>6 &&
-            <span className='mb-12'>Ver os tópicos</span>
+            <span className='mb-4 cursor-pointer' onClick={() => setIsPopupOpen(true)} >Ver todos os tópicos</span>
         }
 
         {isAddingNewTopic && <AddNewTopicInput topicsList={topicsList} setTopicsList={setTopicsList} setIsAddingNewTopic={setIsAddingNewTopic} />}
@@ -35,7 +37,18 @@ export const TopicsList = ({topics}:TopicsListProps) => {
         {!isAddingNewTopic &&
             <OutlineButton onClick={() => setIsAddingNewTopic(true)}>+ Adicionar tópico</OutlineButton>
         }
-    </>
+        <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+            <ul className='divide-y'>
+                {firstTopics.map((singleTopic:TopicType, i:number) => (
+                    <li className={`py-4 `} key={i}>
+                        <Link to={singleTopic.url}>{singleTopic.name}</Link>
+                    </li>
+                ))}
+            </ul>
+        </Popup>
+
+        
+    </div>
     )
 }
 
