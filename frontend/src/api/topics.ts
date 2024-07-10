@@ -1,4 +1,9 @@
-export const topics = [
+export interface TopicType {
+    name:string;
+    url:string;
+}
+
+export const topics:TopicType[] = [
     {
         name:'Tópico 1',
         url:'#url-to-topic',
