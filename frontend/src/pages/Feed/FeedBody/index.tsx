@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, OutlineButton } from '@/components/common/Button'
+import { useState } from 'react'
+import { Button} from '@/components/common/Button'
 import { Limiter }  from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
 import { postsWithAuthorsInfo as externalPosts, PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
