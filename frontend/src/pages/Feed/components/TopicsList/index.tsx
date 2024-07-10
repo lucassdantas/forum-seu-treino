@@ -1,9 +1,9 @@
 import { TopicType } from '@/api/topics'
 import { OutlineButton } from '@/components/common/Button'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IoIosArrowDroprightCircle } from "react-icons/io";
-import { Popup } from '@/components/common/PopUp';
+import { Popup } from '@/components/common/Popup';
 type TopicsListProps = {
     topics:TopicType[]
 }
@@ -39,7 +39,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
         }
         <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
             <ul className='divide-y'>
-                {firstTopics.map((singleTopic:TopicType, i:number) => (
+                {topicsList.map((singleTopic:TopicType, i:number) => (
                     <li className={`py-4 `} key={i}>
                         <Link to={singleTopic.url}>{singleTopic.name}</Link>
                     </li>
@@ -54,6 +54,14 @@ export const TopicsList = ({topics}:TopicsListProps) => {
 
 const AddNewTopicInput = ({topicsList, setTopicsList, setIsAddingNewTopic}:AddNewTopicProps) => {
     const [topicName, setTopicName] = useState<string>('')
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
     const filterSpaceAndSpecialChars = (value:string, setFunction:any = null) => {
         const removeSpecialCharactersExceptAccents = (str: string) => str.replace(/[^a-zA-Z0-9\s\u00C0-\u00FF]/g, '');
         const removeDoubleSpaces = (str: string) => str.replace(/\s{2,}/g, ' ');
@@ -88,6 +96,8 @@ const AddNewTopicInput = ({topicsList, setTopicsList, setIsAddingNewTopic}:AddNe
                 value={topicName} 
                 onChange={(e) => filterSpaceAndSpecialChars(e.target.value, setTopicName) }
                 maxLength={20}
+                ref={inputRef}
+                onKeyDown={(e) => e.key === 'Enter' && handleNewTopic(topicName)}
             />
             <IoIosArrowDroprightCircle onClick={() => handleNewTopic(topicName)} className='text-2xl cursor-pointer'/>
         </div>
