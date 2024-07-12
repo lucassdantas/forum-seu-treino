@@ -93,7 +93,7 @@ const MiddleColumn = () => {
       </GrayCard>
 
       {
-        postsWithAuthorsInfo.map((post, i) => <PostCard key={i} post={post}/>)
+        postsWithAuthorsInfo.map((post:PostWithAuthors, i) => <PostCard key={i} post={post}/>)
       }
     </div>
   )
