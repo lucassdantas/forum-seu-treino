@@ -113,7 +113,7 @@ const PostAnswer = ({ commentWithAuthor, commentsQuantity, setCommentsQuantity, 
                             </div>
 
                             <div className='mt-4'>
-                                <p>{comment.commentContent}</p>
+                                <p className='break-words'>{comment.commentContent}</p>
                             </div>
                         </div>
                     ))}
