@@ -14,7 +14,7 @@ import { TopicsList } from '@/pages/Feed/components/TopicsList'
 
 export const FeedBody = () => {
   return (
-    <div className='bg-black w-full flex justify-center'>
+    <div className='bg-black w-full flex justify-center pb-4'>
       <Limiter>
         <div className='flex gap-12 pt-4'>
           <LeftColumn/>
