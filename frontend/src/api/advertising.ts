@@ -1,11 +1,12 @@
+import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-silva-1.jpg'
 export const advertising = [
     {
-        img:'#'
+        img:tempAdvertisingImage
     },
     {
-        img:'#'
+        img:tempAdvertisingImage
     },
     {
-        img:'#'
+        img:tempAdvertisingImage
     },
 ]
