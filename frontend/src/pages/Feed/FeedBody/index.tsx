@@ -105,7 +105,7 @@ const RightColumn = () => {
     <div className='text-white flex flex-col w-1/4 gap-4'>
       {
         advertising.map((ads, i) => (
-          <div key={i} className=''>
+          <div key={i} className='border rounded-md'>
             <img src={ads.img} alt='Propaganda'/>
           </div>
         ))
