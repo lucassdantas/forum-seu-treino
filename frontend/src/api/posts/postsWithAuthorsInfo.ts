@@ -19,7 +19,7 @@ export const postsWithAuthorsInfo:PostWithAuthors[] = [
       authorImage:tempImage,
       postContent:'Conteúdo do post',
       dateOfCreation:'2024-05-30T05:03:05',
-      likesQuantity: 10,
+      likesQuantity: 0,
       commentsQuantity:5,
       
     },
