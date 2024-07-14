@@ -73,7 +73,7 @@ const Header = () => {
                   />
                   {
                     isMenuOpen &&
-                    <div className='absolute mt-8 bg-black rounded-md'
+                    <div className='absolute top-0 mt-4 bg-black rounded-md'
                       onMouseEnter={() => setIsMenuOpen(true)}
                       onMouseLeave={() => setIsMenuOpen(false)}
                     >
