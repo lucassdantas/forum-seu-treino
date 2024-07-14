@@ -5,7 +5,7 @@ import { formatTimeAgo } from '@/utils/formatTimeAgo'
 import { useState } from 'react'
 import { CiHeart } from 'react-icons/ci'
 import { TfiComment } from 'react-icons/tfi'
-import { Popup } from '@/components/common/Popup';
+import { Popup } from '@/components/common/PopUp';
 import { Button } from '@/components/common/Button'
 
 type PostCardProps = {
