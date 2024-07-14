@@ -3,7 +3,7 @@ import { OutlineButton } from '@/components/common/Button'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IoIosArrowDroprightCircle } from "react-icons/io";
-import { Popup } from '@/components/common/PopUp';
+import { Popup } from '@/components/common/Popup';
 type TopicsListProps = {
     topics:TopicType[]
 }
