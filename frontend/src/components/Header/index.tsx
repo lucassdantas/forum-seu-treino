@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Limiter } from '@/components/common/Limiter';
 import { Button } from '@/components/common/Button';
@@ -15,9 +15,24 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const firstName = currentUser.name.split(' ')[0]
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Fechar o menu ao clicar fora dele
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
     <>
-
       <header className='bg-black text-white flex justify-center'>
         <Limiter>
           <div className='bg-black text-white flex justify-between items-center lg:px-0 px-4 py-2 w-full'>
@@ -28,7 +43,7 @@ const Header = () => {
               <FaRegBell className='text-yellow-seu-treino text-xl cursor-pointer' />
             </div>
           </div>
-          <nav className='flex w-full items-center my-4 '>
+          <nav className='flex w-full items-center my-4'>
             <div className='w-2/12 text-left'>
               <Link to='/'> <img src={logo} alt='Logo' className='w-full' /></Link>
             </div>
@@ -78,21 +93,30 @@ const Header = () => {
                 {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
               </button>
             </div>
-            <div className={`absolute top-16 left-0 w-full bg-black text-white z-50 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
-              <ul className='flex flex-col items-center py-4'>
-                <li className='py-2'><Link to="/">Feed</Link></li>
-                <li className='py-2'><Link to={"/perfil:" + currentUser.userId}>Meu perfil</Link></li>
-                <li className='py-2'><Link to={"/seguidores:" + currentUser.userId}>Seguidores</Link></li>
-                <li className='py-2'><Link to={"/feed:" + currentUser.userId}>Configurações</Link></li>
-                <li className='py-2'>
-                  <Link to={'/rotina:' + currentUser.userId}>
-                    <Button>Visualizar rotina</Button>
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            
-           
+            {isMobileMenuOpen && (
+              <div ref={menuRef} className={`absolute top-16 left-0 w-full bg-black text-white z-50 md:hidden`}>
+                <div className="flex justify-between items-center px-4 py-2">
+                  <span className="text-xl">Menu</span>
+                  <button
+                    className="text-yellow-seu-treino"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+                <ul className='flex flex-col items-center py-4'>
+                  <li className='py-2'><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Feed</Link></li>
+                  <li className='py-2'><Link to={"/perfil:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Meu perfil</Link></li>
+                  <li className='py-2'><Link to={"/seguidores:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Seguidores</Link></li>
+                  <li className='py-2'><Link to={"/feed:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
+                  <li className='py-2'>
+                    <Link to={'/rotina:' + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button>Visualizar rotina</Button>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
           </nav>
         </Limiter>
       </header>
