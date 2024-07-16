@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import { FeedBody } from '@/pages/Feed/FeedBody';
 import { currentUser } from '@/api/users/currentUser';
+type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
-const Feed = ({ setAuth }:any) => {
+interface FeedProps{
+    setAuth:SetAuthType;
+}
+const Feed = ({ setAuth }:FeedProps) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
