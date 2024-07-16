@@ -4,6 +4,7 @@ import axios from 'axios';
 import Login from '@/pages/Login';
 import Feed from '@/pages/Feed';
 import { MainComponent } from '@/components/MainComponent';
+import { Followers } from '@/pages/Followers';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -26,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={auth ? <MainComponent setAuth={setAuth} Component={Feed} /> : <Login setAuth={setAuth}/>} />
         <Route path="/feed" element={auth ? <MainComponent setAuth={setAuth} Component={Feed} /> : <Login setAuth={setAuth} />} />
+        <Route path="/seguidores" element={auth ? <MainComponent setAuth={setAuth} Component={Followers} /> : <Login setAuth={setAuth} />} />
       </Routes>
     </Router>
   );
