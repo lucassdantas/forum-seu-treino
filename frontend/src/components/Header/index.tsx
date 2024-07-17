@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <>
-      <header className='bg-black text-white flex justify-center'>
+      <header className='bg-black text-white flex justify-center px-4'>
         <Limiter>
           <div className='bg-black text-white flex justify-between items-center lg:px-0 px-4 py-2 w-full'>
             <div className='flex gap-4 w-full justify-end'>
@@ -44,15 +44,15 @@ const Header = () => {
             </div>
           </div>
           <nav className='flex w-full items-center my-4'>
-            <div className='w-2/12 text-left'>
+            <div className='w-4/12 lg:w-2/12 text-left'>
               <Link to='/'> <img src={logo} alt='Logo' className='w-full' /></Link>
             </div>
             <div className='hidden md:flex w-8/12 justify-end'>
               <ul className='flex gap-4 items-center '>
                 <li><Link to="/">Feed</Link></li>
-                <li><Link to={"/perfil:" + currentUser.userId}>Meu perfil</Link></li>
-                <li><Link to={"/seguidores:" + currentUser.userId}>Seguidores</Link></li>
-                <li><Link to={"/feed:" + currentUser.userId}>Configurações</Link></li>
+                <li><Link to={"/perfil?id=" + currentUser.userId}>Meu perfil</Link></li>
+                <li><Link to={"/seguidores?id=" + currentUser.userId}>Seguidores</Link></li>
+                <li><Link to={"/feed?id=" + currentUser.userId}>Configurações</Link></li>
                 <li>
                   <Link to={'/rotina:' + currentUser.userId}>
                     <Button>Visualizar rotina</Button>
@@ -94,9 +94,8 @@ const Header = () => {
               </button>
             </div>
             {isMobileMenuOpen && (
-              <div ref={menuRef} className={`absolute top-16 left-0 w-full bg-black text-white z-50 md:hidden`}>
+              <div ref={menuRef} className={`fixed top-16 left-0 w-full bg-black text-white z-50 md:hidden`}>
                 <div className="flex justify-between items-center px-4 py-2">
-                  <span className="text-xl">Menu</span>
                   <button
                     className="text-yellow-seu-treino"
                     onClick={() => setIsMobileMenuOpen(false)}

@@ -31,4 +31,10 @@ export const userInFollowContext:UserInFollowContextProps[] = [
         userName:'Lucas Dantas',
         coverPhoto:tempImage,
     },
+    {
+        userId:5,
+        userImage:tempImage,
+        userName:'Lucas Dantas',
+        coverPhoto:tempImage,
+    },
 ]
