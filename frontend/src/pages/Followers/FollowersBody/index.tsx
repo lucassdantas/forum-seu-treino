@@ -13,7 +13,7 @@ export const FollowersBody = () => {
                     <IoSearch className='text-yellow-seu-treino text-lg'/>
                     <input className='bg-transparent outline-none w-full' type='text' placeholder='Procurar' />
                 </div>
-                <div>
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
                     {followers.map((follower:UserInFollowContextProps, i) => <UserInFollowContextCard key={i}  user={follower}/>)}
                 </div>
             </div>
