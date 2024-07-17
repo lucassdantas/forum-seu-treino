@@ -9,7 +9,7 @@ type PhotoFollowerAndSubjectsProps = {
 
 export const PhotoFollowerAndSubjects = ({ profilePhoto, profileName, followers, subjects }: PhotoFollowerAndSubjectsProps) => {
   return (
-    <div className='bg-black text-white flex justify-center -mt-8'>
+    <div className='bg-black text-white flex justify-center -mt-8 px-4'>
       <Limiter>
         <div className='flex flex-col md:flex-row items-center py-4 w-full'>
           <div className="flex flex-col md:flex-row gap-6 w-full md:w-2/3 items-center">
