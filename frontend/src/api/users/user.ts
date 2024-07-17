@@ -18,10 +18,24 @@ export const users:User[] = [
         subjects:50,
     },
     {
-        userId:1,
+        userId:2,
         name:"Arthur Nunes",
         image:tempImage,
         followers:40,
         subjects:50,
-    }
+    },
+    {
+        userId:3,
+        name:"Arthur Nunes",
+        image:tempImage,
+        followers:40,
+        subjects:50,
+    },
+    {
+        userId:4,
+        name:"Arthur Nunes",
+        image:tempImage,
+        followers:40,
+        subjects:50,
+    },
 ]
