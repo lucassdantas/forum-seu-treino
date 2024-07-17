@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
@@ -11,7 +11,7 @@ import { topics } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
 import { currentUser } from '@/api/users/currentUser'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
-
+import { getPosts } from '@/api/posts/getPosts';
 export const FeedBody = () => {
   return (
     <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
@@ -59,11 +59,20 @@ const LeftColumn = () => {
 }
 
 const MiddleColumn = () => {
-  const [postsWithAuthorsInfo, setPosts] = useState<PostWithAuthors[]>(externalPosts)
-  const [currentPostContent, setCurrentPostContent] = useState<string>('')
+  const [postsWithAuthorsInfo, setPosts] = useState<PostWithAuthors[]>([]);
+  const [currentPostContent, setCurrentPostContent] = useState<string>('');
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await getPosts();
+      setPosts(posts);
+    };
+
+    fetchPosts();
+  }, []);
 
   const handleNewPost = (postContent: string) => {
-    setCurrentPostContent('')
+    setCurrentPostContent('');
 
     const newPost: PostWithAuthors = {
       postId: 0,
@@ -74,28 +83,33 @@ const MiddleColumn = () => {
       dateOfCreation: new Date().toISOString(),
       likesQuantity: 0,
       commentsQuantity: 0,
-    }
-    setPosts([newPost, ...postsWithAuthorsInfo])
-  }
+    };
+    setPosts([newPost, ...postsWithAuthorsInfo]);
+  };
 
   return (
     <div className='text-white flex flex-col w-full md:w-2/4 gap-4'>
       <GrayCard>
         <div className='flex gap-4 mb-4'>
           <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]' />
-          <input placeholder={'No que você está pensando, ' + currentUser.name + '?'} className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2 ' value={currentPostContent} onChange={(e) => setCurrentPostContent(e.target.value)} />
+          <input
+            placeholder={'No que você está pensando, ' + currentUser.name + '?'}
+            className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
+            value={currentPostContent}
+            onChange={(e) => setCurrentPostContent(e.target.value)}
+          />
         </div>
         <div className='flex justify-end'>
           <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
         </div>
       </GrayCard>
 
-      {
-        postsWithAuthorsInfo.map((post: PostWithAuthors, i) => <PostCard key={i} post={post} />)
-      }
+      {postsWithAuthorsInfo.map((post: PostWithAuthors, i) => (
+        <PostCard key={i} post={post} />
+      ))}
     </div>
-  )
-}
+  );
+};
 
 const RightColumn = () => {
   return (

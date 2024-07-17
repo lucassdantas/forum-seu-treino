@@ -1,9 +1,5 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE');
-header('Access-Control-Allow-Headers: Content-Type');
-
+include_once '../config/cors.php';
 include_once '../config/db.php';
 include_once '../models/post.php';
 
