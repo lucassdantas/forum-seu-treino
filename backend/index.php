@@ -1,13 +1,13 @@
 <?php
-include_once './config/cors.php';
-include_once './config/db.php';
+include_once '.config/cors.php';
+include_once '.config/db.php';
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $requestUri = $_SERVER['REQUEST_URI'];
-
 $uriSegments = explode('/', parse_url($requestUri, PHP_URL_PATH));
-if (isset($uriSegments[1])) {
-    switch ($uriSegments[1]) {
+echo $urlSegments;
+if (isset($uriSegments[0])) { // Ajustando o índice para 'backend'
+    switch ($uriSegments[0]) {
         case 'users':
             include_once 'controllers/userController.php';
             break;
