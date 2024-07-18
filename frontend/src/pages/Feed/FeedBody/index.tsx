@@ -59,32 +59,22 @@ const LeftColumn = () => {
 }
 
 const MiddleColumn = () => {
-  const [postsWithAuthorsInfo, setPosts] = useState<PostWithAuthors[]>([]);
+  const [postsWithAuthorsInfo, setPostsWithAuthorsInfo] = useState<PostWithAuthors[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
-
   useEffect(() => {
     const fetchPosts = async () => {
       const posts = await getPosts();
-      setPosts(posts);
+      setPostsWithAuthorsInfo(posts);
     };
 
     fetchPosts();
   }, []);
+  console.log(postsWithAuthorsInfo)
 
   const handleNewPost = (postContent: string) => {
     setCurrentPostContent('');
 
-    const newPost: PostWithAuthors = {
-      postId: 0,
-      authorId: currentUser.userId,
-      authorName: currentUser.name,
-      authorImage: currentUser.image,
-      postContent: postContent,
-      dateOfCreation: new Date().toISOString(),
-      likesQuantity: 0,
-      commentsQuantity: 0,
-    };
-    setPosts([newPost, ...postsWithAuthorsInfo]);
+    //setPostsWithAuthorsInfo([newPost, ...postsWithAuthorsInfo]);
   };
 
   return (
