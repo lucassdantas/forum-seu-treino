@@ -1,18 +1,13 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: http://localhost:5173'); // Substitua pelo URL do seu frontend
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Content-Type');
+include_once '.config/cors.php'; 
+include_once './config/db.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
 $username = $data['username'];
 $password = $data['password'];
-
-$dsn = 'mysql:host=localhost;dbname=forum_seutreino';
-$db_user = 'root';
-$db_password = '';
 
 try {
     $pdo = new PDO($dsn, $db_user, $db_password);
@@ -25,7 +20,14 @@ try {
     $response = array('success' => false);
 
     if ($stmt->rowCount() > 0) {
-        $_SESSION['user_id'] = $username;
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['username'] = $user['login'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['email'] = $user['email'];
+        // Definir outros dados conforme necessário
+
         $response['success'] = true;
     }
 
@@ -34,4 +36,3 @@ try {
 } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
 }
-?>
