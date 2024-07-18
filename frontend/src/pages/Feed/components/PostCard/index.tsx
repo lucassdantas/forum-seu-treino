@@ -7,7 +7,7 @@ import { CiHeart } from 'react-icons/ci'
 import { TfiComment } from 'react-icons/tfi'
 import { Popup } from '@/components/common/Popup';
 import { Button } from '@/components/common/Button'
-
+import defaultImage from '@/assets/users/default/imagem-padrao-do-usuario.png'
 type PostCardProps = {
     post: PostWithAuthors
 }
@@ -70,7 +70,7 @@ const PostAnswer = ({ commentWithAuthor, commentsQuantity, setCommentsQuantity, 
         <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
             <div className="flex gap-4">
                 <div className="flex flex-col ">
-                    <img src={commentWithAuthor.authorImage} alt='Foto do autor do post' className='w-[50px]' />
+                    <img src={commentWithAuthor.authorImage || defaultImage } alt='Foto do autor do post' className='w-[50px]' />
                 </div>
 
                 <div className="flex flex-col gap-1">
