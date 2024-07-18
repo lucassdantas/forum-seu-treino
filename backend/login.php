@@ -23,7 +23,6 @@ try {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $_SESSION['userId']     = $user['userId'];
-        $_SESSION['userEmail']  = $user['userEmail'];
         $_SESSION['userName']   = $user['userName'];
         $_SESSION['userEmail']  = $user['userEmail'];
         $response['success']    = true;
