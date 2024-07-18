@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-include_once '.config/cors.php'; // Inclui configuração de CORS
+include_once './config/cors.php'; // Inclui configuração de CORS
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {

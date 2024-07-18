@@ -7,7 +7,7 @@ import { CiHeart } from 'react-icons/ci'
 import { TfiComment } from 'react-icons/tfi'
 import { Popup } from '@/components/common/Popup';
 import { Button } from '@/components/common/Button'
-import defaultImage from '@/assets/users/default/imagem-padrao-do-usuario.png'
+import { DEFAULT_IMAGE_URL } from '@/constants'
 type PostCardProps = {
     post: PostWithAuthors
 }
@@ -17,18 +17,19 @@ export const PostCard = ({ post }: PostCardProps) => {
     const [commentsWithAuthorsOnComponent, setCommentsWithAuthorsOnComponent] = useState<CommentsWithAuthors[]>(commentsWithAuthors)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [commentsQuantity, setCommentsQuantity] = useState(post.commentsQuantity)
+    const authorImage = post.authorImage || DEFAULT_IMAGE_URL
 
     return (
         <div>
             <GrayCard className=''>
                 <div className="flex gap-4">
                     <div className="flex flex-col ">
-                        <img src={post.authorImage} alt='Foto do autor do post' className='w-[50px]' />
+                        <img src={authorImage} alt='Foto do autor do post' className='w-[50px]' />
                     </div>
 
                     <div className="flex flex-col gap-1">
                         <span>{post.authorName}</span>
-                        <span className='text-sm opacity-85'>{formatTimeAgo(post.dateOfCreation)}</span>
+                        <span className='text-sm opacity-85'>{formatTimeAgo(post.postDateOfCreation)}</span>
                     </div>
                 </div>
 
@@ -66,11 +67,12 @@ const PostAnswer = ({ commentWithAuthor, commentsQuantity, setCommentsQuantity, 
         }])
         setCommentsQuantity(commentsQuantity + 1)
     }
+    const authorImage = commentWithAuthor.authorImage || DEFAULT_IMAGE_URL
     return (
         <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
             <div className="flex gap-4">
                 <div className="flex flex-col ">
-                    <img src={commentWithAuthor.authorImage || defaultImage } alt='Foto do autor do post' className='w-[50px]' />
+                    <img src={authorImage} alt='Foto do autor do post' className='w-[50px]' />
                 </div>
 
                 <div className="flex flex-col gap-1">
