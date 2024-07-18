@@ -6,7 +6,6 @@ export interface PostWithAuthors extends PostType{
   authorName: User['name'];
   authorImage:User['image'];
   postContent:string;
-  dateOfCreation:string;
   likesQuantity:number;
   commentsQuantity:number;
 
@@ -18,7 +17,7 @@ export const postsWithAuthorsInfo:PostWithAuthors[] = [
       authorName:'Arthur Nunes',
       authorImage:tempImage,
       postContent:'Conteúdo do post',
-      dateOfCreation:'2024-05-30T05:03:05',
+      postDateOfCreation:'2024-05-30T05:03:05',
       likesQuantity: 0,
       commentsQuantity:5,
       
@@ -29,7 +28,7 @@ export const postsWithAuthorsInfo:PostWithAuthors[] = [
       authorName:'Lucas Dantas',
       authorImage:tempImage,
       postContent:'Conteúdo do post lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem ' ,
-      dateOfCreation:'2024-07-04T20:42:05',
+      postDateOfCreation:'2024-07-04T20:42:05',
       likesQuantity: 10,
       commentsQuantity:5,
       

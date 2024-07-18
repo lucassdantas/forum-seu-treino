@@ -1,22 +1,19 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-include_once '.config/cors.php'; // Inclui configuração de CORS
+include_once './config/cors.php'; 
 
-// Verifica se o usuário está logado
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['userId'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Usuário não autenticado']);
     exit;
 }
-if (isset($_SESSION['user_id'])) {
-    // Definir os dados do usuário novamente na sessão
+if (isset($_SESSION['userId'])) {
     $response['loggedIn'] = true;
-    $response['user_id'] = $_SESSION['user_id'];
-    $response['username'] = $_SESSION['username'];
-    $response['name'] = $_SESSION['name'];
-    $response['email'] = $_SESSION['email'];
-    // Definir outros dados conforme necessário
+    $_SESSION['userId']     = $user['userId'];
+    $_SESSION['userEmail']  = $user['userEmail'];
+    $_SESSION['userName']   = $user['userName'];
+    $response['success']    = true;
 }
 
 echo json_encode($response);

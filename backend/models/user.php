@@ -52,6 +52,18 @@ class User {
         return $stmt;
     }
 
+    public function getUserById($userId) {
+        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverPhoto, userFollowers, userSubjects, userDateOfCreation 
+                  FROM " . $this->table_name . " 
+                  WHERE userId = :userId";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+
+        return $stmt;
+    }
+    
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET

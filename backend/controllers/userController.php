@@ -31,11 +31,17 @@ switch($method) {
         break;
 
     case 'GET':
-        $stmt = $user->read();
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($users);
+        if (isset($_GET['id'])) {
+            $userId = $_GET['id'];
+            $stmt = $user->getUserById($userId);
+            $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode($userData);
+        } else {
+            $stmt = $user->read();
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($users);
+        }
         break;
-
     case 'PUT':
         $data = json_decode(file_get_contents("php://input"));
 
