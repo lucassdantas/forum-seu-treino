@@ -13,6 +13,8 @@ interface AddNewTopicProps{
     setIsAddingNewTopic:any;
 }
 export const TopicsList = ({topics}:TopicsListProps) => {
+    if(topics.length === 0) return 'Nenhum tópico adicionado';
+
     const [topicsList, setTopicsList] = useState<TopicType[]>(topics)
     const [isAddingNewTopic, setIsAddingNewTopic] = useState(false)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
@@ -23,7 +25,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
         <ul className='divide-y'>
             {firstTopics.map((singleTopic:TopicType, i:number) => (
                 <li className={`py-4 `} key={i}>
-                    <Link to={singleTopic.url}>{singleTopic.name}</Link>
+                    <Link to={singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                 </li>
             ))}
         </ul>
@@ -41,7 +43,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
             <ul className='divide-y'>
                 {topicsList.map((singleTopic:TopicType, i:number) => (
                     <li className={`py-4 `} key={i}>
-                        <Link to={singleTopic.url}>{singleTopic.name}</Link>
+                        <Link to={singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                     </li>
                 ))}
             </ul>
@@ -79,8 +81,8 @@ const AddNewTopicInput = ({topicsList, setTopicsList, setIsAddingNewTopic}:AddNe
         const topicUrl = formatTopicUrl(removeAccents(cleanedTopicName));
     
         const topic: TopicType = {
-            name: cleanedTopicName,
-            url: topicUrl
+            topicName: cleanedTopicName,
+            topicUrl: topicUrl
         };
     
         setTopicsList([...topicsList, topic]);

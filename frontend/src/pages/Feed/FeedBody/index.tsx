@@ -6,11 +6,16 @@ import { PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
 import { advertising } from '@/api/advertising'
 import { IoPersonAddOutline } from "react-icons/io5";
 import { friendsSuggestion } from '@/api/users/friendsSuggestion'
-import { topics } from '@/api/topics'
+import { TopicType } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getPosts } from '@/api/posts/getPosts';
 import { currentUserContext } from '@/api/users/currentUserContext'
+import { getTopics } from '@/api/topics/getTopics'
+import {  Oval } from 'react-loader-spinner'
+import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
+import { getUsers } from '@/api/users/getUsers'
+import { User } from '@/api/users/user'
 export const FeedBody = () => {
   return (
     <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
@@ -25,37 +30,40 @@ export const FeedBody = () => {
   )
 }
 
+
 const LeftColumn = () => {
+  const [topicsList, setTopicsList] = useState<TopicType[]>();
+  const [friendsList, setFriendsList] = useState<User[]>();
+
+  useEffect(() => {
+    const fetchTopics = async () => {
+      const topics = await getTopics();
+      setTopicsList(topics);
+    };
+
+    const fetchFriends = async () => {
+      const friends = await getUsers();
+      setFriendsList(friends);
+    };
+
+    fetchTopics();
+    fetchFriends();
+  }, []);
+
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       <GrayCard>
-        <TopicsList topics={topics} />
+        {topicsList ? <TopicsList topics={topicsList} /> : <Oval />}
       </GrayCard>
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>
-        <div className='divide-y divide-neutral-700'>
-          {
-            friendsSuggestion.map((friend, i) => (
-              <div className={`flex gap-4 items-center justify-between py-4`} key={i}>
-
-                <div className='flex items-center gap-4'>
-                  <img src={friend.friendImage} alt='Foto do usuário' className='w-[40px]' />
-                  <span>{friend.friendName}</span>
-                </div>
-
-                <div className='cursor-pointer '>
-                  <IoPersonAddOutline className='' />
-                </div>
-              </div>
-            ))
-          }
-        </div>
-
+        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <Oval />}
       </GrayCard>
     </div>
-  )
-}
+  );
+};
+
 
 const MiddleColumn = () => {
   const currentUser = useContext(currentUserContext)
