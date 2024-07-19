@@ -10,11 +10,14 @@ if (!isset($_SESSION['userId'])) {
 }
 if (isset($_SESSION['userId'])) {
     $response['loggedIn'] = true;
-    $_SESSION['userId']     = $user['userId'];
-    $_SESSION['userEmail']  = $user['userEmail'];
-    $_SESSION['userName']   = $user['userName'];
+    $response['userData']['userId']             = $_SESSION['userId'];
+    $response['userData']['userEmail']          = $_SESSION['userEmail'];
+    $response['userData']['userName']           = $_SESSION['userName'];
+    $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'] || '/profileImage/default/imagem-padrao-do-usuario.png' ;
+    $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'] || '/profileImage/default/imagem-padrao-do-usuario.png' ;
+    $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
+    $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
     $response['success']    = true;
 }
 
 echo json_encode($response);
-?>

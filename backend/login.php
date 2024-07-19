@@ -21,10 +21,22 @@ try {
 
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $_SESSION['userId']     = $user['userId'];
-        $_SESSION['userName']   = $user['userName'];
-        $_SESSION['userEmail']  = $user['userEmail'];
+        $_SESSION['userId']           = $user['userId'];
+        $_SESSION['userName']         = $user['userName'];
+        $_SESSION['userEmail']        = $user['userEmail'];
+        $_SESSION['userFollowers']    = $user['userFollowers'] ;
+        $_SESSION['userSubjects']     = $user['userSubjects'] ;
+        $_SESSION['userProfileImage'] = $user['userProfileImage']; 
+        $_SESSION['userCoverImage']   = $user['userCoverImage']; 
+       
+        $response['userData']['userId']             = $_SESSION['userId'];
+        $response['userData']['userEmail']          = $_SESSION['userEmail'];
+        $response['userData']['userName']           = $_SESSION['userName'];
+        $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
+        $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
+        $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'];
+        $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'];
+        
         $response['success']    = true;
     }
 
@@ -33,4 +45,3 @@ try {
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Connection failed: ' . $e->getMessage()]);
 }
-?>
