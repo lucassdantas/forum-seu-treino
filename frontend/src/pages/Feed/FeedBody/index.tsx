@@ -16,6 +16,7 @@ import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
+
 export const FeedBody = () => {
   return (
     <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
