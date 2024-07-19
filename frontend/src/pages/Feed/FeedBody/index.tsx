@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
@@ -9,9 +9,9 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import { friendsSuggestion } from '@/api/users/friendsSuggestion'
 import { topics } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
-import { currentUser } from '@/api/users/currentUser'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getPosts } from '@/api/posts/getPosts';
+import { currentUserContext } from '@/api/users/currentUserContext'
 export const FeedBody = () => {
   return (
     <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
@@ -59,6 +59,7 @@ const LeftColumn = () => {
 }
 
 const MiddleColumn = () => {
+  const currentUser = useContext(currentUserContext)
   const [postsWithAuthorsInfo, setPostsWithAuthorsInfo] = useState<PostWithAuthors[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
   useEffect(() => {
@@ -69,7 +70,6 @@ const MiddleColumn = () => {
 
     fetchPosts();
   }, []);
-  console.log(postsWithAuthorsInfo)
 
   const handleNewPost = (postContent: string) => {
     setCurrentPostContent('');
@@ -83,7 +83,7 @@ const MiddleColumn = () => {
         <div className='flex gap-4 mb-4'>
           <img src={tempProfileImage} alt='Foto do usuário' className='w-[50px]' />
           <input
-            placeholder={'No que você está pensando, ' + currentUser.name + '?'}
+            placeholder={'No que você está pensando, ' + currentUser?.userName + '?'}
             className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
             value={currentPostContent}
             onChange={(e) => setCurrentPostContent(e.target.value)}

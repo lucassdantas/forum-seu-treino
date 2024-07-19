@@ -6,7 +6,7 @@ import { IoMdKey } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
 
-const Login = ({setAuth }:any) => {
+const Login = ({setAuth, setCurrentUser, currentUser }:any) => {
   const navigate = useNavigate()
 
   const [username, setUsername] = useState('');
@@ -17,8 +17,11 @@ const Login = ({setAuth }:any) => {
 
     try {
       const response = await axios.post('http://localhost/backend/login.php', { username, password }, { withCredentials: true });
-      if (response.data.success) setAuth(true);
-      else                       console.log(response)
+      if (response.data.success) {
+        setAuth(response.data.loggedIn);
+        setCurrentUser(response.data.userData)
+      }
+      else console.log(response)
     } catch (error) {
       console.error('There was an error logging in!', error);
     }

@@ -1,2 +1,3 @@
 export const BACKEND_URL = 'http://localhost:80/backend/';
-export const DEFAULT_IMAGE_URL = '/profileImage/default/imagem-padrao-do-usuario.png';
+export const DEFAULT_IMAGE_DIRECTORY = '/profileImage/'
+export const DEFAULT_IMAGE_URL = DEFAULT_IMAGE_DIRECTORY+'default/imagem-padrao-do-usuario.png';

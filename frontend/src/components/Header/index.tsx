@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Limiter } from '@/components/common/Limiter';
 import { Button } from '@/components/common/Button';
@@ -8,12 +8,13 @@ import { FaSearch } from "react-icons/fa";
 import { PiUserPlus } from "react-icons/pi";
 import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
 import { handleLogout } from '@/utils/handleLogout';
-import { currentUser } from '@/api/users/currentUser';
+import { currentUserContext } from '@/api/users/currentUserContext';
 
 const Header = () => {
+  const currentUser = useContext(currentUserContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const firstName = currentUser.name.split(' ')[0]
+  const firstName = currentUser.userName.split(' ')[0]
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +63,7 @@ const Header = () => {
             </div>
             <div className='md:w-2/12 w-4/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
               <div className="flex justify-center items-center gap-4">
-                <img src={currentUser.image} alt='Foto' className='rounded-full w-[50px]' />
+                <img src={currentUser.userImage} alt='Foto' className='rounded-full w-[50px]' />
                 <div className="relative flex items-center gap-1">
                   <span>Olá, {firstName}</span>
                   <FaAngleDown

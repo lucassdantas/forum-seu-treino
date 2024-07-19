@@ -1,9 +1,9 @@
-import { currentUser } from '@/api/users/currentUser'
+import { currentUserContext } from '@/api/users/currentUserContext'
 import { Banner } from '@/components/common/Banner'
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects'
 import { FollowersBody } from '@/pages/Followers/FollowersBody'
 import axios from 'axios'
-import React, { useEffect, Dispatch, SetStateAction  } from 'react'
+import { useEffect, Dispatch, SetStateAction, useContext  } from 'react'
 
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
@@ -11,6 +11,7 @@ interface FollowersProps{
     setAuth:SetAuthType;
 }
 export const Followers = ({setAuth}:FollowersProps) => {
+    const currentUser = useContext(currentUserContext)
     useEffect(() => {
         const checkSession = async () => {
             try {
@@ -25,7 +26,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
     return (
         <div>
             <Banner/>
-            <PhotoFollowerAndSubjects followers={currentUser.followers} subjects={currentUser.subjects} profilePhoto={currentUser.image} profileName={currentUser.name}/>
+            <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userImage} profileName={currentUser.userName}/>
             <FollowersBody/>
         </div>
     )
