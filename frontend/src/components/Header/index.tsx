@@ -63,7 +63,7 @@ const Header = () => {
             </div>
             <div className='md:w-2/12 w-4/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
               <div className="flex justify-center items-center gap-4">
-                <img src={currentUser.userImage} alt='Foto' className='rounded-full w-[50px]' />
+                <img src={currentUser.userProfileImage} alt='Foto' className='rounded-full w-[50px]' />
                 <div className="relative flex items-center gap-1">
                   <span>Olá, {firstName}</span>
                   <FaAngleDown
