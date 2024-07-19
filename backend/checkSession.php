@@ -13,8 +13,8 @@ if (isset($_SESSION['userId'])) {
     $response['userData']['userId']             = $_SESSION['userId'];
     $response['userData']['userEmail']          = $_SESSION['userEmail'];
     $response['userData']['userName']           = $_SESSION['userName'];
-    $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'] || '/profileImage/default/imagem-padrao-do-usuario.png' ;
-    $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'] || '/profileImage/default/imagem-padrao-do-usuario.png' ;
+    $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'] ;
+    $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'] ;
     $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
     $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
     $response['success']    = true;

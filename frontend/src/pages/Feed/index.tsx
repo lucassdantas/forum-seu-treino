@@ -30,7 +30,7 @@ const Feed = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userImage} profileName={currentUser.userName}/>
+      <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userProfileImage} profileName={currentUser.userName}/>
       <FeedBody/>
     </>
   );

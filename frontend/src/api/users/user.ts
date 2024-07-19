@@ -1,5 +1,3 @@
-import tempImage from '@/assets/profile/profilePhoto.png'
-
 export interface User{
     userId:number;
     userName:string;

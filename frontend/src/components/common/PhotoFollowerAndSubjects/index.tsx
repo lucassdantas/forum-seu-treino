@@ -1,10 +1,10 @@
 import { Limiter } from '@/components/common/Limiter';
 
 type PhotoFollowerAndSubjectsProps = {
-  profilePhoto: string | undefined;
-  profileName: string | undefined;
-  followers: number | undefined;
-  subjects: number | undefined;
+  profilePhoto: string;
+  profileName: string;
+  followers: number;
+  subjects: number;
 }
 
 export const PhotoFollowerAndSubjects = ({ profilePhoto, profileName, followers, subjects }: PhotoFollowerAndSubjectsProps) => {
