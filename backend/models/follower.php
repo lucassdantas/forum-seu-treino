@@ -39,6 +39,28 @@ class Follower {
         return $stmt;
     }
 
+    // Get followers by followerId
+    public function getFollowersByFollowerId($followerUserFollower) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE followerUserFollower = :followerUserFollower";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":followerUserFollower", $followerUserFollower);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    // Get followed by followedId
+    public function getFollowedByFollowedId($followerUserFollowed) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE followerUserFollowed = :followerUserFollowed";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":followerUserFollowed", $followerUserFollowed);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
@@ -73,3 +95,4 @@ class Follower {
         return false;
     }
 }
+?>

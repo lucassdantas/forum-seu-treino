@@ -1,9 +1,10 @@
 
 export interface PostType{
-  postId:number;
+  postId?:number;
   postAuthorId:number;
-  postAuthorName:string;
+  postTopicId:number;
   postContent:string;
+  postImage:string;
   postDateOfCreation:string;
   postLikesQuantity:number;
   postCommentsQuantity:number;

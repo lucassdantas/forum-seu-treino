@@ -60,4 +60,3 @@ class Like {
         return false;
     }
 }
-?>

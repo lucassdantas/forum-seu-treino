@@ -1,31 +1,74 @@
 <?php
-session_start();
-header('Content-Type: application/json');
-include_once '.config/cors.php';
-include_once '.config/db.php';
+include_once '../config/cors.php';
+include_once '../config/db.php';
+include_once '../models/follower.php';
 
-$data = json_decode(file_get_contents('php://input'), true);
+$database = new Database();
+$db = $database->getConnection();
 
-$username = $data['username'];
-$password = $data['password'];
+$follower = new Follower($db);
 
-try {
-    $pdo = new PDO($dsn, $db_user, $db_password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$method = $_SERVER['REQUEST_METHOD'];
 
-    $sql = 'SELECT * FROM forum_users WHERE userName = :username AND userPassword = :password';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['username' => $username, 'password' => $password]);
+switch($method) {
+    case 'POST':
+        $data = json_decode(file_get_contents("php://input"));
 
-    $response = ['success' => false];
+        $follower->followerUserFollower = $data->followerUserFollower;
+        $follower->followerUserFollowed = $data->followerUserFollowed;
+        $follower->followerDateOfCreation = date('Y-m-d H:i:s'); // Supondo que a data de criação é a data atual
 
-    if ($stmt->rowCount() > 0) {
-        $_SESSION['user_id'] = $username;
-        $response['success'] = true;
-    }
+        if ($follower->create()) {
+            echo json_encode(["message" => "Follower was created."]);
+        } else {
+            echo json_encode(["message" => "Unable to create follower."]);
+        }
+        break;
 
-    echo json_encode($response);
+    case 'GET':
+        if (isset($_GET['followerUserFollower'])) {
+            $followerUserFollower = $_GET['followerUserFollower'];
+            $stmt = $follower->getFollowersByFollowerId($followerUserFollower);
+        } elseif (isset($_GET['followerUserFollowed'])) {
+            $followerUserFollowed = $_GET['followerUserFollowed'];
+            $stmt = $follower->getFollowedByFollowedId($followerUserFollowed);
+        } else {
+            $stmt = $follower->read();
+        }
+        $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($followers);
+        break;
 
-} catch (PDOException $e) {
-    echo json_encode(['error' => 'Connection failed: ' . $e->getMessage()]);
+    case 'PUT':
+        $data = json_decode(file_get_contents("php://input"));
+
+        $follower->followerUserFollower = $data->followerUserFollower;
+        $follower->followerUserFollowed = $data->followerUserFollowed;
+        $follower->followerDateOfCreation = $data->followerDateOfCreation;
+
+        if ($follower->update()) {
+            echo json_encode(["message" => "Follower was updated."]);
+        } else {
+            echo json_encode(["message" => "Unable to update follower."]);
+        }
+        break;
+
+    case 'DELETE':
+        $data = json_decode(file_get_contents("php://input"));
+
+        $follower->followerUserFollower = $data->followerUserFollower;
+        $follower->followerUserFollowed = $data->followerUserFollowed;
+
+        if ($follower->delete()) {
+            echo json_encode(["message" => "Follower was deleted."]);
+        } else {
+            echo json_encode(["message" => "Unable to delete follower."]);
+        }
+        break;
+
+    default:
+        http_response_code(405);
+        echo json_encode(["message" => "Method not allowed"]);
+        break;
 }
+?>

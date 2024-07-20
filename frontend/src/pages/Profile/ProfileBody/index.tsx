@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
-import { PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
 import { advertising } from '@/api/advertising'
 import { TopicType } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
@@ -13,7 +12,8 @@ import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
-import { getPostsByAuthorId } from '@/api/posts/getPostsByAuthorId'
+import { createPost } from '@/api/posts/createPost'
+import { PostType } from '@/api/posts/posts'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -66,22 +66,39 @@ const LeftColumn = () => {
 
 const MiddleColumn = ({user}:{user:User}) => {
   const currentUser = user
-  const [postsWithAuthorsInfo, setPostsWithAuthorsInfo] = useState<PostWithAuthors[]>([]);
+  const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
-  
+
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await getPostsByAuthorId(user.userId);
-      setPostsWithAuthorsInfo(posts);
+      const posts = await getPosts();
+      setPosts(posts);
     };
 
     fetchPosts();
   }, []);
 
-  const handleNewPost = (postContent: string) => {
-    setCurrentPostContent('');
+  const handleNewPost = async (postContent: string) => {
+    if (postContent.trim() === '') return;
 
-    //setPostsWithAuthorsInfo([newPost, ...postsWithAuthorsInfo]);
+    const newPostData:PostType = {
+      postTopicId: 1, // Supondo um tópico padrão ou ajuste conforme necessário
+      postAuthorId: currentUser.userId,
+      postContent:'',
+      postDateOfCreation: new Date().toISOString(),
+      postImage: '', // Ajuste conforme necessário
+      postHasImage: false, // Ajuste conforme necessário
+      postLikesQuantity: 0,
+      postCommentsQuantity: 0,
+    };
+
+    try {
+      const newPost = await createPost(newPostData);
+      setPosts([newPost, ...posts]);
+      setCurrentPostContent('');
+    } catch (error) {
+      console.error('Failed to create post', error);
+    }
   };
 
   return (
@@ -90,7 +107,7 @@ const MiddleColumn = ({user}:{user:User}) => {
         <div className='flex gap-4 mb-4'>
           <img src={currentUser.userProfileImage} alt='Foto do usuário' className='w-[50px]' />
           <input
-            placeholder={'No que você está pensando, ' + currentUser?.userName + '?'}
+            placeholder={`No que você está pensando, ${currentUser?.userName}?`}
             className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
             value={currentPostContent}
             onChange={(e) => setCurrentPostContent(e.target.value)}
@@ -101,7 +118,7 @@ const MiddleColumn = ({user}:{user:User}) => {
         </div>
       </GrayCard>
 
-      {postsWithAuthorsInfo.map((post: PostWithAuthors, i) => (
+      {posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
     </div>
