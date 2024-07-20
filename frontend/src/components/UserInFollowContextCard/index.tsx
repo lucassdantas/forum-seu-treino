@@ -1,9 +1,10 @@
+import { User } from '@/api/users/user'
 import { UserInFollowContextProps } from '@/api/users/userInFollowContext'
 import { Button, OutlineButton } from '@/components/common/Button'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export const UserInFollowContextCard = ({user, className}:{user:UserInFollowContextProps, className?:string}) => {
+export const UserInFollowContextCard = ({user, className}:{user:User, className?:string}) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
   const handleOpenMessage = () => {
 
@@ -13,9 +14,9 @@ export const UserInFollowContextCard = ({user, className}:{user:UserInFollowCont
   }
   return (
     <div className={'bg-neutral-950 text-white rounded-md my-4 ' + className}>
-      <div className={`bg-[url("${user.coverPhoto} bg-neutral-400 w-full h-[80px] p-1")]`}> </div>
+      <div className={`bg-[url("${user.userCoverImage} bg-neutral-400 w-full h-[80px] p-1")]`}> </div>
       <div className='py-8 flex flex-col items-center gap-4 w-full'>
-        <img src={user.userImage } alt={'Foto de perfil do' + user.userName} className='w-[120px] -mt-14 text-center relative'/>
+        <img src={user.userProfileImage } alt={'Foto de perfil do' + user.userName} className='w-[120px] -mt-14 text-center relative'/>
         <span className='mb-4'>{user.userName}</span>
         <div className='flex justify-center gap-4'>
           <Button className='bg-white' onClick={() => handleOpenMessage()}>Mensagem</Button>
@@ -24,7 +25,7 @@ export const UserInFollowContextCard = ({user, className}:{user:UserInFollowCont
             :<Button className='bg-yellow-seu-treino' onClick={() => handleFollow()}>Seguindo</Button>
           }
         </div>
-        <Link to={`/seguidores?id=${user.userId}`}>Visitar Perfil</Link>
+        <Link to={`/perfil?id=${user.userId}`}>Visitar Perfil</Link>
       </div>
     </div>
   )

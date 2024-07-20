@@ -21,7 +21,6 @@ const Login = ({setAuth, setCurrentUser, currentUser }:any) => {
         setAuth(response.data.loggedIn);
         setCurrentUser(response.data.userData)
       }
-      else console.log(response)
     } catch (error) {
       console.error('There was an error logging in!', error);
     }

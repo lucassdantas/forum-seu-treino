@@ -53,7 +53,7 @@ class User {
     }
 
     public function getUserById($userId) {
-        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverPhoto, userFollowers, userSubjects, userDateOfCreation 
+        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation 
                   FROM " . $this->table_name . " 
                   WHERE userId = :userId";
 

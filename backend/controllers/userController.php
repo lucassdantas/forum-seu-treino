@@ -32,7 +32,7 @@ switch($method) {
 
     case 'GET':
         if (isset($_GET['id'])) {
-            $userId = $_GET['id'];
+            $userId = intval( $_GET['id']);
             $stmt = $user->getUserById($userId);
             $userData = $stmt->fetch(PDO::FETCH_ASSOC);
             echo json_encode($userData);

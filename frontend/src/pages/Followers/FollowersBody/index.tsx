@@ -1,17 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserInFollowContextProps, userInFollowContext as externalFollower } from '@/api/users/userInFollowContext';
 import { Limiter } from '@/components/common/Limiter';
 import { UserInFollowContextCard } from '@/components/UserInFollowContextCard';
 import { IoSearch } from "react-icons/io5";
+import { getUsers } from '@/api/users/getUsers';
+import { User } from '@/api/users/user';
+import { Oval } from 'react-loader-spinner';
 
 export const FollowersBody = () => {
+    
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const followers: UserInFollowContextProps[] = externalFollower;
+    const [followers, setFollowers] = useState<User[]>([])
 
+    useEffect(() => {
+        const fetchUsers = async () => {
+          const users = await getUsers();
+          setFollowers(users);
+        };
+    
+        fetchUsers();
+      }, []);
+      
     const filteredFollowers = followers.filter(follower =>
         follower.userName.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
+    if(!followers) return <Oval/>
     return (
         <div className='bg-black w-full flex justify-center px-4'>
             <Limiter>
@@ -27,7 +40,7 @@ export const FollowersBody = () => {
                         />
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
-                        {filteredFollowers.map((follower: UserInFollowContextProps, i) => (
+                        {filteredFollowers.map((follower: User, i:number) => (
                             <UserInFollowContextCard key={i} user={follower}/>
                         ))}
                     </div>

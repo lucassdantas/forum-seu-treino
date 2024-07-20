@@ -26,7 +26,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
     return (
         <div>
             <Banner/>
-            <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userImage} profileName={currentUser.userName}/>
+            <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userProfileImage} profileName={currentUser.userName}/>
             <FollowersBody/>
         </div>
     )

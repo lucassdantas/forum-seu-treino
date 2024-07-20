@@ -4,8 +4,6 @@ import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
 import { PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
 import { advertising } from '@/api/advertising'
-import { IoPersonAddOutline } from "react-icons/io5";
-import { friendsSuggestion } from '@/api/users/friendsSuggestion'
 import { TopicType } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'

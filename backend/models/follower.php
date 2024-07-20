@@ -73,4 +73,3 @@ class Follower {
         return false;
     }
 }
-?>
