@@ -15,10 +15,11 @@ switch($method) {
         $data = json_decode(file_get_contents("php://input"));
 
         $post->postTopicId = $data->postTopicId;
-        $post->authorId = $data->authorId;
+        $post->postAuthorId = $data->postAuthorId;
         $post->postContent = $data->postContent;
-        $post->dateOfCreation = date('Y-m-d H:i:s'); // Supondo que a data de criação é a data atual
+        $post->postDateOfCreation = date('Y-m-d H:i:s'); // Supondo que a data de criação é a data atual
         $post->postImage = $data->postImage;
+        $post->postHasImage = $data->postHasImage;
         $post->postLikesQuantity = $data->postLikesQuantity;
         $post->postCommentsQuantity = $data->postCommentsQuantity;
 
@@ -45,10 +46,11 @@ switch($method) {
 
         $post->postId = $data->postId;
         $post->postTopicId = $data->postTopicId;
-        $post->authorId = $data->authorId;
+        $post->postAuthorId = $data->postAuthorId;
         $post->postContent = $data->postContent;
-        $post->dateOfCreation = $data->dateOfCreation;
+        $post->postDateOfCreation = $data->postDateOfCreation;
         $post->postImage = $data->postImage;
+        $post->postHasImage = $data->postHasImage;
         $post->postLikesQuantity = $data->postLikesQuantity;
         $post->postCommentsQuantity = $data->postCommentsQuantity;
 

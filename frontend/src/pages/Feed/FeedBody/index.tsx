@@ -14,6 +14,7 @@ import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
+import { PostType } from '@/api/posts/posts'
 
 export const FeedBody = () => {
   return (
@@ -66,13 +67,13 @@ const LeftColumn = () => {
 
 const MiddleColumn = () => {
   const currentUser = useContext(currentUserContext)
-  const [postsWithAuthorsInfo, setPostsWithAuthorsInfo] = useState<PostWithAuthors[]>([]);
+  const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
   
   useEffect(() => {
     const fetchPosts = async () => {
       const posts = await getPosts();
-      setPostsWithAuthorsInfo(posts);
+      setPosts(posts);
     };
 
     fetchPosts();
@@ -101,7 +102,7 @@ const MiddleColumn = () => {
         </div>
       </GrayCard>
 
-      {postsWithAuthorsInfo.map((post: PostWithAuthors, i) => (
+      {posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
     </div>

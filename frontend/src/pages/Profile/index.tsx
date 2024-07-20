@@ -50,7 +50,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
   }, [userId]);
 
   return (
-    <div>
+    <div className='bg-black'>
       <Banner />
       {profileUser ? (
         <PhotoFollowerAndSubjects

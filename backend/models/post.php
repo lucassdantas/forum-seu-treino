@@ -5,10 +5,11 @@ class Post {
 
     public $postId;
     public $postTopicId;
-    public $authorId;
+    public $postAuthorId;
     public $postContent;
-    public $dateOfCreation;
+    public $postDateOfCreation;
     public $postImage;
+    public $postHasImage;  // Novo campo adicionado
     public $postLikesQuantity;
     public $postCommentsQuantity;
 
@@ -19,16 +20,17 @@ class Post {
     // Create
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET
-                    postTopicId=:postTopicId, authorId=:authorId, postContent=:postContent, dateOfCreation=:dateOfCreation,
-                    postImage=:postImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity";
+                    postTopicId=:postTopicId, postAuthorId=:postAuthorId, postContent=:postContent, postDateOfCreation=:postDateOfCreation,
+                    postImage=:postImage, postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":postTopicId", $this->postTopicId);
-        $stmt->bindParam(":authorId", $this->authorId);
+        $stmt->bindParam(":postAuthorId", $this->postAuthorId);
         $stmt->bindParam(":postContent", $this->postContent);
-        $stmt->bindParam(":dateOfCreation", $this->dateOfCreation);
+        $stmt->bindParam(":postDateOfCreation", $this->postDateOfCreation);
         $stmt->bindParam(":postImage", $this->postImage);
+        $stmt->bindParam(":postHasImage", $this->postHasImage);
         $stmt->bindParam(":postLikesQuantity", $this->postLikesQuantity);
         $stmt->bindParam(":postCommentsQuantity", $this->postCommentsQuantity);
 
@@ -51,10 +53,10 @@ class Post {
 
     // Get posts by authorId
     public function getPostsByAuthorId($authorId) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE authorId = :authorId";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE postAuthorId = :postAuthorId";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":authorId", $authorId);
+        $stmt->bindParam(":postAuthorId", $authorId);
         $stmt->execute();
 
         return $stmt;
@@ -63,18 +65,19 @@ class Post {
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
-                    postTopicId=:postTopicId, authorId=:authorId, postContent=:postContent, dateOfCreation=:dateOfCreation,
-                    postImage=:postImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity
+                    postTopicId=:postTopicId, postAuthorId=:postAuthorId, postContent=:postContent, postDateOfCreation=:postDateOfCreation,
+                    postImage=:postImage, postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity
                     WHERE postId=:postId";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":postId", $this->postId);
         $stmt->bindParam(":postTopicId", $this->postTopicId);
-        $stmt->bindParam(":authorId", $this->authorId);
+        $stmt->bindParam(":postAuthorId", $this->postAuthorId);
         $stmt->bindParam(":postContent", $this->postContent);
-        $stmt->bindParam(":dateOfCreation", $this->dateOfCreation);
+        $stmt->bindParam(":postDateOfCreation", $this->postDateOfCreation);
         $stmt->bindParam(":postImage", $this->postImage);
+        $stmt->bindParam(":postHasImage", $this->postHasImage);
         $stmt->bindParam(":postLikesQuantity", $this->postLikesQuantity);
         $stmt->bindParam(":postCommentsQuantity", $this->postCommentsQuantity);
 
@@ -99,4 +102,3 @@ class Post {
         return false;
     }
 }
-?>
