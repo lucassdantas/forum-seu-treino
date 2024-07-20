@@ -49,6 +49,17 @@ class Post {
         return $stmt;
     }
 
+    // Get posts by authorId
+    public function getPostsByAuthorId($authorId) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE authorId = :authorId";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":authorId", $authorId);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET

@@ -13,6 +13,7 @@ import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
+import { getPostsByAuthorId } from '@/api/posts/getPostsByAuthorId'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -70,7 +71,7 @@ const MiddleColumn = ({user}:{user:User}) => {
   
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await getPosts();
+      const posts = await getPostsByAuthorId(user.userId);
       setPostsWithAuthorsInfo(posts);
     };
 

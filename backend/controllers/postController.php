@@ -30,7 +30,12 @@ switch($method) {
         break;
 
     case 'GET':
-        $stmt = $post->read();
+        if (isset($_GET['authorId'])) {
+            $authorId = $_GET['authorId'];
+            $stmt = $post->getPostsByAuthorId($authorId);
+        } else {
+            $stmt = $post->read();
+        }
         $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($posts);
         break;
