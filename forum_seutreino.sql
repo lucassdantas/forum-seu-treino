@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18/07/2024 às 05:11
+-- Tempo de geração: 19/07/2024 às 07:00
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -131,10 +131,10 @@ CREATE TABLE `forum_users` (
   `userName` varchar(255) NOT NULL,
   `userEmail` varchar(255) NOT NULL,
   `userBirthday` date NOT NULL,
-  `userProfileImage` varchar(255) NOT NULL,
-  `userCoverPhoto` varchar(255) NOT NULL,
-  `userFollowers` int(11) NOT NULL,
-  `userSubjects` int(11) NOT NULL,
+  `userProfileImage` varchar(255) NOT NULL DEFAULT '''/profileImage/default/imagem-padrao-do-usuario.png''',
+  `userCoverImage` varchar(255) NOT NULL DEFAULT '''/profileImage/default/imagem-padrao-do-usuario.png''',
+  `userFollowers` int(11) NOT NULL DEFAULT 0,
+  `userSubjects` int(11) NOT NULL DEFAULT 0,
   `userPassword` varchar(255) NOT NULL,
   `userDateOfCreation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -143,8 +143,9 @@ CREATE TABLE `forum_users` (
 -- Despejando dados para a tabela `forum_users`
 --
 
-INSERT INTO `forum_users` (`userId`, `userName`, `userEmail`, `userBirthday`, `userProfileImage`, `userCoverPhoto`, `userFollowers`, `userSubjects`, `userPassword`, `userDateOfCreation`) VALUES
-(1, 'lucas', 'lucasdantasprogramador@gmail.com', '2002-01-07', '', '', 0, 0, '123456', '2024-07-17 19:32:49');
+INSERT INTO `forum_users` (`userId`, `userName`, `userEmail`, `userBirthday`, `userProfileImage`, `userCoverImage`, `userFollowers`, `userSubjects`, `userPassword`, `userDateOfCreation`) VALUES
+(1, 'lucas', 'lucasdantasprogramador@gmail.com', '2002-01-07', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, '123456', '2024-07-17 19:32:49'),
+(2, 'Usuário de teste', 'teste@teste.com', '2024-07-02', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, 'teste', '2024-07-18 10:16:42');
 
 --
 -- Índices para tabelas despejadas
@@ -212,7 +213,7 @@ ALTER TABLE `forum_topics`
 -- AUTO_INCREMENT de tabela `forum_users`
 --
 ALTER TABLE `forum_users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para tabelas despejadas
