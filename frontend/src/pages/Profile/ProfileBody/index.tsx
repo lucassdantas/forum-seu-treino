@@ -8,12 +8,12 @@ import { PostCard } from '@/pages/Feed/components/PostCard'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getPosts } from '@/api/posts/getPosts';
 import { getTopics } from '@/api/topics/getTopics'
-import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
 import { createPost } from '@/api/posts/createPost'
 import { PostType } from '@/api/posts/posts'
+import { LoadingSpinner } from '@/components/LoadingSpinner'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -52,12 +52,12 @@ const LeftColumn = () => {
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       <GrayCard>
-        {topicsList ? <TopicsList topics={topicsList} /> : <Oval />}
+        {topicsList ? <TopicsList topics={topicsList} /> : <LoadingSpinner />}
       </GrayCard>
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>
-        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <Oval />}
+        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <LoadingSpinner />}
       </GrayCard>
     </div>
   );

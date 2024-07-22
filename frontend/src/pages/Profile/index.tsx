@@ -5,8 +5,8 @@ import { getUserById } from '@/api/users/getUserById';
 import { User } from '@/api/users/user';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
-import { Oval } from 'react-loader-spinner';
 import { ProfileBody } from '@/pages/Profile/ProfileBody';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type SetAuthType = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -60,11 +60,11 @@ export const Profile = ({ setAuth }: ProfileProps) => {
           profileName={profileUser.userName}
         />
       ) : (
-        <Oval />
+        <LoadingSpinner />
       )}
       {profileUser?
         <ProfileBody user={profileUser} />
-        :<Oval/>
+        :<LoadingSpinner/>
       }
     </div>
   );

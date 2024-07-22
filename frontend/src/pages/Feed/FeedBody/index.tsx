@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
-import { PostWithAuthors } from '@/api/posts/postsWithAuthorsInfo'
 import { advertising } from '@/api/advertising'
 import { TopicType } from '@/api/topics'
 import { PostCard } from '@/pages/Feed/components/PostCard'
@@ -10,11 +9,11 @@ import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getPosts } from '@/api/posts/getPosts';
 import { currentUserContext } from '@/api/users/currentUserContext'
 import { getTopics } from '@/api/topics/getTopics'
-import {  Oval } from 'react-loader-spinner'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
 import { PostType } from '@/api/posts/posts'
+import { LoadingSpinner } from '@/components/LoadingSpinner'
 
 export const FeedBody = () => {
   return (
@@ -53,12 +52,12 @@ const LeftColumn = () => {
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       <GrayCard>
-        {topicsList ? <TopicsList topics={topicsList} /> : <Oval />}
+        {topicsList ? <TopicsList topics={topicsList} /> : <LoadingSpinner />}
       </GrayCard>
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>
-        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <Oval />}
+        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <LoadingSpinner />}
       </GrayCard>
     </div>
   );

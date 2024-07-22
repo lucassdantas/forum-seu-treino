@@ -7,6 +7,7 @@ import { MainComponent } from '@/components/MainComponent';
 import { Followers } from '@/pages/Followers';
 import { User } from '@/api/users/user';
 import { Profile } from '@/pages/Profile';
+import { Configurations } from '@/pages/Configurations';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -59,6 +60,14 @@ const App = () => {
           element={
             auth && currentUser !== undefined
               ? <MainComponent setAuth={setAuth} Component={Profile} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+              : <Login setAuth={setAuth} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+          }
+        />
+        <Route
+          path="/configuracoes"
+          element={
+            auth && currentUser !== undefined
+              ? <MainComponent setAuth={setAuth} Component={Configurations} currentUser={currentUser} setCurrentUser={setCurrentUser} />
               : <Login setAuth={setAuth} currentUser={currentUser} setCurrentUser={setCurrentUser} />
           }
         />
