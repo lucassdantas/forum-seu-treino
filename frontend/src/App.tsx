@@ -8,6 +8,7 @@ import { Followers } from '@/pages/Followers';
 import { User } from '@/api/users/user';
 import { Profile } from '@/pages/Profile';
 import { Configurations } from '@/pages/Configurations';
+import ProfileConfigurations from '@/pages/ProfileConfigurations';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -67,7 +68,7 @@ const App = () => {
           path="/configuracoes"
           element={
             auth && currentUser !== undefined
-              ? <MainComponent setAuth={setAuth} Component={Configurations} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+              ? <MainComponent setAuth={setAuth} Component={ProfileConfigurations} currentUser={currentUser} setCurrentUser={setCurrentUser} />
               : <Login setAuth={setAuth} currentUser={currentUser} setCurrentUser={setCurrentUser} />
           }
         />

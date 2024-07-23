@@ -54,9 +54,9 @@ const Header = () => {
                 <li><Link to="/">Feed</Link></li>
                 <li><Link to={"/perfil?id=" + currentUser.userId}>Meu perfil</Link></li>
                 <li><Link to={"/seguidores?id=" + currentUser.userId}>Seguidores</Link></li>
-                <li><Link to={"/feed?id=" + currentUser.userId}>Configurações</Link></li>
+                <li><Link to={"/configuracoes"}>Configurações</Link></li>
                 <li>
-                  <Link to={'/rotina:' + currentUser.userId}>
+                  <Link to={'/rotina'}>
                     <Button>Visualizar rotina</Button>
                   </Link>
                 </li>
