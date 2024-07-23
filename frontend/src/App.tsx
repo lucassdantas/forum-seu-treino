@@ -7,7 +7,6 @@ import { MainComponent } from '@/components/MainComponent';
 import { Followers } from '@/pages/Followers';
 import { User } from '@/api/users/user';
 import { Profile } from '@/pages/Profile';
-import { Configurations } from '@/pages/Configurations';
 import ProfileConfigurations from '@/pages/ProfileConfigurations';
 
 const App = () => {
@@ -20,7 +19,6 @@ const App = () => {
         const response = await axios.get('http://localhost/backend/checkSession.php', { withCredentials: true });
         setAuth(response.data.loggedIn);
         setCurrentUser(response.data.userData);
-        console.log(response.data);
       } catch (error) {
         console.error('There was an error checking the session!', error);
       }

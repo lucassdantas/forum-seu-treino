@@ -1,8 +1,9 @@
+import { User } from '@/api/users/user'
 import { GrayCard } from '@/components/common/Card'
 import { Limiter } from '@/components/common/Limiter'
-import { PersonalInfos } from '@/pages/Configurations/ConfigurationsBody/PersonalInfos'
+import { PersonalInfos } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody/PersonalInfos'
 
-export const ProfileConfigurationsBody = () => {
+export const ProfileConfigurationsBody = ({user}:{user:User}) => {
   return (
     <div className='flex justify-center bg-black py-4'>
       <Limiter className='flex gap-4'>

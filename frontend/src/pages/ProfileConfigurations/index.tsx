@@ -11,6 +11,7 @@ interface FeedProps{
 }
 const ProfileConfigurations = ({ setAuth }:FeedProps) => {
   const currentUser = useContext(currentUserContext)
+  
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -25,7 +26,6 @@ const ProfileConfigurations = ({ setAuth }:FeedProps) => {
 
     checkSession();
   }, [setAuth]);
-
 
   return (
     <>
