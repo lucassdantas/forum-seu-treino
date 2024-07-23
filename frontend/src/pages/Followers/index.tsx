@@ -11,8 +11,7 @@ interface FollowersProps{
     setAuth:SetAuthType;
 }
 export const Followers = ({setAuth}:FollowersProps) => {
-    const user = useContext(currentUserContext)
-    const currentUser = user.currentUser
+    const currentUser = useContext(currentUserContext)
     useEffect(() => {
         const checkSession = async () => {
             try {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { Limiter } from '@/components/common/Limiter'
 import { GrayCard } from '@/components/common/Card'
@@ -14,6 +14,9 @@ import { User } from '@/api/users/user'
 import { createPost } from '@/api/posts/createPost'
 import { PostType } from '@/api/posts/posts'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { getPostsByAuthorId } from '@/api/posts/getPostsByAuthorId'
+import { UserImage } from '@/components/UserImage'
+import { currentUserContext } from '@/api/users/currentUserContext'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -65,18 +68,18 @@ const LeftColumn = () => {
 
 
 const MiddleColumn = ({user}:{user:User}) => {
-  const currentUser = user
+  const currentUser = useContext(currentUserContext)
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const posts = await getPosts();
-      setPosts(posts);
+      const fetchedPosts = await getPostsByAuthorId(user.userId);
+      setPosts(fetchedPosts);
     };
 
     fetchPosts();
-  }, []);
+  }, [user.userId]);
 
   const handleNewPost = async (postContent: string) => {
     if (postContent.trim() === '') return;
@@ -100,25 +103,28 @@ const MiddleColumn = ({user}:{user:User}) => {
       console.error('Failed to create post', error);
     }
   };
-
   return (
     <div className='text-white flex flex-col w-full md:w-2/4 gap-4'>
-      <GrayCard>
-        <div className='flex gap-4 mb-4'>
-          <img src={currentUser.userProfileImage} alt='Foto do usuário' className='w-[50px]' />
-          <input
-            placeholder={`No que você está pensando, ${currentUser?.userName}?`}
-            className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
-            value={currentPostContent}
-            onChange={(e) => setCurrentPostContent(e.target.value)}
-          />
-        </div>
-        <div className='flex justify-end'>
-          <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
-        </div>
-      </GrayCard>
-
-      {posts.map((post: PostType, i) => (
+      {user.userId === currentUser.userId? 
+        <GrayCard>
+          <div className='flex gap-4 mb-4'>
+            {user.userId === currentUser.userId? <UserImage userId={currentUser.userId} /> : ''}
+            <input
+              placeholder={`No que você está pensando, ${currentUser?.userName}?`}
+              className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
+              value={currentPostContent}
+              onChange={(e) => setCurrentPostContent(e.target.value)}
+            />
+          </div>
+          <div className='flex justify-end'>
+            <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
+          </div>
+        </GrayCard>
+        : ''
+      }
+      
+      {!posts && <LoadingSpinner/>}
+      {posts && posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
     </div>

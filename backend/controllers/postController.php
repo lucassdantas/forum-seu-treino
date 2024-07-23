@@ -31,8 +31,8 @@ switch($method) {
         break;
 
     case 'GET':
-        if (isset($_GET['authorId'])) {
-            $authorId = $_GET['authorId'];
+        if (isset($_GET['id'])) {
+            $authorId = $_GET['id'];
             $stmt = $post->getPostsByAuthorId($authorId);
         } else {
             $stmt = $post->read();

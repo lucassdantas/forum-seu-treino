@@ -10,8 +10,7 @@ interface FeedProps{
     setAuth:SetAuthType;
 }
 const Feed = ({ setAuth }:FeedProps) => {
-  const user = useContext(currentUserContext)
-  const currentUser = user.currentUser
+  const currentUser = useContext(currentUserContext)
   useEffect(() => {
     const checkSession = async () => {
       try {

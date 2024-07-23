@@ -19,7 +19,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
   const queryParams = new URLSearchParams(location.search);
   const userId = Number(queryParams.get('id')) || 0;
   const [profileUser, setProfileUser] = useState<User | undefined>(undefined);
-
+  
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -60,7 +60,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
           profileName={profileUser.userName}
         />
       ) : (
-        <LoadingSpinner />
+          <LoadingSpinner />
       )}
       {profileUser?
         <ProfileBody user={profileUser} />

@@ -9,6 +9,7 @@ import { PiUserPlus } from "react-icons/pi";
 import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
 import { handleLogout } from '@/utils/handleLogout';
 import { currentUserContext } from '@/api/users/currentUserContext';
+import { UserImage } from '@/components/UserImage';
 
 const Header = () => {
   const currentUser = useContext(currentUserContext)
@@ -53,9 +54,9 @@ const Header = () => {
                 <li><Link to="/">Feed</Link></li>
                 <li><Link to={"/perfil?id=" + currentUser.userId}>Meu perfil</Link></li>
                 <li><Link to={"/seguidores?id=" + currentUser.userId}>Seguidores</Link></li>
-                <li><Link to={"/configuracoes"}>Configurações</Link></li>
+                <li><Link to={"/feed?id=" + currentUser.userId}>Configurações</Link></li>
                 <li>
-                  <Link to={'/rotina' + currentUser.userId}>
+                  <Link to={'/rotina:' + currentUser.userId}>
                     <Button>Visualizar rotina</Button>
                   </Link>
                 </li>
@@ -63,7 +64,7 @@ const Header = () => {
             </div>
             <div className='md:w-2/12 w-4/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
               <div className="flex justify-center items-center gap-4">
-                <img src={currentUser.userProfileImage} alt='Foto' className='rounded-full w-[50px]' />
+                <UserImage userId={currentUser.userId}/>
                 <div className="relative flex items-center gap-1">
                   <span>Olá, {firstName}</span>
                   <FaAngleDown

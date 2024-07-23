@@ -11,6 +11,8 @@ import { PostType } from '@/api/posts/posts'
 import { User } from '@/api/users/user'
 import { getUserById } from '@/api/users/getUserById'
 import { Oval } from 'react-loader-spinner'
+import { UserImage } from '@/components/UserImage'
+import { Link } from 'react-router-dom'
 
 type PostCardProps = {
     post: PostType
@@ -44,11 +46,11 @@ export const PostCard = ({ post }: PostCardProps) => {
             <GrayCard className=''>
                 <div className="flex gap-4">
                     <div className="flex flex-col ">
-                        <img src={DEFAULT_IMAGE_URL} alt='Foto do autor do post' className='w-[50px]' />
+                        <UserImage userId={post.postAuthorId}/>
                     </div>
 
                     <div className="flex flex-col gap-1">
-                        <span>{postAuthor.userName}</span>
+                        <Link to={'/perfil?id='+postAuthor.userId}>{postAuthor.userName}</Link>
                         <span className='text-sm opacity-85'>{formatTimeAgo(post.postDateOfCreation)}</span>
                     </div>
                 </div>

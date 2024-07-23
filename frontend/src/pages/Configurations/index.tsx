@@ -5,7 +5,7 @@ import { ConfigurationsBody } from '@/pages/Configurations/ConfigurationsBody'
 import { useContext } from 'react'
 
 export const Configurations = () => {
-  const {currentUser, setCurrentUser} = useContext(currentUserContext)
+  const currentUser = useContext(currentUserContext)
 
   return (
     <>

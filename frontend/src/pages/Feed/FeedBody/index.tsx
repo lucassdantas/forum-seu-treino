@@ -14,6 +14,8 @@ import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
 import { PostType } from '@/api/posts/posts'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { DEFAULT_IMAGE_DIRECTORY } from '@/constants'
+import { UserImage } from '@/components/UserImage'
 
 export const FeedBody = () => {
   return (
@@ -88,7 +90,7 @@ const MiddleColumn = () => {
     <div className='text-white flex flex-col w-full md:w-2/4 gap-4'>
       <GrayCard>
         <div className='flex gap-4 mb-4'>
-          <img src={currentUser.userProfileImage} alt='Foto do usuário' className='w-[50px]' />
+          <UserImage userId={currentUser.userId}/>
           <input
             placeholder={'No que você está pensando, ' + currentUser?.userName + '?'}
             className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
@@ -101,7 +103,8 @@ const MiddleColumn = () => {
         </div>
       </GrayCard>
 
-      {posts.map((post: PostType, i) => (
+      {!posts && <LoadingSpinner/>}
+      {posts && posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
     </div>

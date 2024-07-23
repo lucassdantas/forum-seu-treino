@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { IoPersonAddOutline } from 'react-icons/io5';
 import { Popup } from '@/components/common/Popup';
 import { User } from '@/api/users/user';
+import { UserImage } from '@/components/UserImage';
+import { Link } from 'react-router-dom';
 
 
 type FriendsSuggestionProps = {
@@ -21,8 +23,8 @@ export const FriendsSuggestion = ({ friends }: FriendsSuggestionProps) => {
         {firstFriends.map((friend, i) => (
           <li className='flex gap-4 items-center justify-between py-4' key={i}>
             <div className='flex items-center gap-4'>
-              <img src={friend.userProfileImage} alt='Foto do usuário' className='w-[40px]' />
-              <span>{friend.userName}</span>
+              <UserImage userId={friend.userId}  />
+              <Link to={'/perfil?id='+friend.userId}>{friend.userName}</Link>
             </div>
             <div className='cursor-pointer'>
               <IoPersonAddOutline />
