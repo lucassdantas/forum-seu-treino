@@ -6,6 +6,7 @@ import { IoSearch } from "react-icons/io5";
 import { getUsers } from '@/api/users/getUsers';
 import { User } from '@/api/users/user';
 import { Oval } from 'react-loader-spinner';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export const FollowersBody = () => {
     
@@ -40,9 +41,11 @@ export const FollowersBody = () => {
                         />
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
-                        {filteredFollowers.map((follower: User, i:number) => (
+                        {!filteredFollowers && <LoadingSpinner/>}
+                        {filteredFollowers.length>1 && filteredFollowers.map((follower: User, i:number) => (
                             <UserInFollowContextCard key={i} user={follower}/>
                         ))}
+                        {filteredFollowers.length===0 && <span className='w-full text-center'>Nenhum usuário encontrado</span>}
                     </div>
                 </div>
             </Limiter>
