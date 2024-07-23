@@ -19,7 +19,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
   const queryParams = new URLSearchParams(location.search);
   const userId = Number(queryParams.get('id')) || 0;
   const [profileUser, setProfileUser] = useState<User | undefined>(undefined);
-  
+  console.log(userId)
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -45,7 +45,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
     };
 
     if (userId !== 0) {
-      fetchUserById();
+      fetchUserById()
     }
   }, [userId]);
 

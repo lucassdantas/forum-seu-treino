@@ -71,7 +71,6 @@ const MiddleColumn = ({user}:{user:User}) => {
   const currentUser = useContext(currentUserContext)
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
-
   useEffect(() => {
     const fetchPosts = async () => {
       const fetchedPosts = await getPostsByAuthorId(user.userId);
@@ -124,9 +123,10 @@ const MiddleColumn = ({user}:{user:User}) => {
       }
       
       {!posts && <LoadingSpinner/>}
-      {posts && posts.map((post: PostType, i) => (
+      {posts.length>1 && posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
+      {posts.length===0 && <span className='w-full text-center'>Nenhuma postagem encontrada.</span>}
     </div>
   );
 };
