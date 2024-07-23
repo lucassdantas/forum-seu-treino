@@ -1,4 +1,4 @@
-<?php
+<?php 
 class Post {
     private $conn;
     private $table_name = "forum_posts";
@@ -9,7 +9,7 @@ class Post {
     public $postContent;
     public $postDateOfCreation;
     public $postImage;
-    public $postHasImage;  // Novo campo adicionado
+    public $postHasImage;
     public $postLikesQuantity;
     public $postCommentsQuantity;
 
@@ -43,7 +43,7 @@ class Post {
 
     // Read
     public function read() {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY postDateOfCreation DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -53,7 +53,7 @@ class Post {
 
     // Get posts by authorId
     public function getPostsByAuthorId($authorId) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE postAuthorId = :postAuthorId";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE postAuthorId = :postAuthorId ORDER BY postDateOfCreation DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":postAuthorId", $authorId);

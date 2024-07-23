@@ -37,14 +37,7 @@ const Header = () => {
     <>
       <header className='bg-black text-white flex justify-center px-4'>
         <Limiter>
-          <div className='bg-black text-white flex justify-between items-center lg:px-0 px-4 py-2 w-full'>
-            <div className='flex gap-4 w-full justify-end'>
-              <FaSearch className='text-yellow-seu-treino text-xl cursor-pointer' />
-              <PiUserPlus className='text-yellow-seu-treino text-xl cursor-pointer' />
-              <FaRegEnvelope className='text-yellow-seu-treino text-xl cursor-pointer' />
-              <FaRegBell className='text-yellow-seu-treino text-xl cursor-pointer' />
-            </div>
-          </div>
+        
           <nav className='flex w-full items-center my-4'>
             <div className='w-4/12 lg:w-2/12 text-left'>
               <Link to='/'> <img src={logo} alt='Logo' className='w-full' /></Link>
@@ -75,13 +68,11 @@ const Header = () => {
                   />
                   {
                     isMenuOpen &&
-                    <div className='absolute top-0 mt-4 bg-black rounded-md'
+                    <div className='absolute top-0 mt-4 bg-black rounded-md min-w-[150px]'
                       onMouseEnter={() => setIsMenuOpen(true)}
                       onMouseLeave={() => setIsMenuOpen(false)}
                     >
-                      <nav className='flex flex-col py-4'>
-                        <Link to='seguidores' className='hover:bg-neutral-700 px-4 py-2'>Seguidores</Link>
-                        <Link to='configuracoes' className='hover:bg-neutral-700 px-4 py-2'>Configurações da conta</Link>
+                      <nav className='flex flex-col py-4 '>
                         <span onClick={() => handleLogout()} className='hover:bg-neutral-700 px-4 py-2 cursor-pointer'>Sair</span>
                       </nav>
                     </div>
