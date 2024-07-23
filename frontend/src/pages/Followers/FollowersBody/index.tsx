@@ -25,7 +25,7 @@ export const FollowersBody = () => {
     const filteredFollowers = followers.filter(follower =>
         follower.userName.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    if(!followers) return <Oval/>
+    if(!followers) return <LoadingSpinner/>
     return (
         <div className='bg-black w-full flex justify-center px-4'>
             <Limiter>
@@ -42,7 +42,7 @@ export const FollowersBody = () => {
                     </div>
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
                         {!filteredFollowers && <LoadingSpinner/>}
-                        {filteredFollowers.length>1 && filteredFollowers.map((follower: User, i:number) => (
+                        {filteredFollowers.length>0 && filteredFollowers.map((follower: User, i:number) => (
                             <UserInFollowContextCard key={i} user={follower}/>
                         ))}
                         {filteredFollowers.length===0 && <span className='w-full text-center'>Nenhum usuário encontrado</span>}

@@ -104,7 +104,7 @@ const MiddleColumn = () => {
       </GrayCard>
 
       {!posts && <LoadingSpinner/>}
-      {posts && posts.map((post: PostType, i) => (
+      {posts.length>0 && posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} />
       ))}
     </div>

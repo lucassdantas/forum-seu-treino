@@ -25,7 +25,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
         <ul className='divide-y'>
             {firstTopics.map((singleTopic:TopicType, i:number) => (
                 <li className={`py-4 `} key={i}>
-                    <Link to={singleTopic.topicUrl}>{singleTopic.topicName}</Link>
+                    <Link to={'/topicos/'+singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                 </li>
             ))}
         </ul>
@@ -43,7 +43,7 @@ export const TopicsList = ({topics}:TopicsListProps) => {
             <ul className='divide-y'>
                 {topicsList.map((singleTopic:TopicType, i:number) => (
                     <li className={`py-4 `} key={i}>
-                        <Link to={singleTopic.topicUrl}>{singleTopic.topicName}</Link>
+                        <Link to={'/topicos/'+singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                     </li>
                 ))}
             </ul>
