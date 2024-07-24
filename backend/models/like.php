@@ -3,8 +3,8 @@ class Like {
     private $conn;
     private $table_name = "forum_likes";
 
-    public $likesAuthorId;
-    public $likesPostId;
+    public $likeAuthorId;
+    public $likePostId;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -13,12 +13,12 @@ class Like {
     // Create
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET
-                    likesAuthorId=:likesAuthorId, likesPostId=:likesPostId";
+                    likeAuthorId=:likeAuthorId, likePostId=:likePostId";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":likesAuthorId", $this->likesAuthorId);
-        $stmt->bindParam(":likesPostId", $this->likesPostId);
+        $stmt->bindParam(":likeAuthorId", $this->likeAuthorId);
+        $stmt->bindParam(":likePostId", $this->likePostId);
 
         if ($stmt->execute()) {
             return true;
@@ -47,11 +47,11 @@ class Like {
 
     // Delete
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE likesAuthorId=:likesAuthorId AND likesPostId=:likesPostId";
+        $query = "DELETE FROM " . $this->table_name . " WHERE likeAuthorId=:likeAuthorId AND likePostId=:likePostId";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":likesAuthorId", $this->likesAuthorId);
-        $stmt->bindParam(":likesPostId", $this->likesPostId);
+        $stmt->bindParam(":likeAuthorId", $this->likeAuthorId);
+        $stmt->bindParam(":likePostId", $this->likePostId);
 
         if ($stmt->execute()) {
             return true;

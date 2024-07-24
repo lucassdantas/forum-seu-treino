@@ -14,8 +14,8 @@ switch($method) {
     case 'POST':
         $data = json_decode(file_get_contents("php://input"));
 
-        $like->likesAuthorId = $data->likesAuthorId;
-        $like->likesPostId = $data->likesPostId;
+        $like->likeAuthorId = $data->likeAuthorId;
+        $like->likePostId = $data->likePostId;
 
         if ($like->create()) {
             echo json_encode(["message" => "Like was created."]);
@@ -26,15 +26,15 @@ switch($method) {
 
     case 'GET':
         $stmt = $like->read();
-        $likes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($likes);
+        $like = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($like);
         break;
 
     case 'DELETE':
         $data = json_decode(file_get_contents("php://input"));
 
-        $like->likesAuthorId = $data->likesAuthorId;
-        $like->likesPostId = $data->likesPostId;
+        $like->likeAuthorId = $data->likeAuthorId;
+        $like->likePostId = $data->likePostId;
 
         if ($like->delete()) {
             echo json_encode(["message" => "Like was deleted."]);
@@ -48,4 +48,3 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
-?>
