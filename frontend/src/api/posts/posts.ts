@@ -1,6 +1,6 @@
 
 export interface PostType{
-  postId?:number;
+  postId:number;
   postAuthorId:number;
   postTopicId:number;
   postContent:string;

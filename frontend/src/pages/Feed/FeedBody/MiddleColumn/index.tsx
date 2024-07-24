@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from 'react'
-import { Button } from '@/components/common/Button'
-import { GrayCard } from '@/components/common/Card'
-import { PostCard } from '@/pages/Feed/components/PostCard'
+import { useContext, useEffect, useState } from 'react';
+import { Button } from '@/components/common/Button';
+import { GrayCard } from '@/components/common/Card';
+import { PostCard } from '@/components/PostCard';
 import { getPosts } from '@/api/posts/getPosts';
-import { currentUserContext } from '@/api/users/currentUserContext'
-import { PostType } from '@/api/posts/posts'
-import { LoadingSpinner } from '@/components/LoadingSpinner'
-import { UserImage } from '@/components/UserImage'
+import { currentUserContext } from '@/api/users/currentUserContext';
+import { PostType } from '@/api/posts/posts';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { UserImage } from '@/components/UserImage';
 import { createPost } from '@/api/posts/createPost';
 
 export const MiddleColumn = () => {
-  const currentUser  = useContext(currentUserContext);
+  const currentUser = useContext(currentUserContext);
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
 
@@ -29,8 +29,9 @@ export const MiddleColumn = () => {
       return;
     }
 
-    const newPost = {
-      postTopicId: 1, // Você pode ajustar isso para ser dinâmico
+    const newPost: PostType = {
+      postId: posts.length + 1, // Provisoriamente definindo postId como length + 1. Idealmente, o backend geraria o ID.
+      postTopicId: 1,
       postAuthorId: currentUser.userId,
       postContent: postContent,
       postDateOfCreation: new Date().toISOString(),
@@ -47,6 +48,10 @@ export const MiddleColumn = () => {
     } catch (error) {
       console.error('Error creating post:', error);
     }
+  };
+
+  const handleDeletePost = (postId: number) => {
+    setPosts(posts.filter(post => post.postId !== postId));
   };
 
   return (
@@ -67,8 +72,8 @@ export const MiddleColumn = () => {
       </GrayCard>
 
       {!posts.length && <LoadingSpinner />}
-      {posts.length > 0 && posts.map((post: PostType, i) => (
-        <PostCard key={i} post={post} />
+      {posts.length > 0 && posts.map((post: PostType) => (
+        <PostCard key={post.postId} post={post} onDelete={handleDeletePost} />
       ))}
     </div>
   );
