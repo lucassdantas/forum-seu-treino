@@ -1,7 +1,7 @@
 export interface User{
     userId:number;
     userName:string;
-    userProfileImage:string;
+    userHasImage:string;
     userBirthday:string;
     userCoverImage:string;
     userFollowers:number;

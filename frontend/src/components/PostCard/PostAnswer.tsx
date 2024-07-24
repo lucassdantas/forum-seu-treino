@@ -12,8 +12,6 @@ export const PostAnswer = ({
   comments,
   commentsQuantity,
   setCommentsQuantity,
-  currentPost,
-  postAuthor,
   isPopupOpen,
   setIsPopupOpen
 }: {

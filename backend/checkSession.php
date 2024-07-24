@@ -13,7 +13,7 @@ if (isset($_SESSION['userId'])) {
     $response['userData']['userId']             = $_SESSION['userId'];
     $response['userData']['userEmail']          = $_SESSION['userEmail'];
     $response['userData']['userName']           = $_SESSION['userName'];
-    $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'] ;
+    $response['userData']['userHasImage']       = $_SESSION['userHasImage'] ;
     $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'] ;
     $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
     $response['userData']['userSubjects']       = $_SESSION['userSubjects'];

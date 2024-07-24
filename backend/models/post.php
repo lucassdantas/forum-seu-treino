@@ -65,18 +65,15 @@ class Post {
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
-                    postTopicId=:postTopicId, postAuthorId=:postAuthorId, postContent=:postContent, postDateOfCreation=:postDateOfCreation,
-                    postImage=:postImage, postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity
+                    postTopicId=:postTopicId, postContent=:postContent, 
+                    postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity
                     WHERE postId=:postId";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":postId", $this->postId);
         $stmt->bindParam(":postTopicId", $this->postTopicId);
-        $stmt->bindParam(":postAuthorId", $this->postAuthorId);
         $stmt->bindParam(":postContent", $this->postContent);
-        $stmt->bindParam(":postDateOfCreation", $this->postDateOfCreation);
-        $stmt->bindParam(":postImage", $this->postImage);
         $stmt->bindParam(":postHasImage", $this->postHasImage);
         $stmt->bindParam(":postLikesQuantity", $this->postLikesQuantity);
         $stmt->bindParam(":postCommentsQuantity", $this->postCommentsQuantity);

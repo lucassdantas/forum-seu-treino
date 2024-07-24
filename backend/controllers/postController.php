@@ -13,7 +13,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case 'POST':
         $data = json_decode(file_get_contents("php://input"));
-
         $post->postTopicId = $data->postTopicId;
         $post->postAuthorId = $data->postAuthorId;
         $post->postContent = $data->postContent;
@@ -43,15 +42,11 @@ switch($method) {
 
     case 'PUT':
         $data = json_decode(file_get_contents("php://input"));
-
-        $post->postId = $data->postId;
-        $post->postTopicId = $data->postTopicId;
-        $post->postAuthorId = $data->postAuthorId;
-        $post->postContent = $data->postContent;
-        $post->postDateOfCreation = $data->postDateOfCreation;
-        $post->postImage = $data->postImage;
-        $post->postHasImage = $data->postHasImage;
-        $post->postLikesQuantity = $data->postLikesQuantity;
+        $post->postId               = $data->postId;
+        $post->postTopicId          = $data->postTopicId;
+        $post->postContent          = $data->postContent;
+        $post->postHasImage         = $data->postHasImage;
+        $post->postLikesQuantity    = $data->postLikesQuantity;
         $post->postCommentsQuantity = $data->postCommentsQuantity;
 
         if ($post->update()) {

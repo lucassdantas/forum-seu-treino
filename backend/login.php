@@ -26,7 +26,7 @@ try {
         $_SESSION['userEmail']        = $user['userEmail'];
         $_SESSION['userFollowers']    = $user['userFollowers'] ;
         $_SESSION['userSubjects']     = $user['userSubjects'] ;
-        $_SESSION['userProfileImage'] = $user['userProfileImage']; 
+        $_SESSION['userHasImage'] = $user['userHasImage']; 
         $_SESSION['userCoverImage']   = $user['userCoverImage']; 
        
         $response['userData']['userId']             = $_SESSION['userId'];
@@ -34,7 +34,7 @@ try {
         $response['userData']['userName']           = $_SESSION['userName'];
         $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
         $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
-        $response['userData']['userProfileImage']   = $_SESSION['userProfileImage'];
+        $response['userData']['userhasImage']       = $_SESSION['userhasImage'];
         $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'];
         
         $response['success']    = true;

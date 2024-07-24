@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Oval } from 'react-loader-spinner';
 import { CiHeart } from 'react-icons/ci';
 import { TfiComment } from 'react-icons/tfi';
-import { BsTrash3Fill } from 'react-icons/bs';
+import { BsTrash3Fill, BsPencilSquare } from 'react-icons/bs'; // Importação do ícone de edição
 import { GrayCard } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { UserImage } from '@/components/UserImage';
@@ -16,6 +15,8 @@ import { PostType } from '@/api/posts/posts';
 import { formatTimeAgo } from '@/utils/formatTimeAgo';
 import { User } from '@/api/users/user';
 import { Comments } from '@/api/comments/comments';
+import { editPost, PostToEdit } from '@/api/posts/editPost';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 type PostCardProps = {
   post: PostType;
@@ -25,6 +26,8 @@ type PostCardProps = {
 export const PostCard = ({ post, onDelete }: PostCardProps) => {
   const [comments, setComments] = useState<Comments[]>([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(post.postContent);
   const [postAuthor, setPostAuthor] = useState<User | null>(null);
   const [commentsQuantity, setCommentsQuantity] = useState(post.postCommentsQuantity);
   const currentUser = useContext(currentUserContext);
@@ -65,8 +68,24 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
       console.error('Error deleting post:', error);
     }
   };
+  const handleEditPost = async () => {
+    try {
+      const postToEdit:PostToEdit = {
+        postId:post.postId,
+        postContent: editContent,
+        postLikesQuantity:post.postLikesQuantity,
+        postCommentsQuantity:post.postCommentsQuantity,
+        postHasImage:post.postHasImage,
+        postTopicId:post.postTopicId,
+      }
+      await editPost(postToEdit);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error editing post:', error);
+    }
+  };
 
-  if (!postAuthor) return <Oval />;
+  if (!postAuthor) return <LoadingSpinner />;
 
   return (
     <div>
@@ -83,13 +102,30 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
           </div>
           <div className=''>
             {currentUser?.userId === post.postAuthorId && (
-              <Button onClick={handleDeletePost} className='ml-auto'><BsTrash3Fill className='font-bold text-lg' /></Button>
+              <div className='flex gap-2'>
+                <Button onClick={handleDeletePost} className='ml-auto'><BsTrash3Fill className='font-bold text-lg' /></Button>
+                <Button onClick={() => setIsEditing(true)} className='ml-auto'><BsPencilSquare className='font-bold text-lg' /></Button>
+              </div>
             )}
           </div>
         </div>
 
         <div className='my-4'>
-          <p>{post.postContent}</p>
+          {isEditing ? (
+            <>
+              <textarea 
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                className='w-full p-2 border border-gray-300 rounded bg-transparent'
+              />
+              <div className='flex gap-2'>
+                <Button onClick={handleEditPost} className='mt-2'>Salvar</Button>
+                <Button onClick={() => setIsEditing(false)} className='mt-2'>Cancelar</Button>
+              </div>
+            </>
+          ) : (
+            <p>{editContent}</p>
+          )}
         </div>
 
         <div className='flex border-t border-t-neutral-700 py-4 gap-4'>
@@ -97,10 +133,12 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
             <CiHeart className='text-xl cursor-pointer' /> <span>{post.postLikesQuantity} Curtida{post.postLikesQuantity === 1 ? 's' : ''}</span>
           </div>
           <div className='flex items-center gap-2 cursor-pointer' onClick={() => setIsPopupOpen(true)}>
-            <TfiComment className='cursor-pointer' /> <span>{commentsQuantity} Comentário{commentsQuantity === 1 ? 's' : ''} </span>
+            <TfiComment className='cursor-pointer' /> <span>{commentsQuantity} Comentário{commentsQuantity === 1 ? 's' : ''}</span>
           </div>
         </div>
       </GrayCard>
+
+
       {comments.length > 0 && (
         <PostAnswer 
           postAuthor={postAuthor} 
