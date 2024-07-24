@@ -1,4 +1,4 @@
-import { Comments, comments } from "@/api/posts/comments";
+import { Comments, comments } from "@/api/comments/comments.ts";
 import { User} from "@/api/users/user";
 import tempImage from '@/assets/profile/profilePhoto.png'
 

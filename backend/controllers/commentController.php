@@ -17,7 +17,7 @@ switch($method) {
         $comment->commentPostId = $data->commentPostId;
         $comment->commentAuthorId = $data->commentAuthorId;
         $comment->commentContent = $data->commentContent;
-        $comment->commentDateOfCreation = date('Y-m-d H:i:s'); // Supondo que a data de criação é a data atual
+        $comment->commentDateOfCreation = date('Y-m-d H:i:s');
 
         if ($comment->create()) {
             echo json_encode(["message" => "Comment was created."]);
@@ -27,9 +27,16 @@ switch($method) {
         break;
 
     case 'GET':
-        $stmt = $comment->read();
-        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($comments);
+        if (isset($_GET['postId'])) {
+            $postId = $_GET['postId'];
+            $stmt = $comment->readByPostId($postId);
+            $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($comments);
+        } else {
+            $stmt = $comment->read();
+            $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($comments);
+        }
         break;
 
     case 'PUT':
@@ -65,4 +72,3 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
-?>

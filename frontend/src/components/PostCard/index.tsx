@@ -1,20 +1,21 @@
-import { CommentsWithAuthors, commentsWithAuthors } from '@/api/users/commentsWithAuthors';
-import { GrayCard } from '@/components/common/Card';
-import { formatTimeAgo } from '@/utils/formatTimeAgo';
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
 import { CiHeart } from 'react-icons/ci';
 import { TfiComment } from 'react-icons/tfi';
-import { Button } from '@/components/common/Button';
-import { PostType } from '@/api/posts/posts';
-import { User } from '@/api/users/user';
-import { getUserById } from '@/api/users/getUserById';
-import { Oval } from 'react-loader-spinner';
-import { UserImage } from '@/components/UserImage';
-import { Link } from 'react-router-dom';
-import { currentUserContext } from '@/api/users/currentUserContext';
-import { deletePost } from '@/api/posts/deletePost';
 import { BsTrash3Fill } from 'react-icons/bs';
+import { GrayCard } from '@/components/common/Card';
+import { Button } from '@/components/common/Button';
+import { UserImage } from '@/components/UserImage';
 import { PostAnswer } from '@/components/PostCard/PostAnswer';
+import { currentUserContext } from '@/api/users/currentUserContext';
+import { getUserById } from '@/api/users/getUserById';
+import { deletePost } from '@/api/posts/deletePost';
+import { getCommentsByPostId } from '@/api/comments/getCommentsByPostId';
+import { PostType } from '@/api/posts/posts';
+import { formatTimeAgo } from '@/utils/formatTimeAgo';
+import { User } from '@/api/users/user';
+import { Comments } from '@/api/comments/comments';
 
 type PostCardProps = {
   post: PostType;
@@ -22,10 +23,9 @@ type PostCardProps = {
 };
 
 export const PostCard = ({ post, onDelete }: PostCardProps) => {
-  const commentWithAuthor: CommentsWithAuthors = commentsWithAuthors[0];
-  const [commentsWithAuthorsOnComponent, setCommentsWithAuthorsOnComponent] = useState<CommentsWithAuthors[]>(commentsWithAuthors);
+  const [comments, setComments] = useState<Comments[]>([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [postAuthor, setPostAuthor] = useState<User>();
+  const [postAuthor, setPostAuthor] = useState<User | null>(null);
   const [commentsQuantity, setCommentsQuantity] = useState(post.postCommentsQuantity);
   const currentUser = useContext(currentUserContext);
 
@@ -44,6 +44,19 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
     }
   }, [post.postAuthorId]);
 
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const comments = await getCommentsByPostId(post.postId);
+        setComments(comments);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+
+    fetchComments();
+  }, [post.postId]);
+
   const handleDeletePost = async () => {
     try {
       await deletePost(post.postId);
@@ -54,6 +67,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   };
 
   if (!postAuthor) return <Oval />;
+
   return (
     <div>
       <GrayCard className=''>
@@ -62,18 +76,16 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
             <div className="flex flex-col ">
               <UserImage userId={post.postAuthorId} />
             </div>
-
             <div className="flex flex-col gap-1">
               <Link to={'/perfil?id=' + postAuthor.userId}>{postAuthor.userName}</Link>
               <span className='text-sm opacity-85'>{formatTimeAgo(post.postDateOfCreation)}</span>
             </div>
           </div>
-            <div className=''>
-              {currentUser?.userId === post.postAuthorId && (
-                <Button onClick={handleDeletePost} className='ml-auto'><BsTrash3Fill className='font-bold text-lg' /></Button>
-              )}
-            </div>
-
+          <div className=''>
+            {currentUser?.userId === post.postAuthorId && (
+              <Button onClick={handleDeletePost} className='ml-auto'><BsTrash3Fill className='font-bold text-lg' /></Button>
+            )}
+          </div>
         </div>
 
         <div className='my-4'>
@@ -87,10 +99,19 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
           <div className='flex items-center gap-2 cursor-pointer' onClick={() => setIsPopupOpen(true)}>
             <TfiComment className='cursor-pointer' /> <span>{commentsQuantity} Comentário{commentsQuantity === 1 ? 's' : ''} </span>
           </div>
-
         </div>
       </GrayCard>
-      {commentsWithAuthors.length > 0 && <PostAnswer postAuthor={postAuthor} commentWithAuthor={commentWithAuthor} commentsQuantity={commentsQuantity} setCommentsQuantity={setCommentsQuantity} currentPost={post} commentsWithAuthorsOnComponent={commentsWithAuthorsOnComponent} setCommentsWithAuthorsOnComponent={setCommentsWithAuthorsOnComponent} isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />}
+      {comments.length > 0 && (
+        <PostAnswer 
+          postAuthor={postAuthor} 
+          comments={comments} 
+          commentsQuantity={commentsQuantity} 
+          setCommentsQuantity={setCommentsQuantity} 
+          currentPost={post} 
+          isPopupOpen={isPopupOpen} 
+          setIsPopupOpen={setIsPopupOpen} 
+        />
+      )}
     </div>
   );
 };

@@ -42,6 +42,19 @@ class Comment {
         return $stmt;
     }
 
+    // Read comments by post ID with author details
+    public function readByPostId($postId) {
+      $query = "SELECT * FROM " . $this->table_name . " 
+                WHERE commentPostId = :postId
+                ORDER BY commentDateOfCreation DESC";
+  
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(":postId", $postId);
+      $stmt->execute();
+  
+      return $stmt;
+  }
+
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
@@ -77,4 +90,3 @@ class Comment {
         return false;
     }
 }
-?>
