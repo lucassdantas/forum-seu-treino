@@ -33,6 +33,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   const [commentsQuantity, setCommentsQuantity] = useState(post.postCommentsQuantity);
   const [isLiked, setIsLiked] = useState(false);
   const [likesQuantity, setLikesQuantity] = useState(post.postLikesQuantity);
+  const [isLoading, setIsLoading] = useState(false); // Novo estado para controle de carregamento
   const currentUser = useContext(currentUserContext);
 
   useEffect(() => {
@@ -108,6 +109,8 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   };
 
   const handlePostLike = async () => {
+    setIsLoading(true); // Inicia o carregamento
+
     const updatedLikesQuantity = isLiked ? likesQuantity - 1 : likesQuantity + 1;
     setLikesQuantity(updatedLikesQuantity);
     setIsLiked(!isLiked);
@@ -135,6 +138,8 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
       await editPost(postToEdit);
     } catch (error) {
       console.error('Error updating likes:', error);
+    } finally {
+      setIsLoading(false); // Encerra o carregamento
     }
   };
 
@@ -176,6 +181,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
             isLiked={isLiked}
             likesQuantity={likesQuantity}
             handlePostLike={handlePostLike}
+            isLoading={isLoading} // Passa o estado de carregamento
           />
           <CommentsComponent
             commentsQuantity={commentsQuantity}
