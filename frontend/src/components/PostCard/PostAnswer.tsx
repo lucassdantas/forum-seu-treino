@@ -9,12 +9,14 @@ import { User } from '@/api/users/user';
 import { Comments } from '@/api/comments/comments';
 import { UserImage } from '@/components/UserImage';
 import { addComment } from '@/api/comments/addComment';
+import { fetchComments } from '@/api/comments/fetchComments';
 
 export const PostAnswer = ({
   comments,
   commentsQuantity,
   setCommentsQuantity,
   currentPost,
+  setComments,
   postAuthor,
   isPopupOpen,
   setIsPopupOpen,
@@ -22,40 +24,39 @@ export const PostAnswer = ({
 }: {
   comments: Comments[],
   commentsQuantity: number,
+  setComments:any,
   setCommentsQuantity: (quantity: number) => void,
   currentPost: PostType,
   postAuthor: User,
   isPopupOpen: boolean,
   setIsPopupOpen: (isOpen: boolean) => void,
-  currentUser:User
+  currentUser: User
 }) => {
   const [commentContent, setCommentContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false); // Novo estado para controle de submissão
 
   const handleNewComment = async (commentContent: string) => {
     if (commentContent.trim() === '') return;
-    
+
     setIsSubmitting(true); // Inicia o carregamento
-    
+
     try {
       const newComment = {
         commentContent,
         commentPostId: currentPost.postId,
-        commentAuthorId: postAuthor.userId,
-        commentAuthorName:currentUser.userName
+        commentAuthorId: currentUser.userId,
+        commentAuthorName: currentUser.userName
       };
-      
+
       // Envia o comentário para o servidor
       await addComment(newComment);
 
-      // Atualiza o estado local
-      setCommentsQuantity(commentsQuantity + 1);
+      // Atualiza a lista de comentários
+      const updatedComments = await fetchComments(currentPost.postId);
+      setComments(updatedComments);
+      setCommentsQuantity(updatedComments.length);
       setCommentContent('');
-      
-      // Atualiza a lista de comentários (opcional)
-      // const updatedComments = await fetchComments(currentPost.postId);
-      // setComments(updatedComments);
-      
+
     } catch (error) {
       console.error('Error adding comment:', error);
     } finally {
