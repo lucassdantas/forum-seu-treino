@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/07/2024 às 07:00
+-- Tempo de geração: 25/07/2024 às 02:30
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,9 +31,21 @@ CREATE TABLE `forum_comments` (
   `commentId` int(11) NOT NULL,
   `commentPostId` int(11) NOT NULL,
   `commentAuthorId` int(11) NOT NULL,
+  `commentAuthorName` varchar(255) NOT NULL,
   `commentContent` text NOT NULL,
   `commentDateOfCreation` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `forum_comments`
+--
+
+INSERT INTO `forum_comments` (`commentId`, `commentPostId`, `commentAuthorId`, `commentAuthorName`, `commentContent`, `commentDateOfCreation`) VALUES
+(1, 4, 1, 'Lucas', 'aaaaaaaaaa', '2024-07-25 00:21:17'),
+(2, 4, 1, 'Lucas', 'aaaaaaa', '2024-07-25 00:23:04'),
+(3, 4, 1, 'Lucas', 'bbbbbbbb', '2024-07-25 00:23:07'),
+(4, 4, 1, 'Lucas', 'cccccccccc', '2024-07-25 00:23:16'),
+(5, 17, 2, 'Usuário de teste', 'aaaaaaaaa', '2024-07-25 00:25:30');
 
 -- --------------------------------------------------------
 
@@ -59,6 +71,13 @@ CREATE TABLE `forum_likes` (
   `likeDateOfCreation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `forum_likes`
+--
+
+INSERT INTO `forum_likes` (`likeAuthorId`, `likePostId`, `likeDateOfCreation`) VALUES
+(2, 17, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -73,15 +92,21 @@ CREATE TABLE `forum_posts` (
   `postImage` varchar(255) NOT NULL,
   `postLikesQuantity` int(11) NOT NULL,
   `postCommentsQuantity` int(11) NOT NULL,
-  `postTopicId` int(11) NOT NULL
+  `postTopicId` int(11) NOT NULL,
+  `postHasImage` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `forum_posts`
 --
 
-INSERT INTO `forum_posts` (`postId`, `postAuthorId`, `postContent`, `postDateOfCreation`, `postImage`, `postLikesQuantity`, `postCommentsQuantity`, `postTopicId`) VALUES
-(1, 1, 'Conteúdo do post', '2024-07-17 19:46:36', '', 0, 0, 1);
+INSERT INTO `forum_posts` (`postId`, `postAuthorId`, `postContent`, `postDateOfCreation`, `postImage`, `postLikesQuantity`, `postCommentsQuantity`, `postTopicId`, `postHasImage`) VALUES
+(1, 1, 'Conteúdo do post', '2024-07-17 19:46:36', '', 0, 0, 1, 0),
+(2, 1, '', '2024-07-20 10:34:39', '', 0, 0, 1, 0),
+(3, 1, '', '2024-07-20 10:34:40', '', 0, 0, 1, 0),
+(4, 1, 'aaaaaaaaaaaaaaaaabbbbbbbbbbbbb', '2024-07-20 10:34:41', '', 4, 0, 1, 0),
+(5, 1, '', '2024-07-20 10:34:41', '', 0, 0, 1, 0),
+(17, 2, 'aaaaaaaaaaaaaaaaabbbbbbbbbbbbb', '2024-07-24 22:54:16', '', 4, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -105,24 +130,6 @@ INSERT INTO `forum_topics` (`topicId`, `topicName`, `topicUrl`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `forum_user`
---
-
-CREATE TABLE `forum_user` (
-  `login` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `forum_user`
---
-
-INSERT INTO `forum_user` (`login`, `password`) VALUES
-('teste@teste.com', 'teste');
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `forum_users`
 --
 
@@ -136,16 +143,17 @@ CREATE TABLE `forum_users` (
   `userFollowers` int(11) NOT NULL DEFAULT 0,
   `userSubjects` int(11) NOT NULL DEFAULT 0,
   `userPassword` varchar(255) NOT NULL,
-  `userDateOfCreation` datetime NOT NULL DEFAULT current_timestamp()
+  `userDateOfCreation` datetime NOT NULL DEFAULT current_timestamp(),
+  `userHarImage` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `forum_users`
 --
 
-INSERT INTO `forum_users` (`userId`, `userName`, `userEmail`, `userBirthday`, `userProfileImage`, `userCoverImage`, `userFollowers`, `userSubjects`, `userPassword`, `userDateOfCreation`) VALUES
-(1, 'lucas', 'lucasdantasprogramador@gmail.com', '2002-01-07', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, '123456', '2024-07-17 19:32:49'),
-(2, 'Usuário de teste', 'teste@teste.com', '2024-07-02', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, 'teste', '2024-07-18 10:16:42');
+INSERT INTO `forum_users` (`userId`, `userName`, `userEmail`, `userBirthday`, `userProfileImage`, `userCoverImage`, `userFollowers`, `userSubjects`, `userPassword`, `userDateOfCreation`, `userHarImage`) VALUES
+(1, 'lucas', 'lucasdantasprogramador@gmail.com', '2002-01-07', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, '123456', '2024-07-17 19:32:49', 0),
+(2, 'Usuário de teste', 'teste@teste.com', '2024-07-02', '/profileImage/default/imagem-padrao-do-usuario.png', '/profileImage/default/imagem-padrao-do-usuario.png', 0, 0, 'teste', '2024-07-18 10:16:42', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -198,10 +206,16 @@ ALTER TABLE `forum_users`
 --
 
 --
+-- AUTO_INCREMENT de tabela `forum_comments`
+--
+ALTER TABLE `forum_comments`
+  MODIFY `commentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de tabela `forum_posts`
 --
 ALTER TABLE `forum_posts`
-  MODIFY `postId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `postId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de tabela `forum_topics`

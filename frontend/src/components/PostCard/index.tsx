@@ -190,17 +190,16 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
         </div>
       </GrayCard>
 
-      {comments.length > 0 && (
-        <PostAnswer
-          postAuthor={postAuthor}
-          comments={comments}
-          commentsQuantity={commentsQuantity}
-          setCommentsQuantity={setCommentsQuantity}
-          currentPost={post}
-          isPopupOpen={isPopupOpen}
-          setIsPopupOpen={setIsPopupOpen}
-        />
-      )}
+      <PostAnswer
+        postAuthor={postAuthor}
+        comments={comments}
+        commentsQuantity={commentsQuantity}
+        setCommentsQuantity={setCommentsQuantity}
+        currentPost={post}
+        isPopupOpen={isPopupOpen}
+        setIsPopupOpen={setIsPopupOpen}
+        currentUser={currentUser}
+      />
     </div>
   );
 };
