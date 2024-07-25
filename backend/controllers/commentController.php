@@ -17,6 +17,7 @@ switch($method) {
         $comment->commentPostId = $data->commentPostId;
         $comment->commentAuthorId = $data->commentAuthorId;
         $comment->commentContent = $data->commentContent;
+        $comment->commentAuthorName = $data->commentAuthorName;
         $comment->commentDateOfCreation = date('Y-m-d H:i:s');
 
         if ($comment->create()) {

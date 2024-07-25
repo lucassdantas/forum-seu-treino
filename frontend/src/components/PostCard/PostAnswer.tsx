@@ -66,7 +66,7 @@ export const PostAnswer = ({
   return (
     <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
       <div className='flex gap-2 w-full items-center mb-4'>
-        <UserImage userId={postAuthor.userId} size={40}/>
+        <UserImage userId={currentUser.userId} size={40}/>
         <input
           placeholder={'Escrever resposta'}
           className='w-11/12 bg-transparent placeholder:to-zinc-100 outline-none px-2 pr-4 bg-neutral-900 py-4'

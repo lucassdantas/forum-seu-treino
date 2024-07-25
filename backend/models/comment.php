@@ -6,6 +6,7 @@ class Comment {
     public $commentId;
     public $commentPostId;
     public $commentAuthorId;
+    public $commentAuthorName;
     public $commentContent;
     public $commentDateOfCreation;
 
@@ -16,12 +17,13 @@ class Comment {
     // Create
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET
-                    commentPostId=:commentPostId, commentAuthorId=:commentAuthorId, commentContent=:commentContent, commentDateOfCreation=:commentDateOfCreation";
+                    commentPostId=:commentPostId, commentAuthorId=:commentAuthorId, commentAuthorName=:commentAuthorName, commentContent=:commentContent, commentDateOfCreation=:commentDateOfCreation";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":commentPostId", $this->commentPostId);
         $stmt->bindParam(":commentAuthorId", $this->commentAuthorId);
+        $stmt->bindParam(":commentAuthorName", $this->commentAuthorName);
         $stmt->bindParam(":commentContent", $this->commentContent);
         $stmt->bindParam(":commentDateOfCreation", $this->commentDateOfCreation);
 
