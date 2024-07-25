@@ -56,6 +56,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
       try {
         const comments = await getCommentsByPostId(post.postId);
         setComments(comments);
+        setCommentsQuantity(comments.length)
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
