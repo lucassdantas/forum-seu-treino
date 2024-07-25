@@ -3,20 +3,20 @@ import { GrayCard } from '@/components/common/Card';
 import { Popup } from '@/components/common/Popup';
 import { Button } from '@/components/common/Button';
 import { formatTimeAgo } from '@/utils/formatTimeAgo';
-import { DEFAULT_IMAGE_URL } from '@/constants';
 import { PostType } from '@/api/posts/posts';
 import { User } from '@/api/users/user';
 import { Comments } from '@/api/comments/comments';
 import { UserImage } from '@/components/UserImage';
 import { addComment } from '@/api/comments/addComment';
 import { fetchComments } from '@/api/comments/fetchComments';
+import { deleteComment } from '@/api/comments/deleteComments'; // Importe a função de exclusão
 
 export const PostAnswer = ({
   comments,
   commentsQuantity,
+  setComments,
   setCommentsQuantity,
   currentPost,
-  setComments,
   postAuthor,
   isPopupOpen,
   setIsPopupOpen,
@@ -24,7 +24,7 @@ export const PostAnswer = ({
 }: {
   comments: Comments[],
   commentsQuantity: number,
-  setComments:any,
+  setComments: (comments: Comments[]) => void,
   setCommentsQuantity: (quantity: number) => void,
   currentPost: PostType,
   postAuthor: User,
@@ -33,12 +33,12 @@ export const PostAnswer = ({
   currentUser: User
 }) => {
   const [commentContent, setCommentContent] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Novo estado para controle de submissão
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNewComment = async (commentContent: string) => {
     if (commentContent.trim() === '') return;
 
-    setIsSubmitting(true); // Inicia o carregamento
+    setIsSubmitting(true);
 
     try {
       const newComment = {
@@ -48,10 +48,8 @@ export const PostAnswer = ({
         commentAuthorName: currentUser.userName
       };
 
-      // Envia o comentário para o servidor
       await addComment(newComment);
 
-      // Atualiza a lista de comentários
       const updatedComments = await fetchComments(currentPost.postId);
       setComments(updatedComments);
       setCommentsQuantity(updatedComments.length);
@@ -60,7 +58,20 @@ export const PostAnswer = ({
     } catch (error) {
       console.error('Error adding comment:', error);
     } finally {
-      setIsSubmitting(false); // Encerra o carregamento
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    try {
+      await deleteComment(commentId);
+
+      const updatedComments = comments.filter(comment => comment.commentId !== commentId);
+      setComments(updatedComments);
+      setCommentsQuantity(updatedComments.length);
+
+    } catch (error) {
+      console.error('Error deleting comment:', error);
     }
   };
 
@@ -84,8 +95,8 @@ export const PostAnswer = ({
         </Button>
       </div>
 
-      {comments.map((comment, key) => (
-        <div key={key} className='mb-4'>
+      {comments.map((comment) => (
+        <div key={comment.commentId} className='mb-4'>
           <div className="flex gap-4">
             <div className="flex flex-col">
               <UserImage userId={comment.commentAuthorId} size={40}/>
@@ -94,6 +105,14 @@ export const PostAnswer = ({
               <span className=''>{comment.commentAuthorName}</span>
               <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
             </div>
+            {comment.commentAuthorId === currentUser.userId && (
+              <Button
+                onClick={() => handleDeleteComment(comment.commentId)}
+                className='ml-auto h-fit rounded-full text-white '
+              >
+                x
+              </Button>
+            )}
           </div>
           <div className='mt-4'>
             <p className='break-words'>{comment.commentContent}</p>
@@ -105,8 +124,8 @@ export const PostAnswer = ({
 
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <div className='gap-4 divide-y flex flex-col'>
-          {comments.map((comment, key) => (
-            <div key={key} className='pt-4'>
+          {comments.map((comment) => (
+            <div key={comment.commentId} className='pt-4'>
               <div className="flex gap-4">
                 <div className="flex flex-col">
                   <UserImage userId={comment.commentAuthorId} size={40}/>
@@ -115,6 +134,14 @@ export const PostAnswer = ({
                   <span className=''>{comment.commentAuthorName}</span>
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </div>
+                {comment.commentAuthorId === currentUser.userId && (
+                  <Button
+                    onClick={() => handleDeleteComment(comment.commentId)}
+                    className='ml-auto text-white'
+                  >
+                    x
+                  </Button>
+                )}
               </div>
               <div className='mt-4'>
                 <p className='break-words'>{comment.commentContent}</p>

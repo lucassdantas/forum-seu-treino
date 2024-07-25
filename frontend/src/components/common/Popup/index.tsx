@@ -16,7 +16,7 @@ export const Popup: React.FC<PopupProps> = ({ children, isOpen, onClose }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 h-full overflow-y-hidden ">
       <div className="fixed inset-0 bg-gray-800 opacity-50" onClick={onClose}></div>
       <div className="relative rounded-lg shadow-lg w-[50%] h-fit max-h-[90%] overflow-y-scroll overflow-x-hidden">
-        <GrayCard className='w-full '>
+        <GrayCard className='w-full py-8'>
           {children}
         </GrayCard>
         <button className={classNames('absolute top-2 right-4 text-white text-lg font-bold')} onClick={onClose}>x</button>
