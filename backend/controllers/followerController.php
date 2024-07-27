@@ -26,7 +26,13 @@ switch($method) {
         break;
 
     case 'GET':
-        if (isset($_GET['followerUserFollower'])) {
+        if (isset($_GET['followerUserFollower']) && isset($_GET['followerUserFollowed'])) {
+            $followerUserFollower = $_GET['followerUserFollower'];
+            $followerUserFollowed = $_GET['followerUserFollowed'];
+            $stmt = $follower->isFollower($followerUserFollower, $followerUserFollowed);
+            $isFollower = $stmt->rowCount() > 0;
+            echo json_encode(['isFollower' => $isFollower]);
+        } elseif (isset($_GET['followerUserFollower'])) {
             $followerUserFollower = $_GET['followerUserFollower'];
             $stmt = $follower->getFollowersByFollowerId($followerUserFollower);
         } elseif (isset($_GET['followerUserFollowed'])) {

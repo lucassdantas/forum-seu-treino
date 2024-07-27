@@ -19,7 +19,6 @@ export const Profile = ({ setAuth }: ProfileProps) => {
   const queryParams = new URLSearchParams(location.search);
   const userId = Number(queryParams.get('id')) || 0;
   const [profileUser, setProfileUser] = useState<User | undefined>(undefined);
-  console.log(userId)
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -56,7 +55,6 @@ export const Profile = ({ setAuth }: ProfileProps) => {
         <PhotoFollowerAndSubjects
           followers={profileUser.userFollowers}
           subjects={profileUser.userSubjects}
-          profilePhoto={profileUser.userProfileImage}
           profileName={profileUser.userName}
         />
       ) : (

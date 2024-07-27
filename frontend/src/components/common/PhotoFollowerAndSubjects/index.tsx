@@ -4,13 +4,12 @@ import { UserImage } from '@/components/UserImage';
 import { useContext } from 'react';
 
 type PhotoFollowerAndSubjectsProps = {
-  profilePhoto: string;
   profileName: string;
   followers: number;
   subjects: number;
 }
 
-export const PhotoFollowerAndSubjects = ({ profilePhoto, profileName, followers, subjects }: PhotoFollowerAndSubjectsProps) => {
+export const PhotoFollowerAndSubjects = ({  profileName, followers, subjects }: PhotoFollowerAndSubjectsProps) => {
   const currentUser = useContext(currentUserContext)
 
   return (

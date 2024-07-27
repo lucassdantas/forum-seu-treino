@@ -6,6 +6,5 @@ type UserImageProps = {
   className?:string,
 }
 export const UserImage = ({userId, size=50, className}:UserImageProps) => {
-  const sizeToClass = ' w-['+String(size)+'px] h-['+String(size)+'px]';
-  return <img src={`${location.origin + DEFAULT_IMAGE_DIRECTORY + userId}/${userId}.jpg`} alt='Foto do usuário' className={sizeToClass+` object-cover rounded-full block ${className}`  }/>
+  return <img src={`${location.origin + DEFAULT_IMAGE_DIRECTORY + userId}/${userId}.jpg`} alt='Foto do usuário' className={`w-[50px] h-[50px] object-cover rounded-full block ${className}`  }/>
 }

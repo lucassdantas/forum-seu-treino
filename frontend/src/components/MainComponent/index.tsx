@@ -12,6 +12,7 @@ type MainComponentProps = {
 }
 
 export const MainComponent = ({ setAuth, Component, currentUser, setCurrentUser }: MainComponentProps) => {
+
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -33,6 +34,7 @@ export const MainComponent = ({ setAuth, Component, currentUser, setCurrentUser 
 
   return (
     <currentUserContext.Provider value={currentUser}>
+      {}
       <Header />
       <main>
         <Component/>

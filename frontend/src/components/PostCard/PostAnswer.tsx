@@ -10,6 +10,7 @@ import { UserImage } from '@/components/UserImage';
 import { addComment } from '@/api/comments/addComment';
 import { fetchComments } from '@/api/comments/fetchComments';
 import { deleteComment } from '@/api/comments/deleteComments'; // Importe a função de exclusão
+import { TiDelete } from 'react-icons/ti';
 
 export const PostAnswer = ({
   comments,
@@ -75,6 +76,9 @@ export const PostAnswer = ({
     }
   };
 
+  // Limitar a exibição a no máximo 2 comentários
+  const displayedComments = comments.slice(0, 2);
+
   return (
     <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
       <div className='flex gap-2 w-full items-center mb-4'>
@@ -95,7 +99,7 @@ export const PostAnswer = ({
         </Button>
       </div>
 
-      {comments.map((comment) => (
+      {displayedComments.map((comment) => (
         <div key={comment.commentId} className='mb-4'>
           <div className="flex gap-4">
             <div className="flex flex-col">
@@ -106,12 +110,10 @@ export const PostAnswer = ({
               <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
             </div>
             {comment.commentAuthorId === currentUser.userId && (
-              <Button
+              <TiDelete
                 onClick={() => handleDeleteComment(comment.commentId)}
-                className='ml-auto h-fit rounded-full text-white '
-              >
-                x
-              </Button>
+                className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
+              />
             )}
           </div>
           <div className='mt-4'>
@@ -120,7 +122,11 @@ export const PostAnswer = ({
         </div>
       ))}
 
-      {commentsQuantity > 1 && <span className='mb-4 cursor-pointer' onClick={() => setIsPopupOpen(true)}>Ver todos os comentários</span>}
+      {commentsQuantity > 2 && (
+        <span className='mb-4 cursor-pointer' onClick={() => setIsPopupOpen(true)}>
+          Ver todos os comentários
+        </span>
+      )}
 
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <div className='gap-4 divide-y flex flex-col'>
@@ -135,12 +141,10 @@ export const PostAnswer = ({
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </div>
                 {comment.commentAuthorId === currentUser.userId && (
-                  <Button
+                  <TiDelete
                     onClick={() => handleDeleteComment(comment.commentId)}
-                    className='ml-auto text-white'
-                  >
-                    x
-                  </Button>
+                    className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
+                  />
                 )}
               </div>
               <div className='mt-4'>

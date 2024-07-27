@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react'
+import {  useContext, useEffect, useState } from 'react'
 import { GrayCard } from '@/components/common/Card'
 import { TopicType } from '@/api/topics'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
@@ -7,11 +7,12 @@ import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/api/users/user'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { currentUserContext } from '@/api/users/currentUserContext'
 
 export const LeftColumn = () => {
   const [topicsList, setTopicsList] = useState<TopicType[]>();
   const [friendsList, setFriendsList] = useState<User[]>();
-
+  const currentUser = useContext(currentUserContext)
   useEffect(() => {
     const fetchTopics = async () => {
       const topics = await getTopics();
@@ -35,7 +36,7 @@ export const LeftColumn = () => {
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>
-        {friendsList ? <FriendsSuggestion friends={friendsList} /> : <LoadingSpinner />}
+        {friendsList ? <FriendsSuggestion friends={friendsList} currentUserId={currentUser.userId} /> : <LoadingSpinner />}
       </GrayCard>
     </div>
   );

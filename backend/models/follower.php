@@ -61,6 +61,18 @@ class Follower {
         return $stmt;
     }
 
+    // Check if user is a follower
+    public function isFollower($followerUserFollower, $followerUserFollowed) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE followerUserFollower = :followerUserFollower AND followerUserFollowed = :followerUserFollowed";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":followerUserFollower", $followerUserFollower);
+        $stmt->bindParam(":followerUserFollowed", $followerUserFollowed);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
