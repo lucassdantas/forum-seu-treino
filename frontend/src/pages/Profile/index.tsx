@@ -56,6 +56,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
           followers={profileUser.userFollowers}
           subjects={profileUser.userSubjects}
           profileName={profileUser.userName}
+          profileOwner={profileUser}
         />
       ) : (
           <LoadingSpinner />
