@@ -13,6 +13,7 @@ export const checkFollowStatus = async (currentUserId: number, friendIds: number
         }
       });
       status[friendId] = response.data.isFollower;
+      console.log(response.data.isFollower)
     } catch (error) {
       console.error('Error checking follow status:', error);
     }

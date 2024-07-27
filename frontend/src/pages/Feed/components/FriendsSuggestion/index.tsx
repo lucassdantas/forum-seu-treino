@@ -6,10 +6,12 @@ import { UserImage } from '@/components/UserImage';
 import { Link } from 'react-router-dom';
 import { checkFollowStatus } from '@/api/followers/checkFollowStatus';
 import { followUser } from '@/api/followers/followUser';
+import { SlUserFollowing } from 'react-icons/sl';
+import { unfollowUser } from '@/api/followers/unFollowUser';
 
 type FriendsSuggestionProps = {
   friends: User[];
-  currentUserId: number; // Adicione o ID do usuário atual como uma prop
+  currentUserId: number;
 };
 
 type FollowStatus = {
@@ -32,14 +34,20 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
   }, [friends, currentUserId]);
 
   const handleFollowClick = async (friendId: number) => {
-    const success = await followUser(currentUserId, friendId);
-    if (success) {
-      setFollowStatus(prevStatus => ({ ...prevStatus, [friendId]: true }));
+    if (followStatus[friendId]) {
+      const success = await unfollowUser(currentUserId, friendId);
+      if (success) {
+        setFollowStatus(prevStatus => ({ ...prevStatus, [friendId]: false }));
+      }
+    } else {
+      const success = await followUser(currentUserId, friendId);
+      if (success) {
+        setFollowStatus(prevStatus => ({ ...prevStatus, [friendId]: true }));
+      }
     }
   };
 
   const firstFriends = friendsList.slice(0, 4);
-
   return (
     <div className='flex flex-col gap-2'>
       <ul className='divide-y'>
@@ -50,7 +58,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
               <Link to={'/perfil?id=' + friend.userId}>{friend.userName}</Link>
             </div>
             <div className='cursor-pointer' onClick={() => handleFollowClick(friend.userId)}>
-              {followStatus[friend.userId] ? 'Seguindo' : <IoPersonAddOutline />}
+              {followStatus[friend.userId] ? <SlUserFollowing className='text-orange-seu-treino font-bold' /> : <IoPersonAddOutline />}
             </div>
           </li>
         ))}
@@ -71,7 +79,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
                 <span>{friend.userName}</span>
               </div>
               <div className='cursor-pointer' onClick={() => handleFollowClick(friend.userId)}>
-                {followStatus[friend.userId] ? 'Seguindo' : <IoPersonAddOutline />}
+                {followStatus[friend.userId] ? <SlUserFollowing className='text-orange-seu-treino font-bold' /> : <IoPersonAddOutline />}
               </div>
             </li>
           ))}

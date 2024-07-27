@@ -35,14 +35,18 @@ switch($method) {
         } elseif (isset($_GET['followerUserFollower'])) {
             $followerUserFollower = $_GET['followerUserFollower'];
             $stmt = $follower->getFollowersByFollowerId($followerUserFollower);
+            $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($followers);
         } elseif (isset($_GET['followerUserFollowed'])) {
             $followerUserFollowed = $_GET['followerUserFollowed'];
             $stmt = $follower->getFollowedByFollowedId($followerUserFollowed);
+            $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($followers);
         } else {
             $stmt = $follower->read();
+            $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($followers);
         }
-        $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        echo json_encode($followers);
         break;
 
     case 'PUT':
