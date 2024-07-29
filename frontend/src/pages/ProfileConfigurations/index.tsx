@@ -30,7 +30,7 @@ const ProfileConfigurations = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profilePhoto={currentUser.userProfileImage} profileName={currentUser.userName}/>
+      <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profileName={currentUser.userName} profileOwner={currentUser}/>
       <ProfileConfigurationsBody user={currentUser}/>
     </>
   );

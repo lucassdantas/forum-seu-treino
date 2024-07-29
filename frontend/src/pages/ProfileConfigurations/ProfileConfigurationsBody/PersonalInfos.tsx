@@ -1,4 +1,5 @@
 import { currentUserContext } from '@/api/users/currentUserContext';
+import { Button } from '@/components/common/Button';
 import { BACKEND_URL } from '@/constants';
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
@@ -11,7 +12,6 @@ export const PersonalInfos = () => {
   const [userPhone, setUserPhone] = useState(currentUser.userPhone);
 
   const handleSave = async () => {
-    // Função para salvar as alterações no backend
     try {
       const updatedUser = {
         userId: currentUser.userId,
@@ -76,12 +76,12 @@ export const PersonalInfos = () => {
         </div>
       </div>
       <div className="flex justify-end mt-4">
-        <button
+        <Button
           className="p-2 bg-blue-500 text-white rounded"
           onClick={handleSave}
         >
           Salvar
-        </button>
+        </Button>
       </div>
     </div>
   );
