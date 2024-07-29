@@ -48,16 +48,15 @@ export const UserInFollowContextCard = ({ user, className }: UserInFollowContext
     <div className={'bg-neutral-950 text-white rounded-md my-4 ' + className}>
       <div className={`bg-[url("${user.userCoverImage}")] bg-neutral-400 w-full h-[80px] p-1`}> </div>
       <div className='py-8 flex flex-col items-center gap-4 w-full'>
-        <UserImage userId={user.userId} size={120} className='-mt-14 text-center relative' />
+        <UserImage userId={user.userId} photoSize='lg' className='-mt-14 text-center relative' />
         <span className='mb-4'>{user.userName}</span>
         <div className='flex justify-center gap-4'>
-          <Button className='bg-white' onClick={handleOpenMessage}>Mensagem</Button>
+          <Button className='bg-white' onClick={handleOpenMessage}><Link to={`/perfil?id=${user.userId}`}>Ver Perfil</Link></Button>
           {isFollowing ? 
             <OutlineButton className='border-yellow-seu-treino min-w-[90px]' onClick={handleFollow}>Deixar de seguir</OutlineButton>
             : <Button className='bg-yellow-seu-treino' onClick={handleFollow}>Seguir</Button>
           }
         </div>
-        <Link to={`/perfil?id=${user.userId}`}>Visitar Perfil</Link>
       </div>
     </div>
   );

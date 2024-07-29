@@ -8,6 +8,7 @@ import { Followers } from '@/pages/Followers';
 import { User } from '@/api/users/user';
 import { Profile } from '@/pages/Profile';
 import ProfileConfigurations from '@/pages/ProfileConfigurations';
+import TrainRoutine from '@/pages/TrainRoutine';
 
 const App = () => {
   const [auth, setAuth] = useState(false);
@@ -47,7 +48,7 @@ const App = () => {
           }
         />
         <Route
-          path="/seguidores"
+          path="/usuarios"
           element={
             auth && currentUser !== undefined
               ? <MainComponent setAuth={setAuth} Component={Followers} currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -67,6 +68,14 @@ const App = () => {
           element={
             auth && currentUser !== undefined
               ? <MainComponent setAuth={setAuth} Component={ProfileConfigurations} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+              : <Login setAuth={setAuth} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+          }
+        />
+        <Route
+          path="/rotina"
+          element={
+            auth && currentUser !== undefined
+              ? <MainComponent setAuth={setAuth} Component={TrainRoutine} currentUser={currentUser} setCurrentUser={setCurrentUser} />
               : <Login setAuth={setAuth} currentUser={currentUser} setCurrentUser={setCurrentUser} />
           }
         />

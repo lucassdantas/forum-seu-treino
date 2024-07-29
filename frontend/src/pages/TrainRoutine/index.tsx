@@ -2,20 +2,21 @@ import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
-import { FeedBody } from '@/pages/Feed/FeedBody';
 import { currentUserContext } from '@/api/users/currentUserContext';
-import { BACKEND_URL } from '@/constants';
+import { ProfileConfigurationsBody } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody';
+import { TrainRoutineBody } from '@/pages/TrainRoutine/TrainRoutineBody';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
     setAuth:SetAuthType;
 }
-const Feed = ({ setAuth }:FeedProps) => {
+const TrainRoutine = ({ setAuth }:FeedProps) => {
   const currentUser = useContext(currentUserContext)
+  
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}checkSession.php`, { withCredentials: true });
+        const response = await axios.get('http://localhost/backend/checkSession.php', { withCredentials: true });
         if (!response.data.loggedIn) {
           setAuth(false);
         }
@@ -27,14 +28,13 @@ const Feed = ({ setAuth }:FeedProps) => {
     checkSession();
   }, [setAuth]);
 
-
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects profileOwner={currentUser} profileName={currentUser.userName}/>
-      <FeedBody/>
+      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser}/>
+      <TrainRoutineBody />
     </>
   );
 };
 
-export default Feed;
+export default TrainRoutine;

@@ -46,7 +46,7 @@ const Header = () => {
               <ul className='flex gap-4 items-center '>
                 <li><Link to="/">Feed</Link></li>
                 <li><Link to={"/perfil?id=" + currentUser.userId}>Meu perfil</Link></li>
-                <li><Link to={"/seguidores?id=" + currentUser.userId}>Seguidores</Link></li>
+                <li><Link to={"/usuarios?id=" + currentUser.userId}>Usuários</Link></li>
                 <li><Link to={"/configuracoes"}>Configurações</Link></li>
                 <li>
                   <Link to={'/rotina'}>
@@ -99,10 +99,10 @@ const Header = () => {
                 <ul className='flex flex-col items-center py-4'>
                   <li className='py-2'><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Feed</Link></li>
                   <li className='py-2'><Link to={"/perfil:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Meu perfil</Link></li>
-                  <li className='py-2'><Link to={"/seguidores:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Seguidores</Link></li>
+                  <li className='py-2'><Link to={"/usuarios:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Usuários</Link></li>
                   <li className='py-2'><Link to={"/feed:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
                   <li className='py-2'>
-                    <Link to={'/rotina:' + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link to={'/rotina'} onClick={() => setIsMobileMenuOpen(false)}>
                       <Button>Visualizar rotina</Button>
                     </Link>
                   </li>

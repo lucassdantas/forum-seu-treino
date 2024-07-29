@@ -49,13 +49,11 @@ export const Followers = ({setAuth}:FollowersProps) => {
     }
   }, [userId]);
     return (
-    <div>
+    <div className='bg-black'>
       <Banner/>
       {profileUser ? (
       <>
         <PhotoFollowerAndSubjects
-          followers={profileUser.userFollowers}
-          subjects={profileUser.userSubjects}
           profileName={profileUser.userName}
           profileOwner={profileUser}
         />

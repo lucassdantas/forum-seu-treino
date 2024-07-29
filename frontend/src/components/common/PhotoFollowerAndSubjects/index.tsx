@@ -64,9 +64,9 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
   return (
     <div className='bg-black text-white flex justify-center -mt-8 px-4'>
       <Limiter>
-        <div className='flex flex-col md:flex-row items-center py-4 w-full'>
+        <div className='flex flex-col md:flex-row items-center py-4 w-full sm:text-left text-center'>
           <div className="flex flex-col md:flex-row gap-6 w-full md:w-2/3 items-center">
-            <UserImage userId={profileOwner.userId} size={100} className={'md:w-[180px] md:h-[180px]'} />
+            <UserImage userId={profileOwner.userId} photoSize={'lg'} className={''} />
             <div className="flex flex-col">
               <span className='font-bold text-xl mb-4'>{profileName}</span>
               {profileOwner && profileOwner.userId !== currentUser.userId && (
