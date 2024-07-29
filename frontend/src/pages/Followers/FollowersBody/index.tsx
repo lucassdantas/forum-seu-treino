@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserInFollowContextProps, userInFollowContext as externalFollower } from '@/api/users/userInFollowContext';
 import { Limiter } from '@/components/common/Limiter';
 import { UserInFollowContextCard } from '@/components/UserInFollowContextCard';

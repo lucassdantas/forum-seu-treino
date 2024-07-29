@@ -19,6 +19,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
   const queryParams = new URLSearchParams(location.search);
   const userId = Number(queryParams.get('id')) || 0;
   const [profileUser, setProfileUser] = useState<User | undefined>(undefined);
+
   useEffect(() => {
     const checkSession = async () => {
       try {
