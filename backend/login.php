@@ -34,7 +34,7 @@ try {
         $response['userData']['userName']           = $_SESSION['userName'];
         $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
         $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
-        $response['userData']['userhasImage']       = $_SESSION['userhasImage'];
+        $response['userData']['userHasImage']       = $_SESSION['userHasImage'];
         $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'];
         
         $response['success']    = true;
