@@ -7,17 +7,32 @@ import { UserImage } from '@/components/UserImage';
 import { isFollowing } from '@/api/followers/isFollowing';
 import { followUser } from '@/api/followers/followUser';
 import { unfollowUser } from '@/api/followers/unFollowUser';
+import { getFollowersCount } from '@/api/followers/getFollowersCount';
+import { getFollowingCount } from '@/api/followers/getFollowingCount';
 
 type PhotoFollowerAndSubjectsProps = {
   profileName: string;
-  followers: number;
-  subjects: number;
   profileOwner: User;
 };
 
-export const PhotoFollowerAndSubjects = ({ profileName, followers, subjects, profileOwner }: PhotoFollowerAndSubjectsProps) => {
+export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFollowerAndSubjectsProps) => {
   const currentUser = useContext(currentUserContext);
   const [isFollowingState, setIsFollowingState] = useState<boolean | null>(null);
+  const [followersCount, setFollowersCount] = useState<number>(0);
+  const [followingCount, setFollowingCount] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      if (profileOwner) {
+        const followers = await getFollowersCount(profileOwner.userId);
+        const following = await getFollowingCount(profileOwner.userId);
+        setFollowersCount(followers);
+        setFollowingCount(following);
+      }
+    };
+
+    fetchCounts();
+  }, [profileOwner]);
 
   useEffect(() => {
     const checkFollowingStatus = async () => {
@@ -64,11 +79,11 @@ export const PhotoFollowerAndSubjects = ({ profileName, followers, subjects, pro
           <div className="flex w-full md:w-1/3 gap-8 justify-center mt-4 md:mt-0">
             <div className="flex flex-col items-center">
               <span>Seguidores</span>
-              <span className='font-bold'>{followers}</span>
+              <span className='font-bold'>{followersCount}</span>
             </div>
             <div className="flex flex-col items-center">
-              <span>Assuntos</span>
-              <span className='font-bold'>{subjects}</span>
+              <span>Seguindo</span>
+              <span className='font-bold'>{followingCount}</span>
             </div>
           </div>
         </div>

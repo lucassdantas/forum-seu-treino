@@ -48,7 +48,6 @@ const LeftColumn = ({ setActiveSection }: { setActiveSection: (section: string) 
 const RightColumn = ({ children }: { children: React.ReactNode }) => {
   return (
     <GrayCard className='w-2/3'>
-      <h2 className='py-4 text-lg font-bold border-b'>Configurações da conta</h2>
       {children}
     </GrayCard>
   );
