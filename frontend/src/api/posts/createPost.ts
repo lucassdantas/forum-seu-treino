@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BACKEND_URL } from '@/constants';
-import { PostType } from './posts';
+import { PostType } from '../../types/posts';
 
 export const createPost = async (newPost: Omit<PostType, 'postId'>): Promise<void> => {
   try {

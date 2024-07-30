@@ -1,8 +1,8 @@
 import { Limiter } from '@/components/common/Limiter'
-import { advertising } from '@/api/advertising'
 import { User } from '@/types/user'
 import { LeftColumn } from '@/pages/Profile/ProfileBody/LeftColumn'
 import { MiddleColumn } from '@/pages/Profile/ProfileBody/MiddleColumn'
+import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-silva-1.jpg'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -21,6 +21,17 @@ export const ProfileBody = ({user}:{user:User}) => {
 
 
 const RightColumn = () => {
+  const advertising = [
+    {
+        img:tempAdvertisingImage
+    },
+    {
+        img:tempAdvertisingImage
+    },
+    {
+        img:tempAdvertisingImage
+    },
+]
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       {

@@ -1,4 +1,4 @@
-import { TopicType } from '@/api/topics'
+import { TopicType } from '@/types/topics'
 import { OutlineButton } from '@/components/common/Button'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'

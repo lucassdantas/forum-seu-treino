@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { GrayCard } from '@/components/common/Card'
-import { TopicType } from '@/api/topics'
+import { TopicType } from '@/types/topics'
 import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getTopics } from '@/api/topics/getTopics'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'

@@ -4,7 +4,7 @@ import { GrayCard } from '@/components/common/Card';
 import { PostCard } from '@/components/PostCard';
 import { getPosts } from '@/api/posts/getPosts';
 import {  useUser } from '@/context/currentUserContext';
-import { PostType } from '@/api/posts/posts';
+import { PostType } from '@/types/posts';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { UserImage } from '@/components/UserImage';
 import { createPost } from '@/api/posts/createPost';

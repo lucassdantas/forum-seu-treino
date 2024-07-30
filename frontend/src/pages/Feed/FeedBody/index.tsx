@@ -1,7 +1,7 @@
 import { Limiter } from '@/components/common/Limiter'
-import { advertising } from '@/api/advertising'
 import { MiddleColumn } from '@/pages/Feed/FeedBody/MiddleColumn'
 import { LeftColumn } from '@/pages/Feed/FeedBody/LeftColumn'
+import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-silva-1.jpg'
 
 export const FeedBody = () => {
   return (
@@ -19,6 +19,17 @@ export const FeedBody = () => {
 
 
 const RightColumn = () => {
+  const advertising = [
+    {
+        img:tempAdvertisingImage
+    },
+    {
+        img:tempAdvertisingImage
+    },
+    {
+        img:tempAdvertisingImage
+    },
+]
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       {
