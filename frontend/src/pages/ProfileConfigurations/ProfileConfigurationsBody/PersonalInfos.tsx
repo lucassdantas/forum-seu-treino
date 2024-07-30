@@ -7,7 +7,6 @@ import Login from '@/pages/Login';
 import { toast } from 'react-toastify';
 
 export const PersonalInfos = () => {
-
   const { currentUser, setCurrentUser } = useUser();
 
   if (!currentUser) return <Login />;
@@ -32,11 +31,11 @@ export const PersonalInfos = () => {
         userBirthday,
         userEmail,
         userPhone,
-        ...(userPassword && { userPassword }) // Apenas adiciona a senha se ela não for vazia
+        ...(userPassword && userPassword !== '' && { userPassword }) // Apenas adiciona a senha se ela não for vazia
       };
 
       const response = await axios.put(`${BACKEND_URL}controllers/userController.php`, updatedUser, { withCredentials: true });
-      console.log(response)
+      console.log(response);
       if (response.data.success) {
         // Atualizando o contexto do usuário
         setCurrentUser(response.data.updatedUser);
@@ -52,7 +51,7 @@ export const PersonalInfos = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h3 className='text-xl font-bold mb-8'>Configurações do Perfil</h3>
+      <h3 className="text-xl font-bold mb-8">Configurações do Perfil</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-white">Nome</label>
@@ -110,10 +109,7 @@ export const PersonalInfos = () => {
         </div>
       </div>
       <div className="flex justify-end mt-4">
-        <Button
-          className="p-2 bg-blue-500 text-white rounded"
-          onClick={handleSave}
-        >
+        <Button className="p-2 bg-blue-500 text-white rounded" onClick={handleSave}>
           Salvar
         </Button>
       </div>

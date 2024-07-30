@@ -27,6 +27,7 @@ try {
         $_SESSION['userFollowers'] = $user['userFollowers'];
         $_SESSION['userSubjects'] = $user['userSubjects'];
         $_SESSION['userHasImage'] = $user['userHasImage'];
+        $_SESSION['userBirthday'] = $user['userBirthday'];
         $_SESSION['userCoverImage'] = $user['userCoverImage'];
         $_SESSION['userPhone'] = $user['userPhone'];
 
@@ -37,6 +38,7 @@ try {
             'userFollowers' => $_SESSION['userFollowers'],
             'userSubjects' => $_SESSION['userSubjects'],
             'userHasImage' => $_SESSION['userHasImage'],
+            'userBirthday' => $_SESSION['userBirthday'],
             'userCoverImage' => $_SESSION['userCoverImage'],
             'userPhone' => $_SESSION['userPhone'],
         ];

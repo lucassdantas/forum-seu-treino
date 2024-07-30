@@ -1,4 +1,4 @@
-<?php
+<?php 
 class User {
     private $conn;
     private $table_name = "forum_users";
@@ -50,8 +50,13 @@ class User {
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
-                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone, userPassword=:userPassword
-                    WHERE userId=:userId";
+                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone";
+
+        if (!empty($this->userPassword)) {
+            $query .= ", userPassword=:userPassword";
+        }
+
+        $query .= " WHERE userId=:userId";
 
         $stmt = $this->conn->prepare($query);
 
@@ -59,7 +64,10 @@ class User {
         $stmt->bindParam(":userName", $this->userName);
         $stmt->bindParam(":userBirthday", $this->userBirthday);
         $stmt->bindParam(":userPhone", $this->userPhone);
-        $stmt->bindParam(":userPassword", $this->userPassword);
+
+        if (!empty($this->userPassword)) {
+            $stmt->bindParam(":userPassword", $this->userPassword);
+        }
 
         if ($stmt->execute()) {
             return true;
