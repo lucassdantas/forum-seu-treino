@@ -84,6 +84,21 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
         setIsFollowingPopupOpen(true);
     };
 
+    const handleUnfollowClick = async (friendId: number) => {
+        const success = await unfollowUser(currentUser.userId, friendId);
+        if (success) {
+            setFollowersList((prev) => prev.filter((user) => user.userId !== friendId));
+            setFollowingList((prev) => prev.filter((user) => user.userId !== friendId));
+        }
+    };
+
+    const handleRemoveFollowerClick = async (followerId: number) => {
+        const success = await unfollowUser(followerId, currentUser.userId);
+        if (success) {
+            setFollowersList((prev) => prev.filter((user) => user.userId !== followerId));
+        }
+    };
+
     return (
         <div className='bg-black text-white flex justify-center -mt-4 px-4'>
             <Limiter>
@@ -116,11 +131,14 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                     <h3 className="text-xl font-bold mb-4">Seguidores</h3>
                     {followersList.length > 0 ? (
                         followersList.map((follower) => (
-                            <div key={follower.userId} className="mb-4 flex items-center">
-                                <UserImage userId={follower.userId} photoSize="sm" />
-                                <Link to={`/perfil?id=${follower.userId}`} className="ml-2">
-                                    {follower.userName}
-                                </Link>
+                            <div key={follower.userId} className="mb-4 flex items-center justify-between">
+                                <div className="flex items-center">
+                                    <UserImage userId={follower.userId} photoSize="sm" />
+                                    <Link to={`/perfil?id=${follower.userId}`} className="ml-2">
+                                        {follower.userName}
+                                    </Link>
+                                </div>
+                                <Button onClick={() => handleRemoveFollowerClick(follower.userId)}>Remover</Button>
                             </div>
                         ))
                     ) : (
@@ -133,11 +151,14 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                     <h3 className="text-xl font-bold mb-4">Seguindo</h3>
                     {followingList.length > 0 ? (
                         followingList.map((followed) => (
-                            <div key={followed.userId} className="mb-4 flex items-center">
-                                <UserImage userId={followed.userId} photoSize="sm" />
-                                <Link to={`/perfil?id=${followed.userId}`} className="ml-2">
-                                    {followed.userName}
-                                </Link>
+                            <div key={followed.userId} className="mb-4 flex items-center justify-between">
+                                <div className="flex items-center">
+                                    <UserImage userId={followed.userId} photoSize="sm" />
+                                    <Link to={`/perfil?id=${followed.userId}`} className="ml-2">
+                                        {followed.userName}
+                                    </Link>
+                                </div>
+                                <Button onClick={() => handleUnfollowClick(followed.userId)}>Deixar de Seguir</Button>
                             </div>
                         ))
                     ) : (
