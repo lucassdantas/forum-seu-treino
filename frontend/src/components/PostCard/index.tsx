@@ -19,6 +19,7 @@ import { Content } from './Content';
 import { Likes } from './Likes';
 import { CommentsComponent } from './CommentsComponent';
 import Login from '@/pages/Login';
+import { BACKEND_URL } from '@/constants';
 
 type PostCardProps = {
   post: PostType;
@@ -70,7 +71,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   useEffect(() => {
     const checkIfLiked = async () => {
       try {
-        const response = await axios.get('http://localhost/backend/controllers/likeController.php');
+        const response = await axios.get(`${BACKEND_URL}controllers/likeController.php`);
         const likes = response.data;
         const isAlreadyLiked = likes.some(
           (like: { likeAuthorId: number; likePostId: number }) => 

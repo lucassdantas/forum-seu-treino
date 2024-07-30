@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
-import { UserInFollowContextProps, userInFollowContext as externalFollower } from '@/api/users/userInFollowContext';
+import { useEffect, useState } from 'react';
 import { Limiter } from '@/components/common/Limiter';
 import { UserInFollowContextCard } from '@/components/UserInFollowContextCard';
 import { IoSearch } from "react-icons/io5";
 import { getUsers } from '@/api/users/getUsers';
 import { User } from '@/types/user';
-import { Oval } from 'react-loader-spinner';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 
 export const FollowersBody = () => {

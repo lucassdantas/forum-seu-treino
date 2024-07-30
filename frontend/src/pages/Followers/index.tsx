@@ -1,4 +1,3 @@
-import { currentUserContext } from '@/context/currentUserContext'
 import { getUserById } from '@/api/users/getUserById'
 import { User } from '@/types/user'
 import { Banner } from '@/components/common/Banner'
@@ -8,6 +7,7 @@ import { FollowersBody } from '@/pages/Followers/FollowersBody'
 import axios from 'axios'
 import { useEffect, Dispatch, SetStateAction, useContext, useState  } from 'react'
 import { useLocation } from 'react-router-dom'
+import { BACKEND_URL } from '@/constants'
 
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
@@ -23,7 +23,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get('http://localhost/backend/checkSession.php', { withCredentials: true });
+        const response = await axios.get(`${BACKEND_URL}checkSession.php`, { withCredentials: true });
         if (!response.data.loggedIn) {
           setAuth(false);
         }
