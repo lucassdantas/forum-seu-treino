@@ -1,4 +1,4 @@
-import { User } from "@/api/users/user";
+import { User } from "@/types/user";
 
 interface Likes extends User{
     likeId:number;

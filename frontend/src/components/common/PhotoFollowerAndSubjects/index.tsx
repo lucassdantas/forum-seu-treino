@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { currentUserContext } from '@/api/users/currentUserContext';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { Button } from '@/components/common/Button';
 import { Limiter } from '@/components/common/Limiter';
 import { UserImage } from '@/components/UserImage';
@@ -9,6 +8,8 @@ import { followUser } from '@/api/followers/followUser';
 import { unfollowUser } from '@/api/followers/unFollowUser';
 import { getFollowersCount } from '@/api/followers/getFollowersCount';
 import { getFollowingCount } from '@/api/followers/getFollowingCount';
+import { useUser } from '@/context/currentUserContext';
+import Login from '@/pages/Login';
 
 type PhotoFollowerAndSubjectsProps = {
   profileName: string;
@@ -16,7 +17,8 @@ type PhotoFollowerAndSubjectsProps = {
 };
 
 export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFollowerAndSubjectsProps) => {
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   const [isFollowingState, setIsFollowingState] = useState<boolean | null>(null);
   const [followersCount, setFollowersCount] = useState<number>(0);
   const [followingCount, setFollowingCount] = useState<number>(0);

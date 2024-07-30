@@ -8,11 +8,13 @@ import { FaSearch } from "react-icons/fa";
 import { PiUserPlus } from "react-icons/pi";
 import { FaRegEnvelope, FaRegBell } from "react-icons/fa6";
 import { handleLogout } from '@/utils/handleLogout';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import { useUser } from '@/context/currentUserContext';
 import { UserImage } from '@/components/UserImage';
+import Login from '@/pages/Login';
 
 const Header = () => {
-  const currentUser = useContext(currentUserContext)
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const firstName = currentUser.userName.split(' ')[0]

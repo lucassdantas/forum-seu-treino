@@ -1,6 +1,6 @@
 import { Limiter } from '@/components/common/Limiter'
 import { advertising } from '@/api/advertising'
-import { User } from '@/api/users/user'
+import { User } from '@/types/user'
 import { LeftColumn } from '@/pages/Profile/ProfileBody/LeftColumn'
 import { MiddleColumn } from '@/pages/Profile/ProfileBody/MiddleColumn'
 

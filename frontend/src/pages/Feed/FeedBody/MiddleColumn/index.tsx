@@ -3,14 +3,16 @@ import { Button } from '@/components/common/Button';
 import { GrayCard } from '@/components/common/Card';
 import { PostCard } from '@/components/PostCard';
 import { getPosts } from '@/api/posts/getPosts';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import {  useUser } from '@/context/currentUserContext';
 import { PostType } from '@/api/posts/posts';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { UserImage } from '@/components/UserImage';
 import { createPost } from '@/api/posts/createPost';
+import Login from '@/pages/Login';
 
 export const MiddleColumn = () => {
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
 

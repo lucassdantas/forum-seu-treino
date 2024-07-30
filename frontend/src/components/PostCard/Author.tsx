@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { UserImage } from '@/components/UserImage';
 import { formatTimeAgo } from '@/utils/formatTimeAgo';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 
 type AuthorProps = {
   postAuthor: User | null;

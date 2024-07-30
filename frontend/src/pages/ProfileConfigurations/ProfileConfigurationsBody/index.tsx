@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { GrayCard } from '@/components/common/Card';
 import { Limiter } from '@/components/common/Limiter';
 import { PersonalInfos } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody/PersonalInfos';
@@ -40,7 +40,7 @@ const LeftColumn = ({ setActiveSection }: { setActiveSection: (section: string) 
       <h2 className='py-4 text-lg font-bold'>Configurações da conta</h2>
       <p className='py-4 cursor-pointer' onClick={() => setActiveSection('personalInfos')}>Informações pessoais</p>
       <p className='py-4 cursor-pointer' onClick={() => setActiveSection('profileSettings')}>Perfil</p>
-      <p className='py-4 cursor-pointer' onClick={() => setActiveSection('changePassword')}>Trocar senha</p>
+      {/* <p className='py-4 cursor-pointer' onClick={() => setActiveSection('changePassword')}>Trocar senha</p> */}
     </GrayCard>
   );
 };

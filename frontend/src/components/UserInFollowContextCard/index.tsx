@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { followUser } from '@/api/followers/followUser';
 import { unfollowUser } from '@/api/followers/unFollowUser';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import { useUser } from '@/context/currentUserContext';
 import { Button, OutlineButton } from '@/components/common/Button';
 import { UserImage } from '@/components/UserImage';
 import { Link } from 'react-router-dom';
 import { checkSingleFollowStatus } from '@/api/followers/checkSingleFollowStatus';
+import Login from '@/pages/Login';
 
 type UserInFollowContextCardProps = {
   user: User;
@@ -15,7 +16,8 @@ type UserInFollowContextCardProps = {
 
 export const UserInFollowContextCard = ({ user, className }: UserInFollowContextCardProps) => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
 
   useEffect(() => {
     const fetchFollowStatus = async () => {

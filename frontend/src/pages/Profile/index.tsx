@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { getUserById } from '@/api/users/getUserById';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import { ProfileBody } from '@/pages/Profile/ProfileBody';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { BACKEND_URL } from '@/constants';
 
 type SetAuthType = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -22,7 +23,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get('http://localhost/backend/checkSession.php', { withCredentials: true });
+        const response = await axios.get(`${BACKEND_URL}checkSession.php`, { withCredentials: true });
         if (!response.data.loggedIn) {
           setAuth(false);
         }
@@ -53,8 +54,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
       <Banner />
       {profileUser ? (
         <PhotoFollowerAndSubjects
-          followers={profileUser.userFollowers}
-          subjects={profileUser.userSubjects}
+
           profileName={profileUser.userName}
           profileOwner={profileUser}
         />

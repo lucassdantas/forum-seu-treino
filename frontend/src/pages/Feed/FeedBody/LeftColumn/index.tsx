@@ -5,14 +5,16 @@ import { TopicsList } from '@/pages/Feed/components/TopicsList'
 import { getTopics } from '@/api/topics/getTopics'
 import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
-import { User } from '@/api/users/user'
+import { User } from '@/types/user'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
-import { currentUserContext } from '@/api/users/currentUserContext'
+import { useUser } from '@/context/currentUserContext'
+import Login from '@/pages/Login'
 
 export const LeftColumn = () => {
   const [topicsList, setTopicsList] = useState<TopicType[]>();
   const [friendsList, setFriendsList] = useState<User[]>();
-  const currentUser = useContext(currentUserContext)
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   useEffect(() => {
     const fetchTopics = async () => {
       const topics = await getTopics();

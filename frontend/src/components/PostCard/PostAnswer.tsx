@@ -4,7 +4,7 @@ import { Popup } from '@/components/common/Popup';
 import { Button } from '@/components/common/Button';
 import { formatTimeAgo } from '@/utils/formatTimeAgo';
 import { PostType } from '@/api/posts/posts';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { Comments } from '@/api/comments/comments';
 import { UserImage } from '@/components/UserImage';
 import { addComment } from '@/api/comments/addComment';

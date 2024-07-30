@@ -1,5 +1,5 @@
 import { PostType } from '@/api/posts/posts';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import tempImage from '@/assets/profile/profilePhoto.png'
 
 export interface PostWithAuthors extends PostType{

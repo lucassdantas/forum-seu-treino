@@ -3,12 +3,12 @@ import { BsTrash3Fill, BsPencilSquare } from 'react-icons/bs';
 import { GrayCard } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { PostAnswer } from '@/components/PostCard/PostAnswer';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import { useUser } from '@/context/currentUserContext';
 import { getUserById } from '@/api/users/getUserById';
 import { deletePost } from '@/api/posts/deletePost';
 import { getCommentsByPostId } from '@/api/comments/getCommentsByPostId';
 import { PostType } from '@/api/posts/posts';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { Comments } from '@/api/comments/comments';
 import { editPost, PostToEdit } from '@/api/posts/editPost';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
@@ -18,6 +18,7 @@ import { Author } from './Author';
 import { Content } from './Content';
 import { Likes } from './Likes';
 import { CommentsComponent } from './CommentsComponent';
+import Login from '@/pages/Login';
 
 type PostCardProps = {
   post: PostType;
@@ -34,7 +35,8 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likesQuantity, setLikesQuantity] = useState(post.postLikesQuantity);
   const [isLoading, setIsLoading] = useState(false); // Novo estado para controle de carregamento
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
 
   useEffect(() => {
     const fetchUserById = async () => {

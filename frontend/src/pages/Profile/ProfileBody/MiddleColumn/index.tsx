@@ -2,17 +2,19 @@ import { useContext, useEffect, useState } from 'react'
 import { Button } from '@/components/common/Button'
 import { GrayCard } from '@/components/common/Card'
 import { PostCard } from '@/components/PostCard'
-import { User } from '@/api/users/user'
+import { User } from '@/types/user'
 import { createPost } from '@/api/posts/createPost'
 import { PostType } from '@/api/posts/posts'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { getPostsByAuthorId } from '@/api/posts/getPostsByAuthorId'
 import { UserImage } from '@/components/UserImage'
-import { currentUserContext } from '@/api/users/currentUserContext'
+import {  useUser } from '@/context/currentUserContext'
 import { deletePost } from '@/api/posts/deletePost'
+import Login from '@/pages/Login'
 
 export const MiddleColumn = ({ user }: { user: User }) => {
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
 

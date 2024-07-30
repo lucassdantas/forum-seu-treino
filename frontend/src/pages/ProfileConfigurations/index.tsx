@@ -2,15 +2,17 @@ import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import {  useUser } from '@/context/currentUserContext';
 import { ProfileConfigurationsBody } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody';
+import Login from '@/pages/Login';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
     setAuth:SetAuthType;
 }
 const ProfileConfigurations = ({ setAuth }:FeedProps) => {
-  const currentUser = useContext(currentUserContext)
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   
   useEffect(() => {
     const checkSession = async () => {
@@ -30,7 +32,7 @@ const ProfileConfigurations = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects followers={currentUser.userFollowers} subjects={currentUser.userSubjects} profileName={currentUser.userName} profileOwner={currentUser}/>
+      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser}/>
       <ProfileConfigurationsBody user={currentUser}/>
     </>
   );

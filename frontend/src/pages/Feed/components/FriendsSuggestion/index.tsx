@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { IoPersonAddOutline } from 'react-icons/io5';
 import { Popup } from '@/components/common/Popup';
-import { User } from '@/api/users/user';
+import { User } from '@/types/user';
 import { UserImage } from '@/components/UserImage';
 import { Link } from 'react-router-dom';
 import { checkFollowStatus } from '@/api/followers/checkFollowStatus';

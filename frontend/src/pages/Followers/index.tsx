@@ -1,6 +1,6 @@
-import { currentUserContext } from '@/api/users/currentUserContext'
+import { currentUserContext } from '@/context/currentUserContext'
 import { getUserById } from '@/api/users/getUserById'
-import { User } from '@/api/users/user'
+import { User } from '@/types/user'
 import { Banner } from '@/components/common/Banner'
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects'
 import { LoadingSpinner } from '@/components/LoadingSpinner'

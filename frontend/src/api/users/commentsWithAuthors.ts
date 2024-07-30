@@ -1,5 +1,5 @@
 import { Comments, comments } from "@/api/comments/comments.ts";
-import { User} from "@/api/users/user";
+import { User} from "@/types/user";
 import tempImage from '@/assets/profile/profilePhoto.png'
 
 export interface CommentsWithAuthors extends Comments {

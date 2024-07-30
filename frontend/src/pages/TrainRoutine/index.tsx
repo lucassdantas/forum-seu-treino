@@ -1,22 +1,25 @@
-import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
-import { currentUserContext } from '@/api/users/currentUserContext';
-import { ProfileConfigurationsBody } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody';
+import { useUser } from '@/context/currentUserContext';
+
 import { TrainRoutineBody } from '@/pages/TrainRoutine/TrainRoutineBody';
+import Login from '@/pages/Login';
+import { BACKEND_URL } from '@/constants';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
     setAuth:SetAuthType;
 }
 const TrainRoutine = ({ setAuth }:FeedProps) => {
-  const currentUser = useContext(currentUserContext)
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get('http://localhost/backend/checkSession.php', { withCredentials: true });
+        const response = await axios.get(`${BACKEND_URL}checkSession.php`, { withCredentials: true });
         if (!response.data.loggedIn) {
           setAuth(false);
         }

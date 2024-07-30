@@ -3,15 +3,17 @@ import axios from 'axios';
 import { Banner } from '@/components/common/Banner';
 import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSubjects';
 import { FeedBody } from '@/pages/Feed/FeedBody';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import { useUser } from '@/context/currentUserContext';
 import { BACKEND_URL } from '@/constants';
+import Login from '@/pages/Login';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
     setAuth:SetAuthType;
 }
 const Feed = ({ setAuth }:FeedProps) => {
-  const currentUser = useContext(currentUserContext)
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   useEffect(() => {
     const checkSession = async () => {
       try {

@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import { currentUserContext } from '@/api/users/currentUserContext';
+import { useUser } from '@/context/currentUserContext';
 import { Limiter } from '@/components/common/Limiter';
 import React from 'react';
 import { getUserRoutines } from '@/api/routines/getuserRoutines';
+import Login from '@/pages/Login';
 
 type Routine = {
   routineId: number;
@@ -12,7 +13,8 @@ type Routine = {
 };
 
 export const TrainRoutineBody = () => {
-  const currentUser = useContext(currentUserContext);
+  const {currentUser} = useUser()
+  if(!currentUser) return <Login/>
   const [routines, setRoutines] = useState<Routine[]>([]);
 
   useEffect(() => {
