@@ -165,7 +165,7 @@ export const PersonalInfos = () => {
             type="email"
             className="w-full p-2 rounded bg-gray-700 text-white"
             value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
+            disabled
           />
         </div>
         <div>
