@@ -126,7 +126,7 @@ export const PostAnswer = ({
                 <UserImage userId={comment.commentAuthorId} size={40} />
               </div>
               <div className="flex flex-col gap-1">
-                <Link to={`/profile?id=${comment.commentAuthorId}`}>
+                <Link className='flex flex-col gap-1' to={`/profile?id=${comment.commentAuthorId}`}>
                   <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </Link>

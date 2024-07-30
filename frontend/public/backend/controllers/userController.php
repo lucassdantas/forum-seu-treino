@@ -36,7 +36,8 @@ switch($method) {
         $user->userEmail = $data->userEmail;
         $user->userBirthday = $data->userBirthday;
         $user->userPhone = $data->userPhone;
-        $user->userPassword = $data->userPassword;
+        $user->userPassword = isset($data->userPassword) ? $data->userPassword : null;
+        $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : null;
 
         if ($user->update()) {
             echo json_encode(["message" => "User was updated.", "updatedUser" => $user, 'success' => true]);
