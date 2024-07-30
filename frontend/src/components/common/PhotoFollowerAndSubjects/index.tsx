@@ -13,6 +13,7 @@ import { getFollowersList } from '@/api/followers/getFollowersList';
 import { getFollowingList } from '@/api/followers/getFollowingList';
 import { Popup } from '@/components/common/Popup';
 import Login from '@/pages/Login';
+import { Link } from 'react-router-dom';
 
 type PhotoFollowerAndSubjectsProps = {
     profileName: string;
@@ -115,9 +116,11 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                     <h3 className="text-xl font-bold mb-4">Seguidores</h3>
                     {followersList.length > 0 ? (
                         followersList.map((follower) => (
-                            <div key={follower.userId} className="mb-2 flex items-center">
+                            <div key={follower.userId} className="mb-4 flex items-center">
                                 <UserImage userId={follower.userId} photoSize="sm" />
-                                <span className="ml-2">{follower.userName}</span>
+                                <Link to={`/perfil?id=${follower.userId}`} className="ml-2">
+                                    {follower.userName}
+                                </Link>
                             </div>
                         ))
                     ) : (
@@ -130,9 +133,11 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                     <h3 className="text-xl font-bold mb-4">Seguindo</h3>
                     {followingList.length > 0 ? (
                         followingList.map((followed) => (
-                            <div key={followed.userId} className="mb-2 flex items-center">
+                            <div key={followed.userId} className="mb-4 flex items-center">
                                 <UserImage userId={followed.userId} photoSize="sm" />
-                                <span className="ml-2">{followed.userName}</span>
+                                <Link to={`/perfil?id=${followed.userId}`} className="ml-2">
+                                    {followed.userName}
+                                </Link>
                             </div>
                         ))
                     ) : (
