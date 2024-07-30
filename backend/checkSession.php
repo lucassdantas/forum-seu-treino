@@ -20,10 +20,13 @@ $stmt = $user->getUserById($userId);
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($userData) {
+    // Remove a senha dos dados do usuário
+    unset($userData['userPassword']);
+
     $sessionNeedsUpdate = false;
 
     foreach ($userData as $key => $value) {
-        if ($_SESSION[$key] !== $value) {
+        if (!isset($_SESSION[$key]) || $_SESSION[$key] !== $value) {
             $_SESSION[$key] = $value;
             $sessionNeedsUpdate = true;
         }

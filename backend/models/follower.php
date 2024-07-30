@@ -61,6 +61,34 @@ class Follower {
         return $stmt;
     }
 
+    // Get followers list
+    public function getFollowersList($followerUserFollowed) {
+        $query = "SELECT u.userId, u.userName 
+                  FROM " . $this->table_name . " f
+                  JOIN forum_users u ON f.followerUserFollower = u.userId
+                  WHERE f.followerUserFollowed = :followerUserFollowed";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":followerUserFollowed", $followerUserFollowed);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    // Get following list
+    public function getFollowingList($followerUserFollower) {
+        $query = "SELECT u.userId, u.userName 
+                  FROM " . $this->table_name . " f
+                  JOIN forum_users u ON f.followerUserFollowed = u.userId
+                  WHERE f.followerUserFollower = :followerUserFollower";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":followerUserFollower", $followerUserFollower);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     // Check if user is a follower
     public function isFollower($followerUserFollower, $followerUserFollowed) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE followerUserFollower = :followerUserFollower AND followerUserFollowed = :followerUserFollowed";
@@ -94,9 +122,10 @@ class Follower {
 
     // Delete
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE followerUserFollower=:followerUserFollower AND followerUserFollowed=:followerUserFollowed";
+        $query = "DELETE FROM " . $this->table_name . " WHERE followerUserFollower = :followerUserFollower AND followerUserFollowed = :followerUserFollowed";
 
         $stmt = $this->conn->prepare($query);
+
         $stmt->bindParam(":followerUserFollower", $this->followerUserFollower);
         $stmt->bindParam(":followerUserFollowed", $this->followerUserFollowed);
 
@@ -106,6 +135,5 @@ class Follower {
 
         return false;
     }
-
-    
 }
+?>

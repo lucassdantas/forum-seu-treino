@@ -34,12 +34,12 @@ switch($method) {
             echo json_encode(['isFollower' => $isFollower]);
         } elseif (isset($_GET['followerUserFollower'])) {
             $followerUserFollower = $_GET['followerUserFollower'];
-            $stmt = $follower->getFollowersByFollowerId($followerUserFollower);
-            $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo json_encode($followers);
+            $stmt = $follower->getFollowingList($followerUserFollower);
+            $followings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($followings);
         } elseif (isset($_GET['followerUserFollowed'])) {
             $followerUserFollowed = $_GET['followerUserFollowed'];
-            $stmt = $follower->getFollowedByFollowedId($followerUserFollowed);
+            $stmt = $follower->getFollowersList($followerUserFollowed);
             $followers = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($followers);
         } else {
@@ -80,4 +80,5 @@ switch($method) {
         http_response_code(405);
         echo json_encode(["message" => "Method not allowed"]);
         break;
-}
+} 
+?>
