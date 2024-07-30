@@ -12,27 +12,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch($method) {
     case 'POST':
-        $data = json_decode(file_get_contents("php://input"));
-
-        $user->userName = $data->userName;
-        $user->userEmail = $data->userEmail;
-        $user->userBirthday = $data->userBirthday;
-        $user->userProfileImage = $data->userProfileImage;
-        $user->userCoverPhoto = $data->userCoverPhoto;
-        $user->userFollowers = $data->userFollowers;
-        $user->userSubjects = $data->userSubjects;
-        $user->userPassword = $data->userPassword;
-
-        if ($user->create()) {
-            echo json_encode(["message" => "User was created."]);
-        } else {
-            echo json_encode(["message" => "Unable to create user."]);
-        }
+        // Implementação do método POST, se necessário
         break;
 
     case 'GET':
         if (isset($_GET['id'])) {
-            $userId = intval( $_GET['id']);
+            $userId = intval($_GET['id']);
             $stmt = $user->getUserById($userId);
             $userData = $stmt->fetch(PDO::FETCH_ASSOC);
             echo json_encode($userData);
@@ -42,6 +27,7 @@ switch($method) {
             echo json_encode($users);
         }
         break;
+        
     case 'PUT':
         $data = json_decode(file_get_contents("php://input"));
 
@@ -49,29 +35,18 @@ switch($method) {
         $user->userName = $data->userName;
         $user->userEmail = $data->userEmail;
         $user->userBirthday = $data->userBirthday;
-        $user->userProfileImage = $data->userProfileImage;
-        $user->userCoverPhoto = $data->userCoverPhoto;
-        $user->userFollowers = $data->userFollowers;
-        $user->userSubjects = $data->userSubjects;
+        $user->userPhone = $data->userPhone;
         $user->userPassword = $data->userPassword;
 
         if ($user->update()) {
-            echo json_encode(["message" => "User was updated."]);
+            echo json_encode(["message" => "User was updated.", "updatedUser" => $user, 'success' => true]);
         } else {
             echo json_encode(["message" => "Unable to update user."]);
         }
         break;
 
     case 'DELETE':
-        $data = json_decode(file_get_contents("php://input"));
-
-        $user->userId = $data->userId;
-
-        if ($user->delete()) {
-            echo json_encode(["message" => "User was deleted."]);
-        } else {
-            echo json_encode(["message" => "Unable to delete user."]);
-        }
+        // Implementação do método DELETE, se necessário
         break;
 
     default:

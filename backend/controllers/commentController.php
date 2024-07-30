@@ -57,9 +57,9 @@ switch($method) {
         break;
 
     case 'DELETE':
-        $data = json_decode(file_get_contents("php://input"));
+        $data = $_GET['commentId'];
 
-        $comment->commentId = $data->commentId;
+        $comment->commentId = $data;
 
         if ($comment->delete()) {
             echo json_encode(["message" => "Comment was deleted."]);

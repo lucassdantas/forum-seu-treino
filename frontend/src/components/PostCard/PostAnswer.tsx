@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GrayCard } from '@/components/common/Card';
 import { Popup } from '@/components/common/Popup';
 import { Button } from '@/components/common/Button';
@@ -11,6 +11,8 @@ import { addComment } from '@/api/comments/addComment';
 import { fetchComments } from '@/api/comments/fetchComments';
 import { deleteComment } from '@/api/comments/deleteComments'; // Importe a função de exclusão
 import { TiDelete } from 'react-icons/ti';
+import { getUserById } from '@/api/users/getUserById';
+import { Link } from 'react-router-dom';
 
 export const PostAnswer = ({
   comments,
@@ -35,6 +37,24 @@ export const PostAnswer = ({
 }) => {
   const [commentContent, setCommentContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [commentAuthors, setCommentAuthors] = useState<{ [key: number]: string }>({});
+
+  useEffect(() => {
+    const fetchCommentAuthors = async () => {
+      const authorNames: { [key: number]: string } = {};
+
+      for (const comment of comments) {
+        if (!commentAuthors[comment.commentAuthorId]) {
+          const user = await getUserById(comment.commentAuthorId);
+          authorNames[comment.commentAuthorId] = user.userName;
+        }
+      }
+
+      setCommentAuthors((prev) => ({ ...prev, ...authorNames }));
+    };
+
+    fetchCommentAuthors();
+  }, [comments]);
 
   const handleNewComment = async (commentContent: string) => {
     if (commentContent.trim() === '') return;
@@ -46,7 +66,7 @@ export const PostAnswer = ({
         commentContent,
         commentPostId: currentPost.postId,
         commentAuthorId: currentUser.userId,
-        commentAuthorName: currentUser.userName
+        commentAuthorName: currentUser.userName,
       };
 
       await addComment(newComment);
@@ -67,7 +87,7 @@ export const PostAnswer = ({
     try {
       await deleteComment(commentId);
 
-      const updatedComments = comments.filter(comment => comment.commentId !== commentId);
+      const updatedComments = comments.filter((comment) => comment.commentId !== commentId);
       setComments(updatedComments);
       setCommentsQuantity(updatedComments.length);
 
@@ -82,7 +102,7 @@ export const PostAnswer = ({
   return (
     <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
       <div className='flex gap-2 w-full items-center mb-4'>
-        <UserImage userId={currentUser.userId} size={40}/>
+        <UserImage userId={currentUser.userId} size={40} />
         <input
           placeholder={'Escrever resposta'}
           className='w-11/12 bg-transparent placeholder:to-zinc-100 outline-none px-2 pr-4 bg-neutral-900 py-4'
@@ -101,21 +121,23 @@ export const PostAnswer = ({
 
       {displayedComments.map((comment) => (
         <div key={comment.commentId} className='mb-4'>
-          <div className="flex gap-4">
-            <div className="flex flex-col">
-              <UserImage userId={comment.commentAuthorId} size={40}/>
+            <div className="flex gap-4">
+              <div className="flex flex-col">
+                <UserImage userId={comment.commentAuthorId} size={40} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <Link to={`/profile?id=${comment.commentAuthorId}`}>
+                  <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
+                  <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
+                </Link>
+              </div>
+              {comment.commentAuthorId === currentUser.userId && (
+                <TiDelete
+                  onClick={() => handleDeleteComment(comment.commentId)}
+                  className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
+                />
+              )}
             </div>
-            <div className="flex flex-col gap-1">
-              <span className=''>{comment.commentAuthorName}</span>
-              <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
-            </div>
-            {comment.commentAuthorId === currentUser.userId && (
-              <TiDelete
-                onClick={() => handleDeleteComment(comment.commentId)}
-                className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
-              />
-            )}
-          </div>
           <div className='mt-4'>
             <p className='break-words'>{comment.commentContent}</p>
           </div>
@@ -134,10 +156,10 @@ export const PostAnswer = ({
             <div key={comment.commentId} className='pt-4'>
               <div className="flex gap-4">
                 <div className="flex flex-col">
-                  <UserImage userId={comment.commentAuthorId} size={40}/>
+                  <UserImage userId={comment.commentAuthorId} size={40} />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className=''>{comment.commentAuthorName}</span>
+                  <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </div>
                 {comment.commentAuthorId === currentUser.userId && (

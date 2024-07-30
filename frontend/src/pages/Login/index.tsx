@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/context/currentUserContext';  // Importando o contexto
 import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
 import { BACKEND_URL } from '@/constants';
+import { toast } from 'react-toastify';
 
 const Login = ({ setAuth }: any) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Login = ({ setAuth }: any) => {
         setCurrentUser(response.data.userData); // Configurando o usuário no contexto
         navigate('/'); // Redirecionando após login bem-sucedido
       } else {
-        alert('Login falhou. Verifique suas credenciais.');
+        toast.error('Login falhou. Verifique suas credenciais.');
       }
     } catch (error) {
       console.error('Erro ao fazer login!', error);

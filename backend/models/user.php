@@ -13,6 +13,8 @@ class User {
     public $userSubjects;
     public $userPassword;
     public $userDateOfCreation;
+    public $userHasImage;
+    public $userPhone;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -20,26 +22,7 @@ class User {
 
     // Create
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " SET
-                    userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, userProfileImage=:userProfileImage,
-                    userCoverPhoto=:userCoverPhoto, userFollowers=:userFollowers, userSubjects=:userSubjects, userPassword=:userPassword";
-
-        $stmt = $this->conn->prepare($query);
-
-        $stmt->bindParam(":userName", $this->userName);
-        $stmt->bindParam(":userEmail", $this->userEmail);
-        $stmt->bindParam(":userBirthday", $this->userBirthday);
-        $stmt->bindParam(":userProfileImage", $this->userProfileImage);
-        $stmt->bindParam(":userCoverPhoto", $this->userCoverPhoto);
-        $stmt->bindParam(":userFollowers", $this->userFollowers);
-        $stmt->bindParam(":userSubjects", $this->userSubjects);
-        $stmt->bindParam(":userPassword", $this->userPassword);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        // Implementação do método create, se necessário
     }
 
     // Read
@@ -53,7 +36,7 @@ class User {
     }
 
     public function getUserById($userId) {
-        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation 
+        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation, userHasImage, userPhone
                   FROM " . $this->table_name . " 
                   WHERE userId = :userId";
 
@@ -67,20 +50,15 @@ class User {
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
-                    userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, userProfileImage=:userProfileImage,
-                    userCoverPhoto=:userCoverPhoto, userFollowers=:userFollowers, userSubjects=:userSubjects, userPassword=:userPassword
+                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone, userPassword=:userPassword
                     WHERE userId=:userId";
 
         $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":userName", $this->userName);
-        $stmt->bindParam(":userEmail", $this->userEmail);
         $stmt->bindParam(":userBirthday", $this->userBirthday);
-        $stmt->bindParam(":userProfileImage", $this->userProfileImage);
-        $stmt->bindParam(":userCoverPhoto", $this->userCoverPhoto);
-        $stmt->bindParam(":userFollowers", $this->userFollowers);
-        $stmt->bindParam(":userSubjects", $this->userSubjects);
+        $stmt->bindParam(":userPhone", $this->userPhone);
         $stmt->bindParam(":userPassword", $this->userPassword);
 
         if ($stmt->execute()) {
@@ -92,16 +70,6 @@ class User {
 
     // Delete
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE userId=:userId";
-
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":userId", $this->userId);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        // Implementação do método delete, se necessário
     }
 }
-?>

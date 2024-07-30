@@ -17,6 +17,7 @@ if (isset($_SESSION['userId'])) {
     $response['userData']['userCoverImage']     = $_SESSION['userCoverImage'] ;
     $response['userData']['userFollowers']      = $_SESSION['userFollowers'];
     $response['userData']['userSubjects']       = $_SESSION['userSubjects'];
+    $response['userData']['userPhone']       = $_SESSION['userPhone'];
     $response['success']    = true;
 }
 
