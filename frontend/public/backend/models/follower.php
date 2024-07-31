@@ -140,4 +140,3 @@ class Follower {
         return false;
     }
 }
-?>

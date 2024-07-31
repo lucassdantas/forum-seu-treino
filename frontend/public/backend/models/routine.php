@@ -37,7 +37,7 @@ class Routine {
 
     // Read all
     public function read() {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . ' WHERE routineStatus = 1';
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -47,7 +47,7 @@ class Routine {
 
     // Read by ID
     public function readOne() {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE routineId = :routineId";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE routineId = :routineId AND routineStatus = 1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":routineId", $this->routineId);
@@ -58,7 +58,7 @@ class Routine {
 
     // Read by User ID
     public function readByUserId() {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE routineUserId = :routineUserId";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE routineUserId = :routineUserId AND routineStatus = 1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":routineUserId", $this->routineUserId);
@@ -89,15 +89,20 @@ class Routine {
 
     // Delete
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE routineId = :routineId";
+      $query = "UPDATE " . $this->table_name . " SET routineStatus = :routineStatus WHERE routineId = :routineId";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":routineId", $this->routineId);
-
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+      $stmt = $this->conn->prepare($query);
+  
+      // Defina o status como 0 (inativo)
+      $routineStatus = 0;
+  
+      $stmt->bindParam(":routineId", $this->routineId);
+      $stmt->bindParam(":routineStatus", $routineStatus);
+  
+      if ($stmt->execute()) {
+          return true;
+      }
+  
+      return false;
     }
 }

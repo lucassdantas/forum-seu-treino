@@ -4,18 +4,14 @@ import { Limiter } from '@/components/common/Limiter';
 import React from 'react';
 import { getUserRoutines } from '@/api/routines/getuserRoutines';
 import Login from '@/pages/Login';
+import { Routines } from '@/types/routines';
 
-type Routine = {
-  routineId: number;
-  routineDescription: string;
-  routineDateOfExecute: string;
-  routineDateOfCreation: string;
-};
+
 
 export const TrainRoutineBody = () => {
   const {currentUser} = useUser()
   if(!currentUser) return <Login/>
-  const [routines, setRoutines] = useState<Routine[]>([]);
+  const [routines, setRoutines] = useState<Routines[]>([]);
 
   useEffect(() => {
     const fetchRoutines = async () => {
@@ -56,7 +52,7 @@ export const TrainRoutineBody = () => {
                 routines.map(routine => (
                   <tr key={routine.routineId} className='border-b border-gray-600'>
                     <td className='px-6 py-4 text-gray-300'>{routine.routineDescription}</td>
-                    <td className='px-6 py-4 text-gray-300'>{formatDate(routine.routineDateOfExecute)}</td>
+                    <td className='px-6 py-4 text-gray-300'>{formatDate(routine.routineDateToExecute)}</td>
                     <td className='px-6 py-4 text-gray-300'>{formatDate(routine.routineDateOfCreation)}</td>
                   </tr>
                 ))

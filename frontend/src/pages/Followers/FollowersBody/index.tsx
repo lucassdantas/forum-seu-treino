@@ -29,7 +29,7 @@ export const FollowersBody = () => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-
+   
     useEffect(() => {
         const fetchUsers = async () => {
             const users = await getUsers();
@@ -170,7 +170,7 @@ export const FollowersBody = () => {
                                         className='absolute top-2 right-2 text-red-600 cursor-pointer'
                                     />
                                 )}
-                                <UserInFollowContextCard key={i} user={follower} />
+                                <UserInFollowContextCard key={i} user={follower}  />
                             </div>
                         ))}
                         {filteredFollowers.length === 0 && <span className='text-white'>Nenhum resultado encontrado.</span>}
@@ -205,6 +205,8 @@ export const FollowersBody = () => {
                     </div>
                 </form>
             </Popup>
+
+
         </div>
     );
 };

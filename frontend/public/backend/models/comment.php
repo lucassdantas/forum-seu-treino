@@ -92,4 +92,3 @@ class Comment {
         return false;
     }
 }
-?>
