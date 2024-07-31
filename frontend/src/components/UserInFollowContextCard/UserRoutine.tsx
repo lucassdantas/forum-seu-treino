@@ -89,7 +89,7 @@ export const UserRoutine = ({ routines, setRoutines, selectedUser }: UserRoutine
     const result = await createRoutine(newRoutine);
 
     if (result) {
-      setRoutines([...routines || [], result]);
+      setRoutines([...routines || [], newRoutine]);
       setShowAddRoutine(false);
       setEditedRoutine({ routineUserId: 0, routineDescription: '', routineDateToExecute: '' });
     } else {
