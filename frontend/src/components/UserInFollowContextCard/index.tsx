@@ -75,7 +75,7 @@ export const UserInFollowContextCard = ({ user, className }: UserInFollowContext
       </div>
     </div>
     <Popup isOpen={isRoutinePopupOpen} onClose={() => setIsRoutinePopupOpen(false)}>
-      <UserRoutine routines={routines} setRoutines={setRoutines}/>
+      <UserRoutine routines={routines} setRoutines={setRoutines} selectedUser={user}/>
     </Popup>
     </>
   );
