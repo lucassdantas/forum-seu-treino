@@ -22,7 +22,29 @@ class User {
 
     // Create
     public function create() {
-        // Implementação do método create, se necessário
+        $query = "INSERT INTO " . $this->table_name . "
+                  SET userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, 
+                      userPhone=:userPhone, userPassword=:userPassword, userHasImage=:userHasImage";
+  
+        $stmt = $this->conn->prepare($query);
+  
+        // Hash a senha antes de armazenar
+        $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
+  
+        // Bind values
+        $stmt->bindParam(":userName", $this->userName);
+        $stmt->bindParam(":userEmail", $this->userEmail);
+        $stmt->bindParam(":userBirthday", $this->userBirthday);
+        $stmt->bindParam(":userPhone", $this->userPhone);
+        $stmt->bindParam(":userPassword", $hashedPassword);
+        $stmt->bindParam(":userHasImage", $this->userHasImage);
+  
+        if ($stmt->execute()) {
+            $this->userId = $this->conn->lastInsertId();
+            return true;
+        }
+  
+        return false;
     }
 
     // Read
@@ -60,13 +82,16 @@ class User {
 
         $stmt = $this->conn->prepare($query);
 
+        // Bind values
         $stmt->bindParam(":userId", $this->userId);
         $stmt->bindParam(":userName", $this->userName);
         $stmt->bindParam(":userBirthday", $this->userBirthday);
         $stmt->bindParam(":userPhone", $this->userPhone);
 
         if (!empty($this->userPassword)) {
-            $stmt->bindParam(":userPassword", $this->userPassword);
+            // Hash a senha antes de armazenar
+            $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
+            $stmt->bindParam(":userPassword", $hashedPassword);
         }
 
         if ($stmt->execute()) {
@@ -81,3 +106,4 @@ class User {
         // Implementação do método delete, se necessário
     }
 }
+?>

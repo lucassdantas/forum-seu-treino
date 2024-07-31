@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 import { GrayCard } from '@/components/common/Card'
 import { TopicType } from '@/types/topics'
-import { TopicsList } from '@/pages/Feed/components/TopicsList'
-import { getTopics } from '@/api/topics/getTopics'
-import { FriendsSuggestion } from '@/pages/Feed/components/FriendsSuggestion'
 import { getUsers } from '@/api/users/getUsers'
 import { User } from '@/types/user'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { useUser } from '@/context/currentUserContext'
 import Login from '@/pages/Login'
+import { FriendsSuggestion } from '@/components/FriendsSuggestion'
+import { TopicsList } from '@/components/TopicsList'
+import { getTopics } from '@/api/topics/getTopics'
 
 export const LeftColumn = () => {
   const [topicsList, setTopicsList] = useState<TopicType[]>();

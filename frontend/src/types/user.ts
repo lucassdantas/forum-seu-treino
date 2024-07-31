@@ -8,4 +8,5 @@ export interface User{
     userEmail:string;
     userSubjects:number;
     userPhone:string;
+    userRole?:string;
 }

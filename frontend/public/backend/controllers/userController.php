@@ -12,8 +12,21 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch($method) {
     case 'POST':
-        // Implementação do método POST, se necessário
-        break;
+      $data = json_decode(file_get_contents("php://input"));
+
+      $user->userName = $data->userName;
+      $user->userEmail = $data->userEmail;
+      $user->userBirthday = $data->userBirthday;
+      $user->userPhone = $data->userPhone;
+      $user->userPassword = $data->userPassword;
+      $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : 0;
+
+      if ($user->create()) {
+          echo json_encode(["message" => "User was created.", "userId" => $user->userId, 'success' => true]);
+      } else {
+          echo json_encode(["message" => "Unable to create user.", 'success' => false]);
+      }
+    break;
 
     case 'GET':
         if (isset($_GET['id'])) {

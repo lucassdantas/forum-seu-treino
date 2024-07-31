@@ -43,6 +43,7 @@ if ($userData) {
         'userSubjects' => $_SESSION['userSubjects'],
         'userBirthday' => $_SESSION['userBirthday'],
         'userPhone' => $_SESSION['userPhone'],
+        'userRole' => $_SESSION['userRole'],
     ];
     $response['sessionUpdated'] = $sessionNeedsUpdate;
     $response['success'] = true;

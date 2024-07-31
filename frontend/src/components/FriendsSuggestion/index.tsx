@@ -51,7 +51,9 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
   return (
     <div className='flex flex-col gap-2'>
       <ul className='divide-y'>
-        {firstFriends.map((friend, i) => (
+        {firstFriends.map((friend, i) => {
+        if(friend.userId == currentUserId) return('')
+        return (
           <li className='flex gap-4 items-center justify-between py-4' key={i}>
             <div className='flex items-center gap-4'>
               <UserImage userId={friend.userId} />
@@ -61,7 +63,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
               {followStatus[friend.userId] ? <SlUserFollowing className='text-orange-seu-treino font-bold' /> : <IoPersonAddOutline />}
             </div>
           </li>
-        ))}
+        )})}
       </ul>
 
       {friendsList.length > 4 && (
@@ -72,7 +74,9 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
 
       <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <ul className='divide-y'>
-          {friendsList.map((friend, i) => (
+          {friendsList.map((friend, i) => {
+          if(friend.userId == currentUserId) return('')
+          return (
             <li className='flex gap-4 items-center justify-between py-4' key={i}>
               <div className='flex items-center gap-4'>
                 <UserImage userId={friend.userId} />
@@ -82,7 +86,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
                 {followStatus[friend.userId] ? <SlUserFollowing className='text-orange-seu-treino font-bold' /> : <IoPersonAddOutline />}
               </div>
             </li>
-          ))}
+          )})}
         </ul>
       </Popup>
     </div>
