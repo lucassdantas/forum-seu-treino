@@ -32,9 +32,9 @@ export const LeftColumn = () => {
 
   return (
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
-      <GrayCard>
+      {/* <GrayCard>
         {topicsList ? <TopicsList topics={topicsList} /> : <LoadingSpinner />}
-      </GrayCard>
+      </GrayCard> */}
 
       <GrayCard>
         <h4 className='mb-4'>Sugestões de amizade</h4>

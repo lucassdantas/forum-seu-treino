@@ -5,6 +5,7 @@ import React from 'react';
 import { getUserRoutines } from '@/api/routines/getuserRoutines';
 import Login from '@/pages/Login';
 import { Routines } from '@/types/routines';
+import { formatRoutineDate } from '@/utils/formatRoutineDate';
 
 
 
@@ -24,16 +25,6 @@ export const TrainRoutineBody = () => {
     fetchRoutines();
   }, [currentUser]);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  };
 
   return (
     <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
@@ -52,8 +43,8 @@ export const TrainRoutineBody = () => {
                 routines.map(routine => (
                   <tr key={routine.routineId} className='border-b border-gray-600'>
                     <td className='px-6 py-4 text-gray-300'>{routine.routineDescription}</td>
-                    <td className='px-6 py-4 text-gray-300'>{formatDate(routine.routineDateToExecute)}</td>
-                    <td className='px-6 py-4 text-gray-300'>{formatDate(routine.routineDateOfCreation)}</td>
+                    <td className='px-6 py-4 text-gray-300'>{formatRoutineDate(routine.routineDateToExecute)}</td>
+                    <td className='px-6 py-4 text-gray-300'>{formatRoutineDate(routine.routineDateOfCreation)}</td>
                   </tr>
                 ))
               ) : (
