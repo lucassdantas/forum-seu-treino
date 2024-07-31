@@ -49,7 +49,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
     }
   }, [userId]);
     return (
-    <div className='bg-black'>
+    <div className='bg-black min-h-screen'>
       <Banner/>
       {profileUser ? (
       <>

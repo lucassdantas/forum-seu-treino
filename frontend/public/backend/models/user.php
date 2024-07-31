@@ -49,7 +49,7 @@ class User {
 
     // Read
     public function read() {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . " WHERE userStatus=1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -60,7 +60,7 @@ class User {
     public function getUserById($userId) {
         $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation, userHasImage, userPhone
                   FROM " . $this->table_name . " 
-                  WHERE userId = :userId";
+                  WHERE userId = :userId AND userStatus = true";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userId', $userId);
@@ -101,9 +101,19 @@ class User {
         return false;
     }
 
-    // Delete
+    // Delete (Deactivate)
     public function delete() {
-        // Implementação do método delete, se necessário
+      $query = "UPDATE " . $this->table_name . " SET userStatus = false WHERE userId = :userId";
+
+      $stmt = $this->conn->prepare($query);
+
+      // Bind value
+      $stmt->bindParam(":userId", $this->userId);
+
+      if ($stmt->execute()) {
+          return true;
+      }
+
+      return false;
     }
 }
-?>

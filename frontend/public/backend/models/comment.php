@@ -36,7 +36,7 @@ class Comment {
 
     // Read
     public function read() {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . "WHERE commentStatus=1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -46,16 +46,16 @@ class Comment {
 
     // Read comments by post ID with author details
     public function readByPostId($postId) {
-      $query = "SELECT * FROM " . $this->table_name . " 
-                WHERE commentPostId = :postId
-                ORDER BY commentDateOfCreation DESC";
-  
-      $stmt = $this->conn->prepare($query);
-      $stmt->bindParam(":postId", $postId);
-      $stmt->execute();
-  
-      return $stmt;
-  }
+        $query = "SELECT * FROM " . $this->table_name . " 
+                  WHERE commentPostId = :postId AND commentStatus=1
+                  ORDER BY commentDateOfCreation DESC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":postId", $postId);
+        $stmt->execute();
+
+        return $stmt;
+    }
 
     // Update
     public function update() {
@@ -92,3 +92,4 @@ class Comment {
         return false;
     }
 }
+?>

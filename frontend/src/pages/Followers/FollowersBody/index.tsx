@@ -8,10 +8,11 @@ import { Popup } from '@/components/common/Popup';
 import { useUser } from '@/context/currentUserContext';
 import { Button } from '@/components/common/Button';
 import { toast } from 'react-toastify';
-import { FaPen, FaTimes } from 'react-icons/fa';
+import { FaPen, FaTimes, FaTrash } from 'react-icons/fa';
 import { getUsers } from '@/api/users/getUsers';
 import { createUser } from '@/api/users/createUser';
 import { uploadProfileImage } from '@/api/users/uploadProfileImage';
+import { deleteUser } from '@/api/users/deleteUser'; // Importe a função de exclusão
 
 export const FollowersBody = () => {
     const { currentUser } = useUser(); // Use o contexto do usuário
@@ -123,6 +124,21 @@ export const FollowersBody = () => {
         }
     };
 
+    const handleDeleteUser = async (userId: number) => {
+        try {
+            const response = await deleteUser(userId);
+            if (response.success) {
+                setFollowers((prevFollowers) => prevFollowers.filter((user) => user.userId !== userId));
+                toast.success('Usuário deletado com sucesso!');
+            } else {
+                toast.error('Erro ao deletar usuário.');
+            }
+        } catch (error) {
+            console.error('Erro ao deletar usuário:', error);
+            toast.error('Erro ao deletar usuário.');
+        }
+    };
+
     return (
         <div className='bg-black w-full flex justify-center px-4'>
             <Limiter>
@@ -147,7 +163,15 @@ export const FollowersBody = () => {
                     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
                         {!filteredFollowers && <LoadingSpinner />}
                         {filteredFollowers.length > 0 && filteredFollowers.map((follower: User, i: number) => (
-                            <UserInFollowContextCard key={i} user={follower} />
+                            <div className="relative" key={i}>
+                                {currentUser?.userRole === 'admin' && (
+                                    <FaTrash
+                                        onClick={() => handleDeleteUser(follower.userId)}
+                                        className='absolute top-2 right-2 text-red-600 cursor-pointer'
+                                    />
+                                )}
+                                <UserInFollowContextCard key={i} user={follower} />
+                            </div>
                         ))}
                         {filteredFollowers.length === 0 && <span className='text-white'>Nenhum resultado encontrado.</span>}
                     </div>
@@ -173,15 +197,11 @@ export const FollowersBody = () => {
                         )}
                         <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Nome' required value={userName} onChange={(e) => setUserName(e.target.value)} />
                         <input className='bg-neutral-700 p-2 rounded-lg' type='email' placeholder='Email' required value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
-                        <input className='bg-neutral-700 p-2 rounded-lg' type='tel' placeholder='Telefone' required value={userPhone} onChange={(e) => setUserPhone(e.target.value)} />
-                        <input className='bg-neutral-700 p-2 rounded-lg' type='date' required value={userBirthday} onChange={(e) => setUserBirthday(e.target.value)} />
+                        <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Telefone' required value={userPhone} onChange={(e) => setUserPhone(e.target.value)} />
+                        <input className='bg-neutral-700 p-2 rounded-lg' type='date' placeholder='Data de Nascimento' required value={userBirthday} onChange={(e) => setUserBirthday(e.target.value)} />
                         <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Senha' required value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
                         <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                    </div>
-                    <div className='flex justify-end mt-4'>
-                        <button type='submit' className='bg-orange-seu-treino text-white font-bold px-4 py-2 rounded-lg'>
-                            Adicionar
-                        </button>
+                        <button type='submit' className='bg-orange-seu-treino text-white items-center p-4'>Adicionar Usuário</button>
                     </div>
                 </form>
             </Popup>

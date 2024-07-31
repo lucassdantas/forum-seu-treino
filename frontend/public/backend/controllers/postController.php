@@ -73,3 +73,4 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
+?>

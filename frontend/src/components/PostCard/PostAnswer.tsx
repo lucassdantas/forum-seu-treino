@@ -131,7 +131,7 @@ export const PostAnswer = ({
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </Link>
               </div>
-              {comment.commentAuthorId === currentUser.userId && (
+              {(comment.commentAuthorId === currentUser.userId || currentUser.userRole === 'admin') && (
                 <TiDelete
                   onClick={() => handleDeleteComment(comment.commentId)}
                   className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
@@ -162,7 +162,7 @@ export const PostAnswer = ({
                   <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </div>
-                {comment.commentAuthorId === currentUser.userId && (
+                {(comment.commentAuthorId === currentUser.userId || currentUser.userRole === 'admin') && (
                   <TiDelete
                     onClick={() => handleDeleteComment(comment.commentId)}
                     className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'

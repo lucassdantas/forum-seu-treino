@@ -16,7 +16,8 @@ switch($method) {
 
         $topic->topicName = $data->topicName;
         $topic->topicUrl = $data->topicUrl;
-        $topic->topicDateOfCreation = date('Y-m-d H:i:s'); // Supondo que a data de criação é a data atual
+        $topic->topicDateOfCreation = date('Y-m-d H:i:s');
+        $topic->topicStatus = '1';
 
         if ($topic->create()) {
             echo json_encode(["message" => "Topic was created."]);
@@ -37,7 +38,8 @@ switch($method) {
         $topic->topicId = $data->topicId;
         $topic->topicName = $data->topicName;
         $topic->topicUrl = $data->topicUrl;
-        $topic->topicDateOfCreation = $data->topicDateOfCreation; // Supondo que a data de criação é fornecida
+        $topic->topicDateOfCreation = $data->topicDateOfCreation;
+        $topic->topicStatus = $data->topicStatus;
 
         if ($topic->update()) {
             echo json_encode(["message" => "Topic was updated."]);
@@ -47,14 +49,16 @@ switch($method) {
         break;
 
     case 'DELETE':
-        $data = json_decode(file_get_contents("php://input"));
+        if (isset($_GET['topicId'])) {
+            $topic->topicId = $_GET['topicId'];
 
-        $topic->topicId = $data->topicId;
-
-        if ($topic->delete()) {
-            echo json_encode(["message" => "Topic was deleted."]);
+            if ($topic->softDelete()) {
+                echo json_encode(["message" => "Topic was deleted."]);
+            } else {
+                echo json_encode(["message" => "Unable to delete topic."]);
+            }
         } else {
-            echo json_encode(["message" => "Unable to delete topic."]);
+            echo json_encode(["message" => "No topicId provided."]);
         }
         break;
 
@@ -63,3 +67,4 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
+?>

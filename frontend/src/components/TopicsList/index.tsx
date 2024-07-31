@@ -27,10 +27,10 @@ export const TopicsList = ({ topics }: TopicsListProps) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const firstTopics = topicsList.slice(0, 6);
 
-    const handleDeleteTopic = async (topicUrl: string) => {
+    const handleDeleteTopic = async (topicId: number) => {
         try {
-            await deleteTopic(topicUrl); // Deleta o tópico no banco de dados
-            setTopicsList(topicsList.filter(topic => topic.topicUrl !== topicUrl)); // Atualiza a lista de tópicos no estado
+            await deleteTopic(topicId); // Deleta o tópico no banco de dados
+            setTopicsList(topicsList.filter(topic => topic.topicId !== topicId)); // Atualiza a lista de tópicos no estado
         } catch (error) {
             console.error('Error deleting topic:', error);
         }
@@ -44,7 +44,7 @@ export const TopicsList = ({ topics }: TopicsListProps) => {
                         <Link to={'/topicos/' + singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                         {currentUser.userRole === 'admin' &&
                             <IoMdClose 
-                                onClick={() => handleDeleteTopic(singleTopic.topicUrl)} 
+                                onClick={() => handleDeleteTopic(singleTopic.topicId)} 
                                 className='text-xl cursor-pointer text-red-600' 
                             />
                         }
@@ -69,7 +69,7 @@ export const TopicsList = ({ topics }: TopicsListProps) => {
                             <Link to={'/topicos/' + singleTopic.topicUrl}>{singleTopic.topicName}</Link>
                             {currentUser.userRole === 'admin' &&
                                 <IoMdClose 
-                                    onClick={() => handleDeleteTopic(singleTopic.topicUrl)} 
+                                    onClick={() => handleDeleteTopic(singleTopic.topicId)} 
                                     className='text-xl cursor-pointer text-red-600' 
                                 />
                             }
@@ -111,6 +111,7 @@ const AddNewTopicInput = ({ topicsList, setTopicsList, setIsAddingNewTopic }: Ad
         const topicUrl = formatTopicUrl(removeAccents(cleanedTopicName));
     
         const topic: TopicType = {
+            topicId:topicsList.length+1,
             topicName: cleanedTopicName,
             topicUrl: topicUrl
         };

@@ -36,8 +36,8 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likesQuantity, setLikesQuantity] = useState(post.postLikesQuantity);
   const [isLoading, setIsLoading] = useState(false); // Novo estado para controle de carregamento
-  const {currentUser} = useUser()
-  if(!currentUser) return <Login/>
+  const { currentUser } = useUser();
+  if (!currentUser) return <Login />;
 
   useEffect(() => {
     const fetchUserById = async () => {
@@ -74,7 +74,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
         const response = await axios.get(`${BACKEND_URL}controllers/likeController.php`);
         const likes = response.data;
         const isAlreadyLiked = likes.some(
-          (like: { likeAuthorId: number; likePostId: number }) => 
+          (like: { likeAuthorId: number; likePostId: number }) =>
             like.likeAuthorId === currentUser.userId && like.likePostId === post.postId
         );
         setIsLiked(isAlreadyLiked);
@@ -159,14 +159,16 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
           />
 
           <div>
-            {currentUser?.userId === post.postAuthorId && (
+            {(currentUser?.userId === post.postAuthorId || currentUser?.userRole === 'admin') && (
               <div className='flex gap-2'>
                 <Button onClick={handleDeletePost} className='ml-auto'>
                   <BsTrash3Fill className='font-bold text-lg' />
                 </Button>
-                <Button onClick={() => setIsEditing(true)} className='ml-auto'>
-                  <BsPencilSquare className='font-bold text-lg' />
-                </Button>
+                {currentUser?.userId === post.postAuthorId && (
+                  <Button onClick={() => setIsEditing(true)} className='ml-auto'>
+                    <BsPencilSquare className='font-bold text-lg' />
+                  </Button>
+                )}
               </div>
             )}
           </div>

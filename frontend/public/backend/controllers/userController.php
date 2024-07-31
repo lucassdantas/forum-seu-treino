@@ -60,7 +60,15 @@ switch($method) {
         break;
 
     case 'DELETE':
-        // Implementação do método DELETE, se necessário
+        $data = json_decode(file_get_contents("php://input"));
+
+        $user->userId = $data->userId;
+
+        if ($user->delete()) {
+            echo json_encode(["message" => "User was deactivated.", 'success' => true]);
+        } else {
+            echo json_encode(["message" => "Unable to deactivate user.", 'success' => false]);
+        }
         break;
 
     default:

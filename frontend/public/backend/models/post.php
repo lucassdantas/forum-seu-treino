@@ -12,6 +12,7 @@ class Post {
     public $postHasImage;
     public $postLikesQuantity;
     public $postCommentsQuantity;
+    public $postStatus; // Adiciona a propriedade postStatus
 
     public function __construct($db) {
         $this->conn = $db;
@@ -21,7 +22,7 @@ class Post {
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " SET
                     postTopicId=:postTopicId, postAuthorId=:postAuthorId, postContent=:postContent, postDateOfCreation=:postDateOfCreation,
-                    postImage=:postImage, postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity";
+                    postImage=:postImage, postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity, postStatus=1";
 
         $stmt = $this->conn->prepare($query);
 
@@ -43,7 +44,7 @@ class Post {
 
     // Read
     public function read() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY postDateOfCreation DESC";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE postStatus=1 ORDER BY postDateOfCreation DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -53,7 +54,7 @@ class Post {
 
     // Get posts by authorId
     public function getPostsByAuthorId($authorId) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE postAuthorId = :postAuthorId ORDER BY postDateOfCreation DESC";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE postAuthorId = :postAuthorId AND postStatus=1 ORDER BY postDateOfCreation DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":postAuthorId", $authorId);
@@ -67,7 +68,7 @@ class Post {
         $query = "UPDATE " . $this->table_name . " SET
                     postTopicId=:postTopicId, postContent=:postContent, 
                     postHasImage=:postHasImage, postLikesQuantity=:postLikesQuantity, postCommentsQuantity=:postCommentsQuantity
-                    WHERE postId=:postId";
+                    WHERE postId=:postId AND postStatus=1";
 
         $stmt = $this->conn->prepare($query);
 
@@ -85,9 +86,9 @@ class Post {
         return false;
     }
 
-    // Delete
+    // Soft Delete
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE postId=:postId";
+        $query = "UPDATE " . $this->table_name . " SET postStatus=0 WHERE postId=:postId";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":postId", $this->postId);

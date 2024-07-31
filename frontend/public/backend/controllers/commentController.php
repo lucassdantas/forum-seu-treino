@@ -57,14 +57,16 @@ switch($method) {
         break;
 
     case 'DELETE':
-        $data = $_GET['commentId'];
+        if (isset($_GET['commentId'])) {
+            $comment->commentId = $_GET['commentId'];
 
-        $comment->commentId = $data;
-
-        if ($comment->delete()) {
-            echo json_encode(["message" => "Comment was deleted."]);
+            if ($comment->delete()) {
+                echo json_encode(["message" => "Comment was deleted."]);
+            } else {
+                echo json_encode(["message" => "Unable to delete comment."]);
+            }
         } else {
-            echo json_encode(["message" => "Unable to delete comment."]);
+            echo json_encode(["message" => "No commentId provided."]);
         }
         break;
 
@@ -73,3 +75,4 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
+?>
