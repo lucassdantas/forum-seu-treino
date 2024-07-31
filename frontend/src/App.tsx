@@ -81,8 +81,16 @@ const App = () => {
               : <Login setAuth={setAuth} />
           }
         />
+        <Route
+          path='*'
+          element={
+            auth && currentUser !== undefined
+              ? <MainComponent setAuth={setAuth} Component={Feed} />
+              : <Login setAuth={setAuth} />
+          }
+        />
       </Routes>
-      <ToastContainer /> {/* Adicione o ToastContainer aqui */}
+      <ToastContainer /> 
     </Router>
   );
 };
