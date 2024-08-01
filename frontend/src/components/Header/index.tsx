@@ -100,9 +100,9 @@ const Header = () => {
                 </div>
                 <ul className='flex flex-col items-center py-4'>
                   <li className='py-2'><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Feed</Link></li>
-                  <li className='py-2'><Link to={"/perfil:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Meu perfil</Link></li>
-                  <li className='py-2'><Link to={"/usuarios:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Usuários</Link></li>
-                  <li className='py-2'><Link to={"/feed:" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
+                  <li className='py-2'><Link to={"/perfil?id=" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Meu perfil</Link></li>
+                  <li className='py-2'><Link to={"/usuarios?id=" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Usuários</Link></li>
+                  <li className='py-2'><Link to={"/configuracoes" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
                   <li className='py-2'>
                     <Link to={'/rotina'} onClick={() => setIsMobileMenuOpen(false)}>
                       <Button>Visualizar rotina</Button>
