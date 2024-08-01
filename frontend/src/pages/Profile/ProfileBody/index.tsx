@@ -6,7 +6,7 @@ import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-si
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
-    <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
+    <div className='bg-black w-full flex justify-center min-h-fit pb-4 xl:px-0 px-4'>
       <Limiter>
         <div className='flex flex-col md:flex-row gap-4 md:gap-12 pt-4'>
           <LeftColumn />

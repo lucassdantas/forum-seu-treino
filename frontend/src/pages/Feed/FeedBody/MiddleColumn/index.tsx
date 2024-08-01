@@ -81,7 +81,7 @@ export const MiddleColumn = () => {
           
         </div>
         <div className='flex justify-end gap-4'>
-          <select
+          {/* <select
               value={selectedTopicId}
               onChange={(e) => setSelectedTopicId(Number(e.target.value))}
               className='bg-transparent text-white border border-gray-400 px-2 rounded-lg'
@@ -91,7 +91,7 @@ export const MiddleColumn = () => {
                 {topic.topicName}
               </option>
             ))}
-          </select>
+          </select> */}
           <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
         </div>
       </GrayCard>

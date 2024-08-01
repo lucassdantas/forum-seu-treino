@@ -12,21 +12,26 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch($method) {
     case 'POST':
-      $data = json_decode(file_get_contents("php://input"));
+        $data = json_decode(file_get_contents("php://input"));
 
-      $user->userName = $data->userName;
-      $user->userEmail = $data->userEmail;
-      $user->userBirthday = $data->userBirthday;
-      $user->userPhone = $data->userPhone;
-      $user->userPassword = $data->userPassword;
-      $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : 0;
+        $user->userName = $data->userName;
+        $user->userEmail = $data->userEmail;
+        $user->userBirthday = $data->userBirthday;
+        $user->userPhone = $data->userPhone;
+        $user->userPassword = $data->userPassword;
+        $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : 0;
 
-      if ($user->create()) {
-          echo json_encode(["message" => "User was created.", "userId" => $user->userId, 'success' => true]);
-      } else {
-          echo json_encode(["message" => "Unable to create user.", 'success' => false]);
-      }
-    break;
+        // Verifica se o e-mail já existe
+        if ($user->emailExists()) {
+            echo json_encode(["message" => "Já existe um usuário com este e-mail.", 'success' => false]);
+        } else {
+            if ($user->create()) {
+                echo json_encode(["message" => "Usuário criado com sucesso.", "userId" => $user->userId, 'success' => true]);
+            } else {
+                echo json_encode(["message" => "Não foi possível criar o usuário.", 'success' => false]);
+            }
+        }
+      break;
 
     case 'GET':
         if (isset($_GET['id'])) {

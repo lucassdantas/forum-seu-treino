@@ -21,31 +21,51 @@ class User {
     }
 
     // Create
-    public function create() {
-        $query = "INSERT INTO " . $this->table_name . "
-                  SET userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, 
-                      userPhone=:userPhone, userPassword=:userPassword, userHasImage=:userHasImage";
+        // Verifica se o e-mail já existe
+        public function emailExists() {
+          $query = "SELECT userId FROM " . $this->table_name . " WHERE userEmail = :userEmail";
   
-        $stmt = $this->conn->prepare($query);
+          $stmt = $this->conn->prepare($query);
+          $stmt->bindParam(":userEmail", $this->userEmail);
+          $stmt->execute();
   
-        // Hash a senha antes de armazenar
-        $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
+          if ($stmt->rowCount() > 0) {
+              return true;
+          }
   
-        // Bind values
-        $stmt->bindParam(":userName", $this->userName);
-        $stmt->bindParam(":userEmail", $this->userEmail);
-        $stmt->bindParam(":userBirthday", $this->userBirthday);
-        $stmt->bindParam(":userPhone", $this->userPhone);
-        $stmt->bindParam(":userPassword", $hashedPassword);
-        $stmt->bindParam(":userHasImage", $this->userHasImage);
+          return false;
+      }
   
-        if ($stmt->execute()) {
-            $this->userId = $this->conn->lastInsertId();
-            return true;
-        }
+      // Create
+      public function create() {
+          if ($this->emailExists()) {
+              return false;
+          }
   
-        return false;
-    }
+          $query = "INSERT INTO " . $this->table_name . "
+                    SET userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, 
+                        userPhone=:userPhone, userPassword=:userPassword, userHasImage=:userHasImage";
+  
+          $stmt = $this->conn->prepare($query);
+  
+          // Hash a senha antes de armazenar
+          $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
+  
+          // Bind values
+          $stmt->bindParam(":userName", $this->userName);
+          $stmt->bindParam(":userEmail", $this->userEmail);
+          $stmt->bindParam(":userBirthday", $this->userBirthday);
+          $stmt->bindParam(":userPhone", $this->userPhone);
+          $stmt->bindParam(":userPassword", $hashedPassword);
+          $stmt->bindParam(":userHasImage", $this->userHasImage);
+  
+          if ($stmt->execute()) {
+              $this->userId = $this->conn->lastInsertId();
+              return true;
+          }
+  
+          return false;
+      }
 
     // Read
     public function read() {
