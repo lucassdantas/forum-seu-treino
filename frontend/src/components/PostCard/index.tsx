@@ -175,6 +175,8 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
         </div>
 
         <Content
+          postId={post.postId}
+          postHasImage={post.postHasImage}
           isEditing={isEditing}
           editContent={editContent}
           setEditContent={setEditContent}

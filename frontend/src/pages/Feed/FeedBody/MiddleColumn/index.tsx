@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/common/Button';
 import { GrayCard } from '@/components/common/Card';
 import { PostCard } from '@/components/PostCard';
@@ -9,7 +9,10 @@ import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { UserImage } from '@/components/UserImage';
 import { createPost } from '@/api/posts/createPost';
 import Login from '@/pages/Login';
-import { getTopics } from '@/api/topics/getTopics'; // Importe a função getTopics
+import { getTopics } from '@/api/topics/getTopics';
+import { toast } from 'react-toastify';
+import { CiImageOn } from 'react-icons/ci';
+import { uploadPostImage } from '@/api/posts/uploadPostImage'; // Importe a função para upload da imagem
 
 export const MiddleColumn = () => {
   const { currentUser } = useUser();
@@ -18,7 +21,10 @@ export const MiddleColumn = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [currentPostContent, setCurrentPostContent] = useState<string>('');
   const [topics, setTopics] = useState<{ topicId: number; topicName: string }[]>([]);
-  const [selectedTopicId, setSelectedTopicId] = useState<number>(1); // Defina um tópico padrão, se necessário
+  const [selectedTopicId, setSelectedTopicId] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -40,9 +46,9 @@ export const MiddleColumn = () => {
       console.error('User not logged in');
       return;
     }
+    if(postContent === '') return toast.error("Escreva um conteúdo para postar.");
 
-    const newPost: PostType = {
-      postId: posts.length + 1, // Provisoriamente definindo postId como length + 1. Idealmente, o backend geraria o ID.
+    const newPost: Omit<PostType, 'postId'> = {
       postTopicId: selectedTopicId,
       postAuthorId: currentUser.userId,
       postContent: postContent,
@@ -54,10 +60,18 @@ export const MiddleColumn = () => {
     };
 
     try {
-      await createPost(newPost);
-      setPosts([newPost, ...posts]);
+      const postId = await createPost(newPost);
+      if (selectedImage) {
+        await uploadPostImage(postId, selectedImage);
+        newPost.postHasImage = true;
+        newPost.postImage = `/postImage/${postId}/${postId}.jpg`;
+      }
+
+      setPosts([{ postId, ...newPost }, ...posts]);
       setCurrentPostContent('');
-      setSelectedTopicId(1); // Reseta o tópico selecionado, se necessário
+      setSelectedTopicId(1);
+      setSelectedImage(null);
+      setImagePreview('');
     } catch (error) {
       console.error('Error creating post:', error);
     }
@@ -65,6 +79,14 @@ export const MiddleColumn = () => {
 
   const handleDeletePost = (postId: number) => {
     setPosts(posts.filter(post => post.postId !== postId));
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   return (
@@ -78,20 +100,17 @@ export const MiddleColumn = () => {
             value={currentPostContent}
             onChange={(e) => setCurrentPostContent(e.target.value)}
           />
-          
+          <input
+            type='file'
+            accept='.jpg'
+            className='hidden'
+            ref={fileInputRef}
+            onChange={handleImageChange}
+          />
         </div>
-        <div className='flex justify-end gap-4'>
-          {/* <select
-              value={selectedTopicId}
-              onChange={(e) => setSelectedTopicId(Number(e.target.value))}
-              className='bg-transparent text-white border border-gray-400 px-2 rounded-lg'
-            >
-            {topics.map((topic) => (
-              <option key={topic.topicId} value={topic.topicId} className='p-4 bg-neutral-700'>
-                {topic.topicName}
-              </option>
-            ))}
-          </select> */}
+        {imagePreview && <img src={imagePreview} alt='Image preview' className='w-[100%] max-h-[220px] object-cover mb-4' />}
+        <div className='flex justify-end gap-4 items-center'>
+          <CiImageOn onClick={() => fileInputRef.current?.click()} className='cursor-pointer text-2xl' />
           <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>
         </div>
       </GrayCard>

@@ -23,7 +23,9 @@ switch($method) {
         $post->postCommentsQuantity = $data->postCommentsQuantity;
 
         if ($post->create()) {
-            echo json_encode(["message" => "Post was created."]);
+            // Pega o ID do post recém-criado
+            $postId = $db->lastInsertId();
+            echo json_encode(["message" => "Post was created.", "postId" => $postId]);
         } else {
             echo json_encode(["message" => "Unable to create post."]);
         }
@@ -73,3 +75,4 @@ switch($method) {
         echo json_encode(["message" => "Method not allowed"]);
         break;
 }
+?>
