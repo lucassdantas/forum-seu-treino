@@ -1,6 +1,7 @@
-// components/PostCard/Content.tsx
+import { useState } from 'react';
 import { Button } from '@/components/common/Button';
 import { DEFAULT_POST_DIRECTORY } from '@/constants';
+import { Lightbox } from '@/components/Lightbox';
 
 type ContentProps = {
   isEditing: boolean;
@@ -8,8 +9,8 @@ type ContentProps = {
   setEditContent: React.Dispatch<React.SetStateAction<string>>;
   handleEditPost: () => void;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
-  postHasImage:boolean | number | string;
-  postId:number;
+  postHasImage: boolean | number | string;
+  postId: number;
 };
 
 export const Content = ({
@@ -21,6 +22,8 @@ export const Content = ({
   handleEditPost,
   setIsEditing,
 }: ContentProps) => {
+  const imageUrl = `${location.origin + DEFAULT_POST_DIRECTORY + postId}/${postId}.jpg`;
+
   return (
     <div className='my-4'>
       {isEditing ? (
@@ -38,7 +41,7 @@ export const Content = ({
       ) : (
         <>
           <p className='mb-4'>{editContent}</p>
-          {postHasImage == 1 && <img src={`${location.origin + DEFAULT_POST_DIRECTORY + postId}/${postId}.jpg`}/>}
+          {postHasImage == 1 && <Lightbox imageUrl={imageUrl} />}
         </>
       )}
     </div>

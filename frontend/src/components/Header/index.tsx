@@ -57,7 +57,7 @@ const Header = () => {
                 </li>
               </ul>
             </div>
-            <div className='md:w-2/12 w-4/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
+            <div className='md:w-2/12 w-6/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
               <div className="flex justify-center items-center gap-4">
                 <UserImage userId={currentUser.userId} userHasImage={currentUser.userHasImage}/>
                 <div className="relative flex items-center gap-1">
