@@ -12,6 +12,7 @@ import Login from '@/pages/Login';
 import { getTopics } from '@/api/topics/getTopics';
 import { toast } from 'react-toastify';
 import { CiImageOn } from 'react-icons/ci';
+import { FaTimes } from 'react-icons/fa'; // Ícone para remover a imagem
 import { uploadPostImage } from '@/api/posts/uploadPostImage'; // Importe a função para upload da imagem
 
 export const MiddleColumn = () => {
@@ -46,7 +47,7 @@ export const MiddleColumn = () => {
       console.error('User not logged in');
       return;
     }
-    if(postContent === '') return toast.error("Escreva um conteúdo para postar.");
+    if(postContent === '' && !selectedImage) return toast.error("Escreva um conteúdo para postar.");
 
     const newPost: Omit<PostType, 'postId'> = {
       postTopicId: selectedTopicId,
@@ -54,7 +55,7 @@ export const MiddleColumn = () => {
       postContent: postContent,
       postDateOfCreation: new Date().toISOString(),
       postImage: '',
-      postHasImage: false,
+      postHasImage: !!selectedImage,
       postLikesQuantity: 0,
       postCommentsQuantity: 0,
     };
@@ -89,6 +90,11 @@ export const MiddleColumn = () => {
     }
   };
 
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setImagePreview('');
+  };
+
   return (
     <div className='text-white flex flex-col w-full md:w-2/4 gap-4'>
       <GrayCard>
@@ -108,7 +114,15 @@ export const MiddleColumn = () => {
             onChange={handleImageChange}
           />
         </div>
-        {imagePreview && <img src={imagePreview} alt='Image preview' className='w-[100%] max-h-[220px] object-cover mb-4' />}
+        {imagePreview && (
+          <div className='relative mb-4'>
+            <img src={imagePreview} alt='Image preview' className='w-[100%] max-h-[220px] object-cover' />
+            <FaTimes 
+              onClick={handleRemoveImage}
+              className='absolute top-2 right-2 cursor-pointer text-white text-2xl bg-black p-1 rounded-full'
+            />
+          </div>
+        )}
         <div className='flex justify-end gap-4 items-center'>
           <CiImageOn onClick={() => fileInputRef.current?.click()} className='cursor-pointer text-2xl' />
           <Button className='w-full' onClick={() => handleNewPost(currentPostContent)}>Publicar</Button>

@@ -37,8 +37,8 @@ export const Content = ({
         </>
       ) : (
         <>
+          <p className='mb-4'>{editContent}</p>
           {postHasImage == 1 && <img src={`${location.origin + DEFAULT_POST_DIRECTORY + postId}/${postId}.jpg`}/>}
-          <p>{editContent}</p>
         </>
       )}
     </div>
