@@ -13,7 +13,7 @@ class Post {
     public $postLikesQuantity;
     public $postCommentsQuantity;
     public $postStatus; // Adiciona a propriedade postStatus
-
+  
     public function __construct($db) {
         $this->conn = $db;
     }

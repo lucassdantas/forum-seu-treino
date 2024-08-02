@@ -104,6 +104,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
         postCommentsQuantity: commentsQuantity,
         postHasImage: post.postHasImage,
         postTopicId: post.postTopicId,
+        postIsEdited:true,
       };
       await editPost(postToEdit);
       setIsEditing(false);
@@ -138,6 +139,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
         postCommentsQuantity: commentsQuantity,
         postHasImage: post.postHasImage,
         postTopicId: post.postTopicId,
+        postIsEdited:0,
       };
       await editPost(postToEdit);
     } catch (error) {
@@ -156,6 +158,7 @@ export const PostCard = ({ post, onDelete }: PostCardProps) => {
           <Author
             postAuthor={postAuthor}
             postDateOfCreation={post.postDateOfCreation}
+            postIsEdited={post.postIsEdited}
           />
 
           <div>

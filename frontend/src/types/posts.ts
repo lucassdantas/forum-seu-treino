@@ -9,5 +9,6 @@ export interface PostType{
   postLikesQuantity:number;
   postCommentsQuantity:number;
   postHasImage:boolean;
+  postIsEdited?:boolean;
 }
 
