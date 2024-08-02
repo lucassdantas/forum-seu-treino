@@ -2,4 +2,5 @@
 export interface UserBasic {
   userId: number;
   userName: string;
+  userHasImage:string | number | boolean;
 }

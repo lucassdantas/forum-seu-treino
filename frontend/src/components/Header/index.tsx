@@ -59,7 +59,7 @@ const Header = () => {
             </div>
             <div className='md:w-2/12 w-4/12 flex md:justify-end justify-start items-center gap-4 ml-auto'>
               <div className="flex justify-center items-center gap-4">
-                <UserImage userId={currentUser.userId}/>
+                <UserImage userId={currentUser.userId} userHasImage={currentUser.userHasImage}/>
                 <div className="relative flex items-center gap-1">
                   <span>Olá, {firstName}</span>
                   <FaAngleDown
@@ -102,7 +102,7 @@ const Header = () => {
                   <li className='py-2'><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Feed</Link></li>
                   <li className='py-2'><Link to={"/perfil?id=" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Meu perfil</Link></li>
                   <li className='py-2'><Link to={"/usuarios?id=" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Usuários</Link></li>
-                  <li className='py-2'><Link to={"/configuracoes" + currentUser.userId} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
+                  <li className='py-2'><Link to={"/configuracoes"} onClick={() => setIsMobileMenuOpen(false)}>Configurações</Link></li>
                   <li className='py-2'>
                     <Link to={'/rotina'} onClick={() => setIsMobileMenuOpen(false)}>
                       <Button>Visualizar rotina</Button>

@@ -8,6 +8,7 @@ import { checkFollowStatus } from '@/api/followers/checkFollowStatus';
 import { followUser } from '@/api/followers/followUser';
 import { SlUserFollowing } from 'react-icons/sl';
 import { unfollowUser } from '@/api/followers/unFollowUser';
+import { useUser } from '@/context/currentUserContext';
 
 type FriendsSuggestionProps = {
   friends: User[];
@@ -22,6 +23,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
   const [friendsList, setFriendsList] = useState<User[]>(friends);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [followStatus, setFollowStatus] = useState<FollowStatus>({});
+  const {currentUser} = useUser()
 
   useEffect(() => {
     const fetchFollowStatus = async () => {
@@ -56,7 +58,7 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
         return (
           <li className='flex gap-4 items-center justify-between py-4' key={i}>
             <div className='flex items-center gap-4'>
-              <UserImage userId={friend.userId} />
+              <UserImage userId={friend.userId} userHasImage={friend.userHasImage} />
               <Link to={'/perfil?id=' + friend.userId}>{friend.userName}</Link>
             </div>
             <div className='cursor-pointer' onClick={() => handleFollowClick(friend.userId)}>
@@ -78,10 +80,13 @@ export const FriendsSuggestion = ({ friends, currentUserId }: FriendsSuggestionP
           if(friend.userId == currentUserId) return('')
           return (
             <li className='flex gap-4 items-center justify-between py-4' key={i}>
-              <div className='flex items-center gap-4'>
-                <UserImage userId={friend.userId} />
-                <span>{friend.userName}</span>
-              </div>
+              <Link to={`/perfil?id=${friend.userId}`}>
+                <div className='flex items-center gap-4'>
+                    <UserImage userId={friend.userId} userHasImage={friend.userHasImage}  />
+                    <span>{friend.userName}</span>
+                  
+                </div>
+              </Link>
               <div className='cursor-pointer' onClick={() => handleFollowClick(friend.userId)}>
                 {followStatus[friend.userId] ? <SlUserFollowing className='text-orange-seu-treino font-bold' /> : <IoPersonAddOutline />}
               </div>

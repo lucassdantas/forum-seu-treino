@@ -97,6 +97,9 @@ class User {
         if (!empty($this->userPassword)) {
             $query .= ", userPassword=:userPassword";
         }
+        if (!empty($this->userHasImage)) {
+            $query .= ", userHasImage=:userHasImage";
+        }
 
         $query .= " WHERE userId=:userId";
 
@@ -112,6 +115,10 @@ class User {
             // Hash a senha antes de armazenar
             $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
             $stmt->bindParam(":userPassword", $hashedPassword);
+        }
+
+        if (!empty($this->userHasImage)) {
+            $stmt->bindParam(":userHasImage", $this->userHasImage);
         }
 
         if ($stmt->execute()) {

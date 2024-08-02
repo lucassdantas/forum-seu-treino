@@ -53,15 +53,14 @@ export const UserInFollowContextCard = ({ user, className }: UserInFollowContext
     setIsRoutinePopupOpen(true)
     const fetchedRoutines = await getUserRoutines(user.userId)
     if(fetchedRoutines) setRoutines(fetchedRoutines)
-      console.log(fetchedRoutines)
-  };
+    };
 
   return (
     <>
     <div className={'bg-neutral-950 text-white rounded-md my-4 ' + className}>
       <div className={`bg-[url("${user.userCoverImage}")] bg-neutral-400 w-full h-[80px] p-1`}> </div>
       <div className='py-8 flex flex-col items-center gap-4 w-full'>
-        <UserImage userId={user.userId} photoSize='lg' className='-mt-14 text-center relative' />
+        <UserImage userId={user.userId} userHasImage={user.userHasImage} photoSize='lg' className='-mt-14 text-center relative' />
         <span className='mb-4'>{user.userName}</span>
         <div className='flex justify-center gap-4'>
           <Button className='bg-white'><Link to={`/perfil?id=${user.userId}`}>Ver Perfil</Link></Button>

@@ -5,6 +5,7 @@ import axios from 'axios';
 interface Follower {
     userId: number;
     userName: string;
+    userHasImage: number | boolean | string ;
 }
 
 export const getFollowingList = async (userId: number): Promise<Follower[]> => {

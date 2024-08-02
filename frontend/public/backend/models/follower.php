@@ -67,7 +67,7 @@ class Follower {
 
     // Get followers list
     public function getFollowersList($followerUserFollowed) {
-        $query = "SELECT u.userId, u.userName, u.userStatus 
+        $query = "SELECT u.userId, u.userName, u.userStatus, u.userHasImage 
                   FROM " . $this->table_name . " f
                   JOIN forum_users u ON f.followerUserFollower = u.userId
                   WHERE f.followerUserFollowed = :followerUserFollowed AND u.userStatus = 1";
@@ -81,7 +81,7 @@ class Follower {
 
     // Get following list
     public function getFollowingList($followerUserFollower) {
-        $query = "SELECT u.userId, u.userName, u.userStatus 
+        $query = "SELECT u.userId, u.userName, u.userStatus, u.userHasImage  
                   FROM " . $this->table_name . " f
                   JOIN forum_users u ON f.followerUserFollowed = u.userId
                   WHERE f.followerUserFollower = :followerUserFollower AND u.userStatus = 1";

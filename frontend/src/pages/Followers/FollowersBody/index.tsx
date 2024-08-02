@@ -185,17 +185,20 @@ export const FollowersBody = () => {
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8'>
             {!filteredFollowers && <LoadingSpinner />}
-            {filteredFollowers.length > 0 && filteredFollowers.map((follower: User, i: number) => (
-              <div className="relative" key={i}>
-                {currentUser?.userRole === 'admin' && follower.userId != currentUser.userId && (
-                  <FaTrash
-                    onClick={() => handleDeleteUser(follower.userId)}
-                    className='absolute top-2 right-2 text-red-600 cursor-pointer'
-                  />
-                )}
-                <UserInFollowContextCard key={i} user={follower} />
-              </div>
-            ))}
+            {filteredFollowers.length > 0 && filteredFollowers.map((follower: User, i: number) => {
+              if(currentUser && follower.userId === currentUser.userId) return('')
+              return(
+                <div className="relative" key={i}>
+                  {currentUser?.userRole === 'admin' && follower.userId != currentUser.userId && (
+                    <FaTrash
+                      onClick={() => handleDeleteUser(follower.userId)}
+                      className='absolute top-2 right-2 text-red-600 cursor-pointer'
+                    />
+                  )}
+                  <UserInFollowContextCard key={i} user={follower} />
+                </div>
+              )
+            })}
             {filteredFollowers.length === 0 && <span className='text-white'>Nenhum resultado encontrado.</span>}
           </div>
         </div>

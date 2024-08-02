@@ -49,9 +49,8 @@ export const PersonalInfos = () => {
         ...(userPassword && userPassword !== '' && { userPassword }),
         userHasImage: !!profileImage // Atualiza o campo userHasImage
       };
-
       const response = await axios.put(`${BACKEND_URL}controllers/userController.php`, updatedUser, { withCredentials: true });
-
+      
       if (response.data.success) {
         let imageUploadSuccess = true;
 

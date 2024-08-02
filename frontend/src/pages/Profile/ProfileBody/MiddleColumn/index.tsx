@@ -65,7 +65,7 @@ export const MiddleColumn = ({ user }: { user: User }) => {
       {user.userId === currentUser.userId &&
         <GrayCard>
           <div className='flex gap-4 mb-4'>
-            {user.userId === currentUser.userId ? <UserImage userId={currentUser.userId} /> : ''}
+            {user.userId === currentUser.userId ? <UserImage userId={currentUser.userId} userHasImage={currentUser.userHasImage} /> : ''}
             <input
               placeholder={`No que você está pensando, ${currentUser?.userName}?`}
               className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'
@@ -80,7 +80,7 @@ export const MiddleColumn = ({ user }: { user: User }) => {
       }
 
       {!posts && <LoadingSpinner />}
-      {posts.length > 0 && posts.map((post: PostType, i) => (
+      {posts && posts.length > 0 && posts.map((post: PostType, i) => (
         <PostCard key={i} post={post} onDelete={handleDeletePost} />
       ))}
       {posts.length === 0 && <span className='w-full text-center'>Nenhuma postagem encontrada.</span>}

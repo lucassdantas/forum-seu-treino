@@ -37,20 +37,20 @@ export const PostAnswer = ({
 }) => {
   const [commentContent, setCommentContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [commentAuthors, setCommentAuthors] = useState<{ [key: number]: string }>({});
+  const [commentAuthors, setCommentAuthors] = useState<{ [key: number]: { userName: string, userHasImage: boolean } }>({});
 
   useEffect(() => {
     const fetchCommentAuthors = async () => {
-      const authorNames: { [key: number]: string } = {};
+      const authorData: { [key: number]: { userName: string, userHasImage: boolean } } = {};
 
       for (const comment of comments) {
         if (!commentAuthors[comment.commentAuthorId]) {
           const user = await getUserById(comment.commentAuthorId);
-          authorNames[comment.commentAuthorId] = user.userName;
+          authorData[comment.commentAuthorId] = { userName: user.userName, userHasImage: user.userHasImage };
         }
       }
 
-      setCommentAuthors((prev) => ({ ...prev, ...authorNames }));
+      setCommentAuthors((prev) => ({ ...prev, ...authorData }));
     };
 
     fetchCommentAuthors();
@@ -102,7 +102,7 @@ export const PostAnswer = ({
   return (
     <GrayCard className='rounded-t-none -mt-2 border-t border-neutral-600'>
       <div className='flex gap-2 w-full items-center mb-4'>
-        <UserImage userId={currentUser.userId} size={40} />
+        <UserImage userId={currentUser.userId} userHasImage={currentUser.userHasImage} size={40} />
         <input
           placeholder={'Escrever resposta'}
           className='w-11/12 bg-transparent placeholder:to-zinc-100 outline-none px-2 pr-4 bg-neutral-900 py-4'
@@ -121,23 +121,23 @@ export const PostAnswer = ({
 
       {displayedComments.map((comment) => (
         <div key={comment.commentId} className='mb-4'>
-            <div className="flex gap-4">
-              <div className="flex flex-col">
-                <UserImage userId={comment.commentAuthorId} size={40} />
-              </div>
-              <div className="flex flex-col gap-1">
-                <Link className='flex flex-col gap-1' to={`/profile?id=${comment.commentAuthorId}`}>
-                  <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
-                  <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
-                </Link>
-              </div>
-              {(comment.commentAuthorId === currentUser.userId || currentUser.userRole === 'admin') && (
-                <TiDelete
-                  onClick={() => handleDeleteComment(comment.commentId)}
-                  className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
-                />
-              )}
+          <div className="flex gap-4">
+            <div className="flex flex-col">
+              <UserImage userId={comment.commentAuthorId} userHasImage={commentAuthors[comment.commentAuthorId]?.userHasImage} size={40} />
             </div>
+            <div className="flex flex-col gap-1">
+              <Link className='flex flex-col gap-1' to={`/profile?id=${comment.commentAuthorId}`}>
+                <span className=''>{commentAuthors[comment.commentAuthorId]?.userName}</span>
+                <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
+              </Link>
+            </div>
+            {(comment.commentAuthorId === currentUser.userId || currentUser.userRole === 'admin') && (
+              <TiDelete
+                onClick={() => handleDeleteComment(comment.commentId)}
+                className='ml-auto flex h-fit rounded-full text-xl font-bold text-orange-seu-treino cursor-pointer'
+              />
+            )}
+          </div>
           <div className='mt-4'>
             <p className='break-words'>{comment.commentContent}</p>
           </div>
@@ -156,10 +156,10 @@ export const PostAnswer = ({
             <div key={comment.commentId} className='pt-4'>
               <div className="flex gap-4">
                 <div className="flex flex-col">
-                  <UserImage userId={comment.commentAuthorId} size={40} />
+                  <UserImage userId={comment.commentAuthorId} userHasImage={commentAuthors[comment.commentAuthorId]?.userHasImage} size={40} />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className=''>{commentAuthors[comment.commentAuthorId]}</span>
+                  <span className=''>{commentAuthors[comment.commentAuthorId]?.userName}</span>
                   <span className='opacity-85'>{formatTimeAgo(comment.commentDateOfCreation)}</span>
                 </div>
                 {(comment.commentAuthorId === currentUser.userId || currentUser.userRole === 'admin') && (

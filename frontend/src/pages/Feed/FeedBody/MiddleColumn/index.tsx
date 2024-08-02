@@ -71,7 +71,7 @@ export const MiddleColumn = () => {
     <div className='text-white flex flex-col w-full md:w-2/4 gap-4'>
       <GrayCard>
         <div className='flex gap-4 mb-4'>
-          <UserImage userId={currentUser.userId} />
+          <UserImage userId={currentUser.userId} userHasImage={currentUser.userHasImage}/>
           <input
             placeholder={'No que você está pensando, ' + currentUser?.userName + '?'}
             className='w-full bg-transparent placeholder:to-zinc-100 outline-1 px-2'

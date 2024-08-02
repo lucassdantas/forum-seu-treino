@@ -27,7 +27,7 @@ export const TrainRoutineBody = () => {
 
 
   return (
-    <div className='bg-black w-full flex justify-center pb-4 xl:px-0 px-4'>
+    <div className='bg-black min-h-fit w-full flex justify-center pb-4 xl:px-0 px-4'>
       <Limiter>
         <div className='flex flex-col gap-4 pt-4'>
           <table className='min-w-full bg-gray-800 border border-gray-700 rounded-lg'>

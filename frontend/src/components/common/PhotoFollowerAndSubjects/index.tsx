@@ -104,7 +104,7 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
             <Limiter>
                 <div className='flex flex-col md:flex-row items-center py-4 w-full sm:text-left text-center'>
                     <div className="flex flex-col md:flex-row gap-6 w-full md:w-2/3 items-center">
-                        <UserImage userId={profileOwner.userId} photoSize={'lg'} className={'-mt-4'} />
+                        <UserImage userId={profileOwner.userId} userHasImage={profileOwner.userHasImage} photoSize={'lg'} className={'-mt-4'} />
                         <div className="flex flex-col py-2">
                             <span className='font-bold text-xl mb-4'>{profileName}</span>
                             {profileOwner && profileOwner.userId !== currentUser.userId && (
@@ -133,7 +133,7 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                         followersList.map((follower) => (
                             <div key={follower.userId} className="mb-4 flex items-center justify-between">
                                 <div className="flex items-center">
-                                    <UserImage userId={follower.userId} photoSize="sm" />
+                                    <UserImage userId={follower.userId} userHasImage={follower.userHasImage} photoSize="sm" />
                                     <Link to={`/perfil?id=${follower.userId}`} className="ml-2">
                                         {follower.userName}
                                     </Link>
@@ -153,7 +153,7 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                         followingList.map((followed) => (
                             <div key={followed.userId} className="mb-4 flex items-center justify-between">
                                 <div className="flex items-center">
-                                    <UserImage userId={followed.userId} photoSize="sm" />
+                                    <UserImage userId={followed.userId} userHasImage={followed.userHasImage} photoSize="sm" />
                                     <Link to={`/perfil?id=${followed.userId}`} className="ml-2">
                                         {followed.userName}
                                     </Link>
