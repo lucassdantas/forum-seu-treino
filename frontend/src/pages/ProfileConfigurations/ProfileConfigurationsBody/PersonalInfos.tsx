@@ -1,6 +1,6 @@
 import { useUser } from '@/context/currentUserContext';
 import { Button } from '@/components/common/Button';
-import { BACKEND_URL, SITE_URL } from '@/constants';
+import { BACKEND_URL, DEFAULT_IMAGE_DIRECTORY, SITE_URL } from '@/constants';
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import Login from '@/pages/Login';
@@ -23,7 +23,6 @@ export const PersonalInfos = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   useEffect(() => {
     // Limpar URL temporária quando o componente for desmontado
     return () => {
@@ -47,7 +46,7 @@ export const PersonalInfos = () => {
         userEmail,
         userPhone,
         ...(userPassword && userPassword !== '' && { userPassword }),
-        userHasImage: !!profileImage // Atualiza o campo userHasImage
+        userHasImage: !!profileImage || currentUser.userHasImage // Atualiza o campo userHasImage
       };
       const response = await axios.put(`${BACKEND_URL}controllers/userController.php`, updatedUser, { withCredentials: true });
       
@@ -64,7 +63,7 @@ export const PersonalInfos = () => {
         }
 
         // Atualizando o contexto do usuário
-        setCurrentUser(response.data.updatedUser);
+        setCurrentUser(response.data.updatedUserm);
         toast.success('Informações atualizadas com sucesso!');
       } else {
         toast.error('Falha ao atualizar informações!');
@@ -117,9 +116,9 @@ export const PersonalInfos = () => {
             </>
           ) : currentUser.userHasImage ? (
             <img
-              src={`${SITE_URL}profileImage/${currentUser.userId}/${currentUser.userId}.jpg`}
+              src={`${location.protocol+'//'+ SITE_URL + DEFAULT_IMAGE_DIRECTORY}/${currentUser.userId}/${currentUser.userId}.jpg`}
               alt="Foto de Perfil"
-              className="w-24 h-24 rounded-full"
+              className="w-24 h-24 rounded-full object-cover"
             />
           ) : (
             <div className="w-24 h-24 rounded-full bg-gray-500 flex items-center justify-center text-white">

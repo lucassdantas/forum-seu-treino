@@ -98,7 +98,8 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
             setFollowersList((prev) => prev.filter((user) => user.userId !== followerId));
         }
     };
-
+    console.log(profileOwner.userId)
+    console.log(currentUser.userId)
     return (
         <div className='bg-black text-white flex justify-center -mt-4 px-4'>
             <Limiter>
@@ -107,7 +108,7 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                         <UserImage userId={profileOwner.userId} userHasImage={profileOwner.userHasImage} photoSize={'lg'} className={'-mt-4'} />
                         <div className="flex flex-col py-2">
                             <span className='font-bold text-xl mb-4'>{profileName}</span>
-                            {profileOwner && profileOwner.userId !== currentUser.userId && (
+                            {profileOwner && profileOwner.userId != currentUser.userId && (
                                 <Button onClick={handleFollowClick}>
                                     {isFollowingState === null ? 'Carregando...' : isFollowingState ? 'Deixar de Seguir' : 'Seguir'}
                                 </Button>
