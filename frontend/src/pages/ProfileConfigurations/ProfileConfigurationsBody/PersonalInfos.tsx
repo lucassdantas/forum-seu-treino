@@ -67,6 +67,7 @@ export const PersonalInfos = () => {
         setCurrentUser({...response.data.updatedUser, userId:currentUser.userId});
         toast.success('Informações atualizadas com sucesso!');
         handleClearImage()
+        location.href='/'
       } else {
         toast.error('Falha ao atualizar informações!');
       }
