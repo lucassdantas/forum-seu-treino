@@ -23,6 +23,7 @@ export const PersonalInfos = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     // Limpar URL temporária quando o componente for desmontado
     return () => {
@@ -63,7 +64,7 @@ export const PersonalInfos = () => {
         }
 
         // Atualizando o contexto do usuário
-        setCurrentUser(response.data.updatedUserm);
+        setCurrentUser(response.data.updatedUser);
         toast.success('Informações atualizadas com sucesso!');
       } else {
         toast.error('Falha ao atualizar informações!');
@@ -116,7 +117,7 @@ export const PersonalInfos = () => {
             </>
           ) : currentUser.userHasImage ? (
             <img
-              src={`${location.protocol+'//'+ SITE_URL+ '/' + DEFAULT_IMAGE_DIRECTORY}/${currentUser.userId}/${currentUser.userId}.jpg`}
+              src={`${location.protocol+'//'+ SITE_URL + DEFAULT_IMAGE_DIRECTORY}/${currentUser.userId}/${currentUser.userId}.jpg`}
               alt="Foto de Perfil"
               className="w-24 h-24 rounded-full object-cover"
             />
