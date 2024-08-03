@@ -116,7 +116,7 @@ export const PersonalInfos = () => {
             </>
           ) : currentUser.userHasImage ? (
             <img
-              src={`${location.protocol+'//'+ SITE_URL + DEFAULT_IMAGE_DIRECTORY}/${currentUser.userId}/${currentUser.userId}.jpg`}
+              src={`${location.protocol+'//'+ SITE_URL+ '/' + DEFAULT_IMAGE_DIRECTORY}/${currentUser.userId}/${currentUser.userId}.jpg`}
               alt="Foto de Perfil"
               className="w-24 h-24 rounded-full object-cover"
             />
