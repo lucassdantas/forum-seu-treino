@@ -33,7 +33,7 @@ const RightColumn = () => {
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       {
         advertising.map((ads, i) => (
-          <GrayCard key={i} className=''>
+          <GrayCard key={i} className='text-center'>
           <h3>Anúncios em breve</h3>
         </GrayCard>
         ))
