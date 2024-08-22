@@ -4,6 +4,7 @@ import { LeftColumn } from '@/pages/Profile/ProfileBody/LeftColumn'
 import { MiddleColumn } from '@/pages/Profile/ProfileBody/MiddleColumn'
 import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-silva-1.jpg'
 import { Button } from '@/components/common/Button'
+import { GrayCard } from '@/components/common/Card'
 
 export const ProfileBody = ({user}:{user:User}) => {
   return (
@@ -32,10 +33,9 @@ const RightColumn = () => {
     <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
       {
         advertising.map((ads, i) => (
-          <div key={i} className='border rounded-md'>
-            <h3>Em breve</h3>
-            <Button>Anuncie aqui</Button>
-          </div>
+          <GrayCard key={i} className=''>
+          <h3>Anúncios em breve</h3>
+        </GrayCard>
         ))
       }
     </div>
