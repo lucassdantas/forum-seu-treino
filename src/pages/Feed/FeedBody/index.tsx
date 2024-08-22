@@ -2,6 +2,8 @@ import { Limiter } from '@/components/common/Limiter'
 import { MiddleColumn } from '@/pages/Feed/FeedBody/MiddleColumn'
 import { LeftColumn } from '@/pages/Feed/FeedBody/LeftColumn'
 import tempAdvertisingImage from '@/assets/advertising/personal-trainer-breno-silva-1.jpg'
+import { Button } from '@/components/common/Button'
+import { GrayCard } from '@/components/common/Card'
 
 export const FeedBody = () => {
   return (
@@ -23,22 +25,16 @@ const RightColumn = () => {
     {
         img:tempAdvertisingImage
     },
-    {
-        img:tempAdvertisingImage
-    },
-    {
-        img:tempAdvertisingImage
-    },
 ]
   return (
-    <div className='text-white flex flex-col w-full md:w-1/4 gap-4'>
-      {
-        advertising.map((ads, i) => (
-          <div key={i} className='border rounded-md'>
-            <img src={ads.img} alt='Propaganda' />
-          </div>
-        ))
-      }
-    </div>
+    <div className='text-white flex flex-col w-full items-center md:w-1/4 gap-4'>
+    {
+      advertising.map((ads, i) => (
+        <GrayCard key={i} className=''>
+          <h3>Anúncios em breve</h3>
+        </GrayCard>
+      ))
+    }
+  </div>
   )
 }

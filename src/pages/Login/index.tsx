@@ -6,6 +6,7 @@ import { IoMdKey } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/context/currentUserContext';  // Importando o contexto
 import logo from '@/assets/logo-seu-treino-linha-branca-breno-silva.png';
+import brenoImg from '@/assets/personal-trainer-breno-silva-1.jpg'
 import { BACKEND_URL } from '@/constants';
 import { toast } from 'react-toastify';
 
@@ -51,7 +52,7 @@ const Login = ({ setAuth }: any) => {
       <Limiter>
         <div className="flex lg:flex-row flex-col justify-center items-center w-full gap-4">
           <div className="lg:flex flex-col w-1/2 lg:relative hidden items-center">
-            <img src={logo} alt='Imagem para login' />
+            <img src={brenoImg} alt='Imagem para login' className='rounded-md max-w-[450px] border border-white' />
           </div>
 
           <div className="flex flex-col lg:w-1/2 w-full gap-8 lg:px-4 px-8 lg:text-left text-center">
