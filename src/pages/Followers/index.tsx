@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useEffect, Dispatch, SetStateAction, useContext, useState  } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BACKEND_URL } from '@/constants'
+import { checkUserRole } from '@/utils/checkUserRole'
 
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
@@ -56,6 +57,7 @@ export const Followers = ({setAuth}:FollowersProps) => {
         <PhotoFollowerAndSubjects
           profileName={profileUser.userName}
           profileOwner={profileUser}
+          userRole={checkUserRole(profileUser.userRole)}
         />
         <FollowersBody  />
       </>

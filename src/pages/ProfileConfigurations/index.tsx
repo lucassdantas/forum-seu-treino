@@ -6,6 +6,7 @@ import {  useUser } from '@/context/currentUserContext';
 import { ProfileConfigurationsBody } from '@/pages/ProfileConfigurations/ProfileConfigurationsBody';
 import Login from '@/pages/Login';
 import { BACKEND_URL } from '@/constants';
+import { checkUserRole } from '@/utils/checkUserRole';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
@@ -33,7 +34,7 @@ const ProfileConfigurations = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser}/>
+      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser} userRole={checkUserRole(currentUser.userRole)}/>
       <ProfileConfigurationsBody user={currentUser}/>
     </>
   );

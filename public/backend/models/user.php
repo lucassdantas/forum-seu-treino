@@ -15,7 +15,7 @@ class User {
     public $userDateOfCreation;
     public $userHasImage;
     public $userPhone;
-
+    public $userRole;
     public function __construct($db) {
         $this->conn = $db;
     }
@@ -44,7 +44,7 @@ class User {
   
           $query = "INSERT INTO " . $this->table_name . "
                     SET userName=:userName, userEmail=:userEmail, userBirthday=:userBirthday, 
-                        userPhone=:userPhone, userPassword=:userPassword, userHasImage=:userHasImage";
+                        userPhone=:userPhone, userPassword=:userPassword, userHasImage=:userHasImage, userRole=:userRole";
   
           $stmt = $this->conn->prepare($query);
   
@@ -58,6 +58,7 @@ class User {
           $stmt->bindParam(":userPhone", $this->userPhone);
           $stmt->bindParam(":userPassword", $hashedPassword);
           $stmt->bindParam(":userHasImage", $this->userHasImage);
+          $stmt->bindParam(":userRole", $this->userRole);
   
           if ($stmt->execute()) {
               $this->userId = $this->conn->lastInsertId();
@@ -78,7 +79,7 @@ class User {
     }
 
     public function getUserById($userId) {
-        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation, userHasImage, userPhone
+        $query = "SELECT userId, userName, userEmail, userBirthday, userProfileImage, userCoverImage, userFollowers, userSubjects, userDateOfCreation, userHasImage, userPhone, userRole 
                   FROM " . $this->table_name . " 
                   WHERE userId = :userId AND userStatus = true";
 
@@ -92,7 +93,7 @@ class User {
     // Update
     public function update() {
         $query = "UPDATE " . $this->table_name . " SET
-                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone";
+                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone, userRole=:userRole";
 
         if (!empty($this->userPassword)) {
             $query .= ", userPassword=:userPassword";
@@ -110,6 +111,7 @@ class User {
         $stmt->bindParam(":userName", $this->userName);
         $stmt->bindParam(":userBirthday", $this->userBirthday);
         $stmt->bindParam(":userPhone", $this->userPhone);
+        $stmt->bindParam(":userPhone", $this->userRole);
 
         if (!empty($this->userPassword)) {
             // Hash a senha antes de armazenar

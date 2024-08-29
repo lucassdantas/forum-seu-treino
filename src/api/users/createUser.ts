@@ -8,6 +8,7 @@ export const createUser = async (user: {
     userBirthday: string;
     userPassword: string;
     userHasImage: boolean;
+    userRole:string;
 }) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/controllers/userController.php`, user);

@@ -20,7 +20,7 @@ switch($method) {
         $user->userPhone = $data->userPhone;
         $user->userPassword = $data->userPassword;
         $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : 0;
-
+        $user->userRole = $data->userRole!='admin'? $data->userRole:'user';
         // Verifica se o e-mail já existe
         if ($user->emailExists()) {
             echo json_encode(["message" => "Já existe um usuário com este e-mail.", 'success' => false]);
@@ -56,6 +56,7 @@ switch($method) {
         $user->userPhone = $data->userPhone;
         $user->userPassword = isset($data->userPassword) ? $data->userPassword : null;
         $user->userHasImage = isset($data->userHasImage) ? $data->userHasImage : null;
+        $user->userRole = $data->userRole!='admin'? $data->userRole:'user';
 
         if ($user->update()) {
             echo json_encode(["message" => "User was updated.", "updatedUser" => $user, 'success' => true]);

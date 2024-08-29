@@ -8,6 +8,7 @@ import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSu
 import { ProfileBody } from '@/pages/Profile/ProfileBody';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { BACKEND_URL } from '@/constants';
+import { checkUserRole } from '@/utils/checkUserRole';
 
 type SetAuthType = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -57,6 +58,7 @@ export const Profile = ({ setAuth }: ProfileProps) => {
 
           profileName={profileUser.userName}
           profileOwner={profileUser}
+          userRole={checkUserRole(profileUser.userRole)}
         />
       ) : (
           <LoadingSpinner />

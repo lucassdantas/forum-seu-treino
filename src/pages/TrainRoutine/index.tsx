@@ -7,6 +7,7 @@ import { useUser } from '@/context/currentUserContext';
 import { TrainRoutineBody } from '@/pages/TrainRoutine/TrainRoutineBody';
 import Login from '@/pages/Login';
 import { BACKEND_URL } from '@/constants';
+import { checkUserRole } from '@/utils/checkUserRole';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
@@ -34,7 +35,7 @@ const TrainRoutine = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser}/>
+      <PhotoFollowerAndSubjects profileName={currentUser.userName} profileOwner={currentUser} userRole={checkUserRole(currentUser.userRole)}/>
       <TrainRoutineBody />
     </>
   );

@@ -18,9 +18,10 @@ import { Link } from 'react-router-dom';
 type PhotoFollowerAndSubjectsProps = {
     profileName: string;
     profileOwner: UserBasic;
+    userRole:string | null;
 };
 
-export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFollowerAndSubjectsProps) => {
+export const PhotoFollowerAndSubjects = ({ profileName, profileOwner, userRole }: PhotoFollowerAndSubjectsProps) => {
     const { currentUser } = useUser();
     if (!currentUser) return <Login />;
 
@@ -98,8 +99,6 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
             setFollowersList((prev) => prev.filter((user) => user.userId !== followerId));
         }
     };
-    console.log(profileOwner.userId)
-    console.log(currentUser.userId)
     return (
         <div className='bg-black text-white flex justify-center -mt-4 px-4'>
             <Limiter>
@@ -107,7 +106,7 @@ export const PhotoFollowerAndSubjects = ({ profileName, profileOwner }: PhotoFol
                     <div className="flex flex-col md:flex-row gap-6 w-full md:w-2/3 items-center">
                         <UserImage userId={profileOwner.userId} userHasImage={profileOwner.userHasImage} photoSize={'lg'} className={'-mt-4'} />
                         <div className="flex flex-col py-2">
-                            <span className='font-bold text-xl mb-4'>{profileName}</span>
+                            <span className='font-bold text-xl mb-4'>{profileName} - <strong>{userRole}</strong></span>
                             {profileOwner && profileOwner.userId != currentUser.userId && (
                                 <Button onClick={handleFollowClick}>
                                     {isFollowingState === null ? 'Carregando...' : isFollowingState ? 'Deixar de Seguir' : 'Seguir'}

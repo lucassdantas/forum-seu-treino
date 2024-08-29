@@ -21,6 +21,7 @@ interface UserData {
   userBirthday: string;
   userPassword: string;
   userHasImage: boolean;
+  userRole:string;
 }
 
 export const FollowersBody = () => {
@@ -33,6 +34,7 @@ export const FollowersBody = () => {
   const [userPhone, setUserPhone] = useState('');
   const [userBirthday, setUserBirthday] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [userRole, setUserRole] = useState('user');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -92,7 +94,8 @@ export const FollowersBody = () => {
         userPhone,
         userBirthday,
         userPassword,
-        userHasImage: !!profileImage
+        userHasImage: !!profileImage,
+        userRole,
       };
 
       const response = await createUser(newUser);
@@ -161,6 +164,9 @@ export const FollowersBody = () => {
       toast.error('Erro ao deletar usuário.');
     }
   };
+  const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setUserRole(event.target.value);
+  };
 
   return (
     <div className='bg-black w-full flex justify-center px-4'>
@@ -224,6 +230,16 @@ export const FollowersBody = () => {
             <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Nome' required value={userName} onChange={(e) => setUserName(e.target.value)} />
             <input className='bg-neutral-700 p-2 rounded-lg' type='email' placeholder='Email' required value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
             <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Telefone' required value={userPhone} onChange={(e) => setUserPhone(e.target.value)} />
+            <select
+              id="userRole"
+              value={userRole}
+              onChange={handleRoleChange}
+              className="bg-neutral-700 p-2 rounded-lg'"
+            >
+              <option value="Usuário">Usuário</option>
+              <option value="Nutricionista">Nutricionista</option>
+              <option value="Personal Trainer">Personal Trainer</option>
+            </select>
             <input className='bg-neutral-700 p-2 rounded-lg' type='date' placeholder='Aniversário' required value={userBirthday} onChange={(e) => setUserBirthday(e.target.value)} />
             <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Senha' required value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
             <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />

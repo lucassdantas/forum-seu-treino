@@ -6,6 +6,7 @@ import { FeedBody } from '@/pages/Feed/FeedBody';
 import { useUser } from '@/context/currentUserContext';
 import { BACKEND_URL } from '@/constants';
 import Login from '@/pages/Login';
+import { checkUserRole } from '@/utils/checkUserRole';
 type SetAuthType = Dispatch<SetStateAction<boolean>>;
 
 interface FeedProps{
@@ -33,7 +34,7 @@ const Feed = ({ setAuth }:FeedProps) => {
   return (
     <>
       <Banner/>
-      <PhotoFollowerAndSubjects profileOwner={currentUser} profileName={currentUser.userName}/>
+      <PhotoFollowerAndSubjects profileOwner={currentUser} profileName={currentUser.userName} userRole={checkUserRole(currentUser.userRole)}/>
       <FeedBody/>
     </>
   );
