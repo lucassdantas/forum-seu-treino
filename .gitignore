@@ -1,3 +1,5 @@
+ads.txt
+
 # Ignorar o arquivo database.php dentro da pasta project
 backend/config/env.php
 
