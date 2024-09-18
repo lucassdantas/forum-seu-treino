@@ -5,7 +5,7 @@ import { PhotoFollowerAndSubjects } from '@/components/common/PhotoFollowerAndSu
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { FollowersBody } from '@/pages/Followers/FollowersBody'
 import axios from 'axios'
-import { useEffect, Dispatch, SetStateAction, useContext, useState  } from 'react'
+import { useEffect, Dispatch, SetStateAction, useState  } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BACKEND_URL } from '@/constants'
 import { checkUserRole } from '@/utils/checkUserRole'

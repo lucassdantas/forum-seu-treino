@@ -13,6 +13,8 @@ import { getUsers } from '@/api/users/getUsers';
 import { createUser } from '@/api/users/createUser';
 import { uploadProfileImage } from '@/api/users/uploadProfileImage';
 import { deleteUser } from '@/api/users/deleteUser'; // Importe a função de exclusão
+import { FaPencil } from 'react-icons/fa6';
+import { updateUser } from '@/api/users/editUser';
 
 interface UserData {
   userName: string;
@@ -40,6 +42,7 @@ export const FollowersBody = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [editingUserId, setEditingUserId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -76,17 +79,32 @@ export const FollowersBody = () => {
   if (!followers) return <LoadingSpinner />;
 
   const handleAddUserClick = () => {
+    setEditingUserId(null);
     setIsPopupOpen(true);
+  };
+  const handleEditUser = (userId: number) => {
+    const userToEdit = followers.find((user) => user.userId === userId);
+    if (userToEdit) {
+      setEditingUserId(userId); 
+      setUserName(userToEdit.userName);
+      setUserEmail(userToEdit.userEmail);
+      setUserPhone(userToEdit.userPhone);
+      setUserBirthday(userToEdit.userBirthday);
+      setUserRole(userToEdit.userRole||'Usuário');
+      setUserPassword('');  
+      setConfirmPassword('');  
+      setIsPopupOpen(true);
+    }
   };
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
+  
     if (userPassword !== confirmPassword) {
       toast.error('As senhas não coincidem!');
       return;
     }
-
+  
     try {
       const newUser: UserData = {
         userName,
@@ -97,35 +115,42 @@ export const FollowersBody = () => {
         userHasImage: !!profileImage,
         userRole,
       };
-
-      const response = await createUser(newUser);
-
-      if (response.success) {
-        let imageUploadSuccess = true;
-
-        if (profileImage) {
-          imageUploadSuccess = await uploadProfileImage(response.userId, profileImage);
+  
+      if (editingUserId) {
+        // Se estiver editando, fazer uma chamada de API para atualizar o usuário
+        const response = await updateUser(editingUserId, newUser); // Função de edição (você deve criá-la)
+        if (response.success) {
+          toast.success('Usuário atualizado com sucesso!');
+        } else {
+          toast.error('Falha ao atualizar usuário.');
         }
-
-        if (!imageUploadSuccess) {
-          toast.error('Falha ao adicionar a foto do perfil!');
-          return;
-        }
-
-        toast.success('Usuário adicionado com sucesso!');
-        setIsPopupOpen(false);
-        // Atualiza a lista de seguidores após adicionar o usuário
-        const users = await getUsers();
-        setFollowers(users);
       } else {
-        if(response.message ==='Já existe um usuário com este e-mail.') toast.error(response.message)
-        else toast.error('Falha ao adicionar usuário!');
+        // Se estiver criando, segue a lógica de criação
+        const response = await createUser(newUser);
+        if (response.success) {
+          if (profileImage) {
+            const imageUploadSuccess = await uploadProfileImage(response.userId, profileImage);
+            if (!imageUploadSuccess) {
+              toast.error('Falha ao adicionar a foto do perfil!');
+              return;
+            }
+          }
+          toast.success('Usuário adicionado com sucesso!');
+        } else {
+          toast.error('Falha ao adicionar usuário.');
+        }
       }
+  
+      setIsPopupOpen(false);
+      const users = await getUsers();
+      setFollowers(users);
     } catch (error) {
-      console.error('Erro ao adicionar usuário:', error);
-      toast.error('Erro ao adicionar usuário!');
+      console.error('Erro ao adicionar/atualizar usuário:', error);
+      toast.error('Erro ao adicionar/atualizar usuário!');
     }
   };
+  
+
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -196,10 +221,16 @@ export const FollowersBody = () => {
               return(
                 <div className="relative" key={i}>
                   {currentUser?.userRole === 'admin' && follower.userId != currentUser.userId && (
-                    <FaTrash
-                      onClick={() => handleDeleteUser(follower.userId)}
-                      className='absolute top-2 right-2 text-red-600 cursor-pointer'
-                    />
+                    <>
+                      <FaTrash
+                        onClick={() => handleDeleteUser(follower.userId)}
+                        className='absolute top-2 right-2 text-red-600 cursor-pointer'
+                      />
+                      <div className='absolute top-2 left-2 rounded-full bg-orange-seu-treino p-2 ' onClick={() => handleEditUser(follower.userId)}>
+                        <FaPencil className=' text-white cursor-pointer'/>
+                      </div>
+
+                    </>
                   )}
                   <UserInFollowContextCard key={i} user={follower} />
                 </div>
