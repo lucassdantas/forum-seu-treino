@@ -122,7 +122,7 @@ export const FollowersBody = () => {
         userPhone,
         userBirthday,
         userPassword,
-        userHasImage: !!profileImage,
+        userHasImage: !!previewImage,
         userRole,
       };
   
