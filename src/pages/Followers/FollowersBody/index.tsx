@@ -168,9 +168,21 @@ export const FollowersBody = () => {
     }
   };
   
+  const resetFields = () => {
+    setUserName('')
+    setUserEmail('')
+    setUserPhone('')
+    setUserBirthday('')
+    setUserPassword('')
+    setConfirmPassword('')
+    setProfileImage(null)
+    setPreviewImage(null)
+    setIsImageSelected(false)
+    setEditingUserId(null)
+  }
   const handleClosePopup = () => {
     setIsPopupOpen(false)
-    setEditingUserId(null)
+    resetFields()
   }
 
 
