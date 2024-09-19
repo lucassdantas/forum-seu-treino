@@ -15,6 +15,7 @@ import { uploadProfileImage } from '@/api/users/uploadProfileImage';
 import { deleteUser } from '@/api/users/deleteUser'; // Importe a função de exclusão
 import { FaPencil } from 'react-icons/fa6';
 import { updateUser } from '@/api/users/editUser';
+import { BACKEND_URL, DEFAULT_IMAGE_DIRECTORY, SITE_URL } from '@/constants';
 
 interface UserData {
   userName: string;
@@ -90,12 +91,22 @@ export const FollowersBody = () => {
       setUserEmail(userToEdit.userEmail);
       setUserPhone(userToEdit.userPhone);
       setUserBirthday(userToEdit.userBirthday);
-      setUserRole(userToEdit.userRole||'Usuário');
+      setUserRole(userToEdit.userRole || 'Usuário');
       setUserPassword('');  
-      setConfirmPassword('');  
+      setConfirmPassword('');
+      
+      // Verifica se o usuário tem uma imagem de perfil
+      if (userToEdit.userHasImage) {
+        // Define a URL para o preview da imagem existente
+        setPreviewImage(`${location.protocol+'//'+ SITE_URL + DEFAULT_IMAGE_DIRECTORY}/${userId}/${userId}.jpg`);
+      } else {
+        setPreviewImage(null); // Sem imagem
+      }
+      
       setIsPopupOpen(true);
     }
   };
+  
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -117,15 +128,23 @@ export const FollowersBody = () => {
       };
   
       if (editingUserId) {
-        // Se estiver editando, fazer uma chamada de API para atualizar o usuário
-        const response = await updateUser(editingUserId, newUser); // Função de edição (você deve criá-la)
+        // Atualiza o usuário existente
+        const response = await updateUser(editingUserId, newUser);
         if (response.success) {
+          // Se uma nova imagem foi selecionada, faça o upload
+          if (profileImage) {
+            const imageUploadSuccess = await uploadProfileImage(editingUserId, profileImage);
+            if (!imageUploadSuccess) {
+              toast.error('Falha ao atualizar a foto do perfil!');
+              return;
+            }
+          }
           toast.success('Usuário atualizado com sucesso!');
         } else {
           toast.error('Falha ao atualizar usuário.');
         }
       } else {
-        // Se estiver criando, segue a lógica de criação
+        // Cria um novo usuário
         const response = await createUser(newUser);
         if (response.success) {
           if (profileImage) {
@@ -149,6 +168,7 @@ export const FollowersBody = () => {
       toast.error('Erro ao adicionar/atualizar usuário!');
     }
   };
+  
   
 
 
@@ -245,9 +265,9 @@ export const FollowersBody = () => {
           <div className='flex flex-col gap-4'>
             <input type="file" ref={fileInputRef} accept=".jpg" style={{ display: 'none' }} onChange={handleImageChange} />
             {previewImage ? (
-              <div className='relative'>
+              <div className='relative flex items-start'>
                 <img src={previewImage} alt="Profile Preview" className="w-32 h-32 object-cover rounded-full" />
-                <button type="button" onClick={handleClearImage} className='absolute top-0 right-0 p-1 bg-black rounded-full'>
+                <button type="button" onClick={handleClearImage} className='p-1 bg-black rounded-full'>
                   <FaTimes className='text-white' />
                 </button>
               </div>
