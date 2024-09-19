@@ -44,7 +44,6 @@ export const FollowersBody = () => {
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [editingUserId, setEditingUserId] = useState<number | null>(null);
-
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await getUsers();
@@ -160,7 +159,7 @@ export const FollowersBody = () => {
         }
       }
   
-      setIsPopupOpen(false);
+      handleClosePopup();
       const users = await getUsers();
       setFollowers(users);
     } catch (error) {
@@ -169,7 +168,10 @@ export const FollowersBody = () => {
     }
   };
   
-  
+  const handleClosePopup = () => {
+    setIsPopupOpen(false)
+    setEditingUserId(null)
+  }
 
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -260,7 +262,7 @@ export const FollowersBody = () => {
           </div>
         </div>
       </Limiter>
-      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+      <Popup isOpen={isPopupOpen} onClose={() => handleClosePopup()}>
         <form onSubmit={handleFormSubmit} className='p-4 text-white'>
           <div className='flex flex-col gap-4'>
             <input type="file" ref={fileInputRef} accept=".jpg" style={{ display: 'none' }} onChange={handleImageChange} />
@@ -292,8 +294,16 @@ export const FollowersBody = () => {
               <option value="Personal Trainer">Personal Trainer</option>
             </select>
             <input className='bg-neutral-700 p-2 rounded-lg' type='date' placeholder='Aniversário' required value={userBirthday} onChange={(e) => setUserBirthday(e.target.value)} />
-            <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Senha' required value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
-            <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            {editingUserId &&<>
+              <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Senha' value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
+              <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            </>
+            }
+            {!editingUserId &&<>
+              <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Senha' required value={userPassword} onChange={(e) => setUserPassword(e.target.value)} />
+              <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            </>
+            }
             <button type='submit' className='p-4 bg-orange-seu-treino text-white'>
               Adicionar Usuário
             </button>
