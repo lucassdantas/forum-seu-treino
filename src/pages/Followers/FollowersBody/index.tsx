@@ -304,8 +304,9 @@ export const FollowersBody = () => {
               <input className='bg-neutral-700 p-2 rounded-lg' type='password' placeholder='Confirmar Senha' required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </>
             }
+            
             <button type='submit' className='p-4 bg-orange-seu-treino text-white'>
-              Adicionar Usuário
+              {editingUserId? 'Atualizar usuário':'Adicionar Usuário'}
             </button>
           </div>
         </form>

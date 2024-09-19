@@ -92,43 +92,52 @@ class User {
     
     // Update
     public function update() {
-        $query = "UPDATE " . $this->table_name . " SET
-                    userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone, userRole=:userRole";
-
-        if (!empty($this->userPassword)) {
-            $query .= ", userPassword=:userPassword";
-        }
-        if (!empty($this->userHasImage)) {
-            $query .= ", userHasImage=:userHasImage";
-        }
-
-        $query .= " WHERE userId=:userId";
-
-        $stmt = $this->conn->prepare($query);
-
-        // Bind values
-        $stmt->bindParam(":userId", $this->userId);
-        $stmt->bindParam(":userName", $this->userName);
-        $stmt->bindParam(":userBirthday", $this->userBirthday);
-        $stmt->bindParam(":userPhone", $this->userPhone);
-        $stmt->bindParam(":userPhone", $this->userRole);
-
-        if (!empty($this->userPassword)) {
-            // Hash a senha antes de armazenar
-            $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
-            $stmt->bindParam(":userPassword", $hashedPassword);
-        }
-
-        if (!empty($this->userHasImage)) {
-            $stmt->bindParam(":userHasImage", $this->userHasImage);
-        }
-
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
-    }
+      // Iniciar a query de atualização
+      $query = "UPDATE " . $this->table_name . " SET
+                  userName=:userName, userBirthday=:userBirthday, userPhone=:userPhone, userRole=:userRole";
+  
+      // Atualizar a senha apenas se ela for fornecida
+      if (!empty($this->userPassword)) {
+          $query .= ", userPassword=:userPassword";
+      }
+  
+      // Atualizar a imagem de perfil apenas se ela for fornecida
+      if (!is_null($this->userHasImage)) {
+          $query .= ", userHasImage=:userHasImage";
+      }
+  
+      // Completar a query
+      $query .= " WHERE userId=:userId";
+  
+      // Preparar a query
+      $stmt = $this->conn->prepare($query);
+  
+      // Bind dos valores obrigatórios
+      $stmt->bindParam(":userId", $this->userId);
+      $stmt->bindParam(":userName", $this->userName);
+      $stmt->bindParam(":userBirthday", $this->userBirthday);
+      $stmt->bindParam(":userPhone", $this->userPhone);
+      $stmt->bindParam(":userRole", $this->userRole);
+  
+      // Bind da senha se ela foi fornecida
+      if (!empty($this->userPassword)) {
+          // Hash da senha antes de armazenar
+          $hashedPassword = password_hash($this->userPassword, PASSWORD_DEFAULT);
+          $stmt->bindParam(":userPassword", $hashedPassword);
+      }
+  
+      // Bind da imagem de perfil se ela foi fornecida
+      if (!is_null($this->userHasImage)) {
+          $stmt->bindParam(":userHasImage", $this->userHasImage);
+      }
+  
+      // Executar a query
+      if ($stmt->execute()) {
+          return true;
+      }
+  
+      return false;
+  }
 
     // Delete (Deactivate)
     public function delete() {
