@@ -48,7 +48,6 @@ switch($method) {
         
     case 'PUT':
         $data = json_decode(file_get_contents("php://input"));
-
         $user->userId = $data->userId;
         $user->userName = $data->userName;
         $user->userEmail = $data->userEmail;

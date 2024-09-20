@@ -293,7 +293,8 @@ export const FollowersBody = () => {
               </div>
             )}
             <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Nome' required value={userName} onChange={(e) => setUserName(e.target.value)} />
-            <input className='bg-neutral-700 p-2 rounded-lg' type='email' placeholder='Email' required value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
+            {editingUserId  && <input className='bg-neutral-700 p-2 rounded-lg text-gray-300' type='email' placeholder='Email' disabled value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />}
+            {!editingUserId && <input className='bg-neutral-700 p-2 rounded-lg' type='email' placeholder='Email' required value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />}
             <input className='bg-neutral-700 p-2 rounded-lg' type='text' placeholder='Telefone' required value={userPhone} onChange={(e) => setUserPhone(e.target.value)} />
             <select
               id="userRole"

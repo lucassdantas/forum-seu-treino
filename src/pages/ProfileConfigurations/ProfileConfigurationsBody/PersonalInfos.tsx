@@ -148,6 +148,7 @@ export const PersonalInfos = () => {
             type="text"
             className="w-full p-2 rounded bg-gray-700 text-white"
             value={userName}
+            maxLength={30}
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>

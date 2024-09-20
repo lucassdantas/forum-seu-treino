@@ -18,7 +18,7 @@ export const updateUser = async (
       userId,
       ...user,
     });
-
+    console.log(response.data)
     return response.data; // Retorna os dados de resposta (assumindo que vem um 'success' no response)
   } catch (error) {
     console.error('Error updating user:', error);
